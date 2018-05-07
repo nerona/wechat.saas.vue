@@ -1,0 +1,22 @@
+<script>
+/**
+ * @overview 应用入口组件
+ */
+
+export default {
+  name: 'App',
+};
+</script>
+
+<template>
+  <div id="app">
+    <router-view />
+  </div>
+</template>
+
+<style lang="less">
+#app {
+  height: 100%;
+  width: 100%;
+}
+</style>
