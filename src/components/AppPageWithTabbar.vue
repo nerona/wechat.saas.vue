@@ -64,6 +64,7 @@ export default {
   created() {
     this.tabList.forEach((item) => {
       if (window.location.href.indexOf(item.link) !== -1) {
+        // eslint-disable-next-line
         item.isActive = true;
       }
     });
