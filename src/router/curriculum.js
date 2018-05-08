@@ -15,4 +15,9 @@ export default [
     name: 'CurriculumIndex',
     component: views.CurriculumIndex,
   },
+  {
+    path: '/curriculum/detail/:id',
+    name: 'CurriculumDetail',
+    component: views.CurriculumDetail,
+  },
 ];

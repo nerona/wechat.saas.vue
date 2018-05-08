@@ -13,7 +13,8 @@ export { default as ActivityLearn } from './Activity/ActivityLearn';
 
 /* 课程中心 */
 
-export { default as CurriculumIndex } from './Curriculum';
+export { default as CurriculumIndex } from './Curriculum/Index/Index';
+export { default as CurriculumDetail } from './Curriculum/Detail/Detail';
 
 /* 学习中心 */
 
