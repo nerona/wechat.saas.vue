@@ -1,7 +1,7 @@
 <template>
-  <view-box class="curriculum-detail">
+  <app-page class="curriculum-detail">
     <!-- 轮播图 -->
-    <swiper-list :swiper-list="swiperList" />
+    <swiper-list :swiper-list="info.swiperList" />
 
     <!-- 课程信息 -->
     <div class="curriculum-detail__info">
@@ -13,8 +13,12 @@
       </div>
       <div class="curriculum-detail-info__price">
         <span class="curriculum-detail-info__price--old">￥2990元</span>
-        <span class="curriculum-detail-info__price--null">￥0元</span>
-        <span class="curriculum-detail-info__price--new">￥100元</span>
+        <span
+          v-if="info.type == 1"
+          class="curriculum-detail-info__price--null">￥0元</span>
+        <span
+          v-if="info.type == 0"
+          class="curriculum-detail-info__price--new">￥100元</span>
       </div>
     </div>
 
@@ -47,31 +51,43 @@
     <!-- 购买-试听 -->
     <div class="curriculum-detail__btns">
       <x-button
+        v-if="info.type == 0"
         type="primary"
         @click.native="openPopup">购买</x-button>
-        <!-- <x-button type="primary">试听</x-button> -->
+      <x-button
+        v-if="info.type == 1"
+        type="primary"
+        @click.native="openPopup">试听</x-button>
     </div>
 
     <!-- 购买详情 -->
-
     <div v-transfer-dom>
       <popup
-        v-model="showOrder"
+        v-model="showPopup"
         :should-scroll-top-on-show="true"
         height="75%"
       >
-
-        <order/>
-
+        <detail-popup/>
       </popup>
     </div>
 
-  </view-box>
+    <!-- 未登陆or没有领取试听 -->
+    <div v-transfer-dom>
+      <confirm
+        v-model="noPermissionActivity"
+        content="您尚未领取试听课程到活动页领取哦"
+        confirm-text="参与活动"
+        cancel-text="知道了"
+        @on-cancel="getIt"
+        @on-confirm="goActivity"/>
+    </div>
+
+  </app-page>
 </template>
 <script>
-import { XButton, ViewBox, TransferDom, Popup } from 'vux';
+import { XButton, ViewBox, TransferDom, Popup, Confirm } from 'vux';
 import SwiperList from './SwiperList';
-import Order from './Order';
+import DetailPopup from './DetailPopup';
 
 export default {
   name: 'CurriculumDetail',
@@ -80,24 +96,31 @@ export default {
     XButton,
     ViewBox,
     Popup,
-    Order,
+    DetailPopup,
+    Confirm,
   },
   directives: {
     TransferDom,
   },
   data() {
     return {
-      showOrder: false,
-      swiperList: [{
-        img: 'http://placeholder.qiniudn.com/750x350/FF3B3B/ffffff',
-        title: '送你一朵fua',
-      }, {
-        img: 'http://placeholder.qiniudn.com/750x350/FFEF7D/ffffff',
-        title: '送你一次旅行',
-      }, {
-        img: 'http://placeholder.qiniudn.com/750x350/8AEEB1/ffffff',
-        title: '送你一朵fua',
-      }],
+      showPopup: false,
+      noPermissionActivity: false,
+      info: {
+        id: 1,
+        type: 0, // 0购买-1试听
+        swiperList: [{
+          img: 'http://placeholder.qiniudn.com/750x350/FF3B3B/ffffff',
+          title: '送你一朵fua',
+        }, {
+          img: 'http://placeholder.qiniudn.com/750x350/FFEF7D/ffffff',
+          title: '送你一次旅行',
+        }, {
+          img: 'http://placeholder.qiniudn.com/750x350/8AEEB1/ffffff',
+          title: '送你一朵fua',
+        }],
+      },
+
     };
   },
   created() {
@@ -105,8 +128,23 @@ export default {
     console.log(this.$route.params.id);
   },
   methods: {
+    // 打开购买详情
     openPopup() {
-      this.showOrder = true;
+      // 购买
+      if (this.info.type === 0) {
+        this.showPopup = true;
+      } else if (this.info.type === 1) {
+        // 试听
+        this.noPermissionActivity = true;
+      }
+    },
+    // 知道了
+    getIt() {
+      this.noPermissionActivity = false;
+    },
+    // 前往活动页
+    goActivity() {
+      alert('我要去活动页面了哦');
     },
   },
 };

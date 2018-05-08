@@ -20,4 +20,9 @@ export default [
     name: 'CurriculumDetail',
     component: views.CurriculumDetail,
   },
+  {
+    path: '/curriculum/order',
+    name: 'CurriculumOrder',
+    component: views.CurriculumOrder,
+  },
 ];

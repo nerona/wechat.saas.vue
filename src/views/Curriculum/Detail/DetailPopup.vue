@@ -17,12 +17,11 @@
       </div>
       <div class="curriculum-detail-order-school__list">
         <div
-          v-for="(item, index) in school"
+          v-for="item in school"
           :key="item.id"
-          :data-id="item.id"
-          :class="{active: index == isSchoolActive}"
+          :class="{active: item.id == isSchoolActive}"
           class="curriculum-detail-order-school-list__item"
-          @click="chooseSchool(index)">
+          @click="chooseSchool(item.id)">
           {{ item.name }}
         </div>
       </div>
@@ -34,11 +33,11 @@
       </div>
       <div class="curriculum-detail-order-date__list">
         <div
-          v-for="(item, index) in date"
-          :key="index"
-          :class="{active: index == isDateActive}"
+          v-for="item in date"
+          :key="item.id"
+          :class="{active: item.id == isDateActive}"
           class="curriculum-detail-order-date-list__item"
-          @click="chooseDate(index)">
+          @click="chooseDate(item.id)">
           <div>{{ item.range }}</div>
           <div
             v-for="(cycle, cindex) in item.cycle"
@@ -114,7 +113,19 @@ export default {
       }
     },
     submit() {
-      alert(1);
+      const query = {};
+      if (this.isSchoolActive === null) {
+        this.$vux.toast.text('请选择校区！', 'middle');
+        return;
+      }
+      if (this.isDateActive === null) {
+        this.$vux.toast.text('请选择上课时间！', 'middle');
+        return;
+      }
+      query.school_id = this.isSchoolActive;
+      query.date_id = this.isDateActive;
+      query.curriculum_id = this.$route.params.id;
+      this.$router.push({ path: '/curriculum/order', query });
     },
   },
 };

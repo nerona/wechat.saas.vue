@@ -1,3 +1,4 @@
+import { ToastPlugin, LoadingPlugin, WechatPlugin } from 'vux';
 import Vue from 'vue';
 import FastClick from 'fastclick';
 import router from '@/router';
@@ -11,7 +12,10 @@ FastClick.attach(document.body);
 Vue.config.productionTip = false;
 
 Vue.use(pluginsRegister)
-  .use(componentsRegister);
+  .use(componentsRegister)
+  .use(ToastPlugin, { position: 'middle' })
+  .use(LoadingPlugin)
+  .use(WechatPlugin);
 
 /* eslint-disable no-new */
 new Vue({
