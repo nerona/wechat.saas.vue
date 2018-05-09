@@ -4,6 +4,27 @@ const config = require('../config')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const pkg = require('../package.json')
 
+const GetValue = function(value) {
+  this.value = value;
+}
+
+GetValue.prototype.genCSS = function (context, output) {
+  output.add(this.value);
+}
+
+const Px2vw = function(designWidth) {
+
+  this.install = (less, pluginManager) => {
+
+    const px2vw = function ({ value }) {
+      return new GetValue(`${(value / designWidth) * 100}vw`);
+    };
+
+    pluginManager.less
+      .functions.functionRegistry.addMultiple({ px2vw });
+  }
+}
+
 exports.assetsPath = function (_path) {
   const assetsSubDirectory = process.env.NODE_ENV === 'production'
     ? config.build.assetsSubDirectory
@@ -56,7 +77,7 @@ exports.cssLoaders = function (options) {
   return {
     css: generateLoaders(),
     postcss: generateLoaders(),
-    less: generateLoaders('less'),
+    less: generateLoaders('less', { plugins: [ new Px2vw(750) ] }),
     sass: generateLoaders('sass', { indentedSyntax: true }),
     scss: generateLoaders('sass'),
     stylus: generateLoaders('stylus'),
