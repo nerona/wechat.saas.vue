@@ -1,3 +1,27 @@
+<script>
+/**
+ * @overview 课程首页列表
+ *
+ * @author  lindongfnag
+ */
+  export default {
+    name: 'CurriculumItem',
+    props: {
+      thumbs: {
+        type: Array,
+        default: () => [],
+      },
+    },
+    data() {
+      return {};
+    },
+    methods: {
+      goDetail(id) {
+        this.$router.push(`/curriculum/detail/${id}`);
+      },
+    },
+  };
+</script>
 <template>
   <div class="curriculum-list">
     <div
@@ -34,25 +58,7 @@
     </div>
   </div>
 </template>
-<script>
-  export default {
-    name: 'CurriculumItem',
-    props: {
-      thumbs: {
-        type: Array,
-        default: () => [],
-      },
-    },
-    data() {
-      return {};
-    },
-    methods: {
-      goDetail(id) {
-        this.$router.push(`/curriculum/detail/${id}`);
-      },
-    },
-  };
-</script>
+
 <style lang="less">
 .curriculum-list {
   margin-top: 2vh;

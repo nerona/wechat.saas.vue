@@ -1,3 +1,72 @@
+<script>
+/**
+ * @overview 课程详情首页
+ *
+ * @author  lindongfnag
+ */
+
+import { XButton, ViewBox, Popup, Confirm } from 'vux';
+import SwiperList from './SwiperList';
+import DetailPopup from './DetailPopup';
+
+export default {
+  name: 'CurriculumDetail',
+  components: {
+    SwiperList,
+    XButton,
+    ViewBox,
+    Popup,
+    DetailPopup,
+    Confirm,
+  },
+  data() {
+    return {
+      showPopup: false,
+      noPermissionActivity: false,
+      info: {
+        id: 1,
+        type: 0, // 0购买-1试听
+        swiperList: [{
+          img: 'http://placeholder.qiniudn.com/750x350/FF3B3B/ffffff',
+          title: '送你一朵fua',
+        }, {
+          img: 'http://placeholder.qiniudn.com/750x350/FFEF7D/ffffff',
+          title: '送你一次旅行',
+        }, {
+          img: 'http://placeholder.qiniudn.com/750x350/8AEEB1/ffffff',
+          title: '送你一朵fua',
+        }],
+      },
+
+    };
+  },
+  created() {
+      // 获取id
+    console.log(this.$route.params.id);
+  },
+  methods: {
+    // 打开购买详情
+    openPopup() {
+      // 购买
+      if (this.info.type === 0) {
+        this.showPopup = true;
+      } else if (this.info.type === 1) {
+        // 试听
+        this.noPermissionActivity = true;
+      }
+    },
+    // 知道了
+    getIt() {
+      this.noPermissionActivity = false;
+    },
+    // 前往活动页
+    goActivity() {
+      alert('我要去活动页面了哦');
+    },
+  },
+};
+</script>
+
 <template>
   <app-page class="curriculum-detail">
     <!-- 轮播图 -->
@@ -84,71 +153,7 @@
 
   </app-page>
 </template>
-<script>
-import { XButton, ViewBox, TransferDom, Popup, Confirm } from 'vux';
-import SwiperList from './SwiperList';
-import DetailPopup from './DetailPopup';
 
-export default {
-  name: 'CurriculumDetail',
-  components: {
-    SwiperList,
-    XButton,
-    ViewBox,
-    Popup,
-    DetailPopup,
-    Confirm,
-  },
-  directives: {
-    TransferDom,
-  },
-  data() {
-    return {
-      showPopup: false,
-      noPermissionActivity: false,
-      info: {
-        id: 1,
-        type: 0, // 0购买-1试听
-        swiperList: [{
-          img: 'http://placeholder.qiniudn.com/750x350/FF3B3B/ffffff',
-          title: '送你一朵fua',
-        }, {
-          img: 'http://placeholder.qiniudn.com/750x350/FFEF7D/ffffff',
-          title: '送你一次旅行',
-        }, {
-          img: 'http://placeholder.qiniudn.com/750x350/8AEEB1/ffffff',
-          title: '送你一朵fua',
-        }],
-      },
-
-    };
-  },
-  created() {
-      // 获取id
-    console.log(this.$route.params.id);
-  },
-  methods: {
-    // 打开购买详情
-    openPopup() {
-      // 购买
-      if (this.info.type === 0) {
-        this.showPopup = true;
-      } else if (this.info.type === 1) {
-        // 试听
-        this.noPermissionActivity = true;
-      }
-    },
-    // 知道了
-    getIt() {
-      this.noPermissionActivity = false;
-    },
-    // 前往活动页
-    goActivity() {
-      alert('我要去活动页面了哦');
-    },
-  },
-};
-</script>
 <style lang="less">
 .curriculum-detail {
     color: #585859;

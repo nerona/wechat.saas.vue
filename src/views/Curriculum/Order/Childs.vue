@@ -1,0 +1,123 @@
+<script>
+/**
+ * @overview 选择小孩
+ *
+ * @author  lindongfnag
+ */
+
+import { Popup } from 'vux';
+
+export default {
+  name: 'OrderChilds',
+  components: {
+    Popup,
+  },
+  props: {
+    showChilds: {
+      type: Boolean,
+      default: () => (false),
+    },
+    childs: {
+      type: Array,
+      default: () => ([]),
+    },
+  },
+  data() {
+    return {
+      selected: null,
+    };
+  },
+  methods: {
+    goAddChild() {
+      alert('go add child');
+    },
+    updateChild(id) {
+      this.selected = id;
+      this.$emit('updateChild', id);
+    },
+  },
+};
+</script>
+<template>
+  <div
+    v-transfer-dom>
+    <popup
+      v-model="showChilds"
+      position="bottom"
+      height="100%">
+
+      <div class="order-childs">
+        <div
+          v-for="item in childs"
+          :key="item.id"
+          :class="{'active': item.id === selected}"
+          class="order-childs-item"
+          @click="updateChild(item.id)">
+          <img
+            :src="item.src"
+            class="order-childs-item__header">
+          <div class="order-childs-item__name">{{ item.name }}</div>
+        </div>
+      </div>
+
+      <div class="order-childs-btns">
+        <div
+          class="order-childs-btns__add"
+          @click="goAddChild" >
+          添加小孩
+        </div>
+        <!-- <div class="order-childs-btns__sure">确定</div> -->
+      </div>
+    </popup>
+  </div>
+</template>
+
+<style lang="less">
+.order-childs {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  padding: 15px 15px 55px 15px;
+  overflow-y: scroll;
+}
+.order-childs-item {
+  width: 30%;
+  margin-bottom: 20px;
+}
+.order-childs-item.active {
+  transform: scale(1.05);
+}
+.order-childs .order-childs-item:not(:nth-child(3n)) {
+  margin-right: 5%;
+}
+.order-childs-item__header {
+  width: 100%;
+}
+.order-childs-item__name {
+  margin-top: 6px;
+}
+.order-childs-btns {
+  height: 50px;
+  line-height: 50px;
+  font-size: 18px;
+  position: fixed;
+  bottom:0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 9;
+  color: rgb(255, 255, 255);
+  display: flex;
+  text-align: center;
+  letter-spacing: 2px;
+}
+.order-childs-btns__add {
+  width: 100%;
+  background: linear-gradient(90deg, rgb(255, 94, 58), rgb(255, 149, 0));
+}
+.order-childs-btns__sure {
+  width: 50%;
+  background: linear-gradient(90deg, rgb(29, 98, 240), rgb(25, 213, 253));
+}
+
+</style>

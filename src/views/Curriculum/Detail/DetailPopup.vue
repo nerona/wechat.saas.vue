@@ -1,59 +1,10 @@
-<template>
-  <div class="curriculum-detail-order">
-    <!--  -->
-    <div class="curriculum-detail-order__card">
-      <div class="curriculum-detail-order-card__header">
-        <img src="http://placeholder.qiniudn.com/110x100/FF3B3B/fff">
-      </div>
-      <div class="curriculum-detail-order-card__content">
-        <div class="curriculum-detail-order-card-content__price">￥2880</div>
-        <div class="curriculum-detail-order-card-content__left">剩余50个名额</div>
-      </div>
-    </div>
-    <!--  -->
-    <div class="curriculum-detail-order__school">
-      <div class="curriculum-detail-order-school__title">
-        校区选择
-      </div>
-      <div class="curriculum-detail-order-school__list">
-        <div
-          v-for="item in school"
-          :key="item.id"
-          :class="{active: item.id == isSchoolActive}"
-          class="curriculum-detail-order-school-list__item"
-          @click="chooseSchool(item.id)">
-          {{ item.name }}
-        </div>
-      </div>
-    </div>
-    <!--  -->
-    <div class="curriculum-detail-order__date">
-      <div class="curriculum-detail-order-date__title">
-        上课时间
-      </div>
-      <div class="curriculum-detail-order-date__list">
-        <div
-          v-for="item in date"
-          :key="item.id"
-          :class="{active: item.id == isDateActive}"
-          class="curriculum-detail-order-date-list__item"
-          @click="chooseDate(item.id)">
-          <div>{{ item.range }}</div>
-          <div
-            v-for="(cycle, cindex) in item.cycle"
-            :key="cindex">{{ cycle }}</div>
-        </div>
-      </div>
-    </div>
-    <!--  -->
-    <div class="curriculum-detail-sure">
-      <x-button
-        type="primary"
-        @click.native="submit">确定</x-button>
-    </div>
-  </div>
-</template>
 <script>
+/**
+ * @overview 课程详情弹窗
+ *
+ * @author  lindongfnag
+ */
+
 import { XButton } from 'vux';
 
 export default {
@@ -130,6 +81,63 @@ export default {
   },
 };
 </script>
+
+<template>
+  <div class="curriculum-detail-order">
+    <!--  -->
+    <div class="curriculum-detail-order__card">
+      <div class="curriculum-detail-order-card__header">
+        <img src="http://placeholder.qiniudn.com/110x100/FF3B3B/fff">
+      </div>
+      <div class="curriculum-detail-order-card__content">
+        <div class="curriculum-detail-order-card-content__price">￥2880</div>
+        <div class="curriculum-detail-order-card-content__left">剩余50个名额</div>
+      </div>
+    </div>
+    <!--  -->
+    <div class="curriculum-detail-order__school">
+      <div class="curriculum-detail-order-school__title">
+        校区选择
+      </div>
+      <div class="curriculum-detail-order-school__list">
+        <div
+          v-for="item in school"
+          :key="item.id"
+          :class="{active: item.id == isSchoolActive}"
+          class="curriculum-detail-order-school-list__item"
+          @click="chooseSchool(item.id)">
+          {{ item.name }}
+        </div>
+      </div>
+    </div>
+    <!--  -->
+    <div class="curriculum-detail-order__date">
+      <div class="curriculum-detail-order-date__title">
+        上课时间
+      </div>
+      <div class="curriculum-detail-order-date__list">
+        <div
+          v-for="item in date"
+          :key="item.id"
+          :class="{active: item.id == isDateActive}"
+          class="curriculum-detail-order-date-list__item"
+          @click="chooseDate(item.id)">
+          <div>{{ item.range }}</div>
+          <div
+            v-for="(cycle, cindex) in item.cycle"
+            :key="cindex">{{ cycle }}</div>
+        </div>
+      </div>
+    </div>
+    <!--  -->
+    <div class="curriculum-detail-sure">
+      <x-button
+        type="primary"
+        @click.native="submit">确定</x-button>
+    </div>
+  </div>
+</template>
+
 <style lang="less">
 .curriculum-detail-order {
   height: 100%;

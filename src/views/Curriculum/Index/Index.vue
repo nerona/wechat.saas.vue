@@ -1,43 +1,8 @@
-<template>
-  <AppPageWithTabbar>
-    <div class="curriculum-index">
-      <x-address
-        v-model="addressValue"
-        :list="addressData"
-        :show.sync="showAddress"
-        style="display: none;"
-        title="选择地址"
-        @on-hide="closeAddress"
-      />
-      <!-- 位置信息 -->
-      <div class="curriculum-index__location">
-        <span
-          class="curriculum-index-location__content"
-          @click="openAddress">{{ location }}</span>
-      </div>
-
-      <!-- banner -->
-      <div
-        class="curriculum-index__banner"
-        @click="goActivity">
-        <img
-          :src="banner.src"
-          class="curriculum-index-banner__image"
-          alt="">
-      </div>
-
-      <!-- 课程列表 -->
-      <thumb-list :thumbs="thumbs" />
-
-    </div>
-  </AppPageWithTabbar>
-</template>
-
 <script>
 /**
  * @overview 课程中心 - 首页
  *
- * @author
+ * @author lindongfang
  */
 
 import {
@@ -113,6 +78,40 @@ export default {
   },
 };
 </script>
+<template>
+  <AppPageWithTabbar>
+    <div class="curriculum-index">
+      <x-address
+        v-model="addressValue"
+        :list="addressData"
+        :show.sync="showAddress"
+        style="display: none;"
+        title="选择地址"
+        @on-hide="closeAddress"
+      />
+      <!-- 位置信息 -->
+      <div class="curriculum-index__location">
+        <span
+          class="curriculum-index-location__content"
+          @click="openAddress">{{ location }}</span>
+      </div>
+
+      <!-- banner -->
+      <div
+        class="curriculum-index__banner"
+        @click="goActivity">
+        <img
+          :src="banner.src"
+          class="curriculum-index-banner__image"
+          alt="">
+      </div>
+
+      <!-- 课程列表 -->
+      <thumb-list :thumbs="thumbs" />
+
+    </div>
+  </AppPageWithTabbar>
+</template>
 
 <style lang="less">
 .curriculum-index {
