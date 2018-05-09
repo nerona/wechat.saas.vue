@@ -1,4 +1,4 @@
-import { ToastPlugin, LoadingPlugin, WechatPlugin } from 'vux';
+import { ToastPlugin, LoadingPlugin, WechatPlugin, TransferDom } from 'vux';
 import Vue from 'vue';
 import FastClick from 'fastclick';
 import router from '@/router';
@@ -16,6 +16,8 @@ Vue.use(pluginsRegister)
   .use(ToastPlugin, { position: 'middle' })
   .use(LoadingPlugin)
   .use(WechatPlugin);
+
+Vue.directive('transfer-dom', TransferDom);
 
 /* eslint-disable no-new */
 new Vue({
