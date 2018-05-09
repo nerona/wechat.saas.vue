@@ -114,31 +114,31 @@ export default {
 </template>
 
 <style lang="less">
-.curriculum-index {
-
-}
+.curriculum-index {}
 .curriculum-index__location {
-  font-size: 14px;
-  padding: 4px 0;
+  font-size: px2vw(28);
+  height: px2vw(60);
   position: relative;
   background-color: #fff;
 }
 .curriculum-index-location__content {
   position: relative;
-  padding-right: 20px;
-  padding-left: 20px;
+  padding-right: px2vw(50);
+  padding-left: px2vw(40);
+  display: inline-block;
+  line-height: px2vw(60);
 }
 .curriculum-index-location__content::after {
   content: '';
   display: block;
   width: 0;
   height: 0;
-  border-width: 8px 8px;
+  border-width: px2vw(16) px2vw(16);
   border-style: solid;
   border-color: #999 transparent transparent transparent;
   position: absolute;
   right: 0px;
-  top: 6px;
+  top: px2vw(24);
 }
 .curriculum-index__banner {}
 .curriculum-index-banner__image {

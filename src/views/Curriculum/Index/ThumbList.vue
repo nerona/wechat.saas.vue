@@ -61,19 +61,23 @@
 
 <style lang="less">
 .curriculum-list {
-  margin-top: 2vh;
+  margin-top: px2vw(30);
 }
 .curriculum-item {
   background-color: #fff;
   display: flex;
-  padding: 10px 8px;
+  padding: px2vw(20) px2vw(16);
   overflow: hidden;
-  font-size: 14px;
-  margin-bottom: 1vh;
+  font-size: px2vw(28);
+  margin-bottom: px2vw(16);
 }
 .curriculum-item__thumb {
-  margin-right: 12px;
+  width: 33%;
+  margin-right: 2%;
   position: relative;
+}
+.curriculum-item__thumb > img {
+  width: 100%;
 }
 .curriculum-item__thumb--full {
   position: absolute;
@@ -81,10 +85,10 @@
   right: 0;
   color: red;
   background-color: rgba(0,0,0,.3);
-  font-size: 16px;
+  font-size: px2vw(32);
   font-weight: bold;
   letter-spacing: 2px;
-  padding: 2px 6px;
+  padding: px2vw(4) px2vw(14);
 }
 .curriculum-item__desc {
   flex: 1;
@@ -93,7 +97,7 @@
   justify-content: space-between;
 }
 .curriculum-item-desc-top__title {
-  font-size: 16px;
+  font-size: px2vw(32);
   font-weight: bold;
 }
 .curriculum-item-desc-top__content {
@@ -103,7 +107,7 @@
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  margin-top: 3px;
+  margin-top: px2vw(6);
 }
 .curriculum-item-desc-top__time {
   color: #999;
@@ -113,9 +117,7 @@
   justify-content: space-between;
   font-weight: bold;
 }
-.curriculum-item-desc-footer__price {
-
-}
+.curriculum-item-desc-footer__price {}
 .curriculum-item-desc-footer__left {
   color: red;
 }

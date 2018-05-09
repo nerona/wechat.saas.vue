@@ -77,12 +77,12 @@ export default {
   display: flex;
   flex-wrap: wrap;
   text-align: center;
-  padding: 15px 15px 55px 15px;
+  padding: px2vw(30) px2vw(30) px2vw(110) px2vw(30);
   overflow-y: scroll;
 }
 .order-childs-item {
   width: 30%;
-  margin-bottom: 20px;
+  margin-bottom: px2vw(40);
 }
 .order-childs-item.active {
   transform: scale(1.05);
@@ -94,12 +94,12 @@ export default {
   width: 100%;
 }
 .order-childs-item__name {
-  margin-top: 6px;
+  margin-top: px2vw(12);
 }
 .order-childs-btns {
-  height: 50px;
-  line-height: 50px;
-  font-size: 18px;
+  height: px2vw(100);
+  line-height: px2vw(100);
+  font-size: px2vw(36);
   position: fixed;
   bottom:0;
   left: 0;

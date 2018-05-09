@@ -160,45 +160,45 @@ export default {
 }
 .curriculum-detail__info {
   background-color: #fff;
-  padding: 15px 15px;
-  font-size: 16px;
+  padding: px2vw(30) px2vw(28);
+  font-size: px2vw(32);
   overflow: hidden;
 }
 .curriculum-detail-info__name {
-  font-size: 16px;
+  font-size: px2vw(32);
   letter-spacing: 1px;
   font-weight: bold;
 }
 .curriculum-detail-info__desc {
-  font-size: 15px;
-  line-height: 22px;
-  margin-top: 3px;
+  font-size: px2vw(28);
+  line-height: px2vw(44);
+  margin-top: px2vw(8);
   text-align: justify;
   word-break: break-all;
 }
 .curriculum-detail-info__price {
-  margin-top: 8px;
+  margin-top: px2vw(16);
   color: red;
-  font-size: 18px;
+  font-size: px2vw(36);
 }
 .curriculum-detail-info__price--old {
-  margin-right: 10px;
+  margin-right: px2vw(22);
   text-decoration:line-through
 }
 .curriculum-detail__detail {
   background-color: #fff;
-  margin-top: 8px;
-  padding: 15px 15px;
-  font-size: 14px;
+  margin-top: px2vw(16);
+  padding: px2vw(30) px2vw(30);
+  font-size: px2vw(28);
   overflow: hidden;
 }
 .curriculum-detail-detail__title {
-  font-size: 16px;
+  font-size: px2vw(32);
   letter-spacing: 1px;
   font-weight: bold;
 }
 .curriculum-detail-detail__content {
-  margin-top: 5px;
+  margin-top: px2vw(10);
   text-align: justify;
 }
 .curriculum-detail__btns {

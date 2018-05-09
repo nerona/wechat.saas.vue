@@ -250,27 +250,25 @@ export default {
 </template>
 
 <style lang="less">
-@group-title-margin-top: 12px;
-.curriculum-order {
-
-}
+@group-title-margin-top: px2vw(24);
+.curriculum-order {}
 .curriculum-order-block {
   width: 100%;
-  height: 12px;
+  height: px2vw(24);
   background: transparent;
 }
 .curriculum-order-info {
-  margin-top: 20px;
+  margin-top: px2vw(40);
   background-color: #fff;
   display: flex;
-  padding: 12px
+  padding: px2vw(24)
 }
 .curriculum-order-info__thumb {
-  margin-right: 12px;
+  margin-right: px2vw(24);
 }
 .curriculum-order-info__desc {
   flex: 1;
-  font-size: 16px;
+  font-size: px2vw(32);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -289,8 +287,8 @@ export default {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 50px;
-  line-height: 50px;
+  height: px2vw(100);
+  line-height: px2vw(100);
   display: flex;
   justify-content: flex-end;
   background-color: #fff;
@@ -300,6 +298,6 @@ export default {
   text-align: center;
   width: 30%;
   letter-spacing: 1px;
-  margin-left: 15px;
+  margin-left: px2vw(30);
 }
 </style>

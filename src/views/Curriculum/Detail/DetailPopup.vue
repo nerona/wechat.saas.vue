@@ -143,33 +143,36 @@ export default {
   height: 100%;
   overflow-y: scroll;
   background-color: #fff;
-  font-size: 16px;
-  padding-bottom: 50px;
+  font-size: px2vw(32);
+  padding-bottom: px2vw(100);
 }
 .curriculum-detail-order__card {
-  padding: 12px 16px;
+  padding: px2vw(24) px2vw(32);
   display: flex;
 }
 .curriculum-detail-order-card__header {
-  margin-right: 20px;
+  margin-right: px2vw(40);
+}
+.curriculum-detail-order-card__header > img {
+  width: 100%;
 }
 .curriculum-detail-order-card__content {
   flex: 1;
 }
 .curriculum-detail-order-card-content__price {
-  font-size: 24px;
+  font-size: px2vw(48);
   color: red;
 }
 .curriculum-detail-order-card-content__left {
-  margin-left: 5px;
-  font-size: 15px;
+  margin-left: px2vw(10);
+  font-size: px2vw(30);
   color: #FFEF7D;
   letter-spacing: 1px;
 }
 .curriculum-detail-order__school,
 .curriculum-detail-order__date {
-  padding: 0 16px;
-  margin-top: 4px;
+  padding: 0 px2vw(32);
+  margin-top: px2vw(8);
 }
 .curriculum-detail-order-school__title,
 .curriculum-detail-order-date__title {
@@ -179,25 +182,25 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  margin-top: 8px;
-  font-size: 15px;
+  margin-top: px2vw(16);
+  font-size: px2vw(30);
 }
 .curriculum-detail-order-school-list__item {
   min-width: 47%;
-  line-height: 32px;
-  height: 32px;
+  line-height: px2vw(64);
+  height: px2vw(64);
   border: 1px solid #ccc;
   text-align: center;
   letter-spacing: 1px;
-  margin-bottom: 10px;
+  margin-bottom: px2vw(20);
 }
 .curriculum-detail-order-date__list{
-  margin-top: 8px;
+  margin-top: px2vw(16);
 }
 .curriculum-detail-order-date-list__item {
   border: 1px solid #ccc;
-  padding: 8px 16px;
-  margin-bottom: 15px;
+  padding: px2vw(16) px2vw(32);
+  margin-bottom: px2vw(30);
 }
 .curriculum-detail-order .active {
   border-color: red;

@@ -86,33 +86,33 @@ export default {
 
 <style lang="less">
 .order-vouchers {
-  padding: 20px 10px;
+  padding: px2vw(40) px2vw(20);
 }
 .order-vouchers-item {
   background-color: #fff;
-  margin-bottom: 12px;
+  margin-bottom: px2vw(24);
   border-radius: 6px;
   border: 1px solid #ccc;
-  font-size: 15px;
+  font-size: px2vw(30);
 }
 .order-vouchers-item--active {
   border-color: red;
 }
 .order-vouchers-item__status {
-  line-height: 30px;
+  line-height: px2vw(60);
   text-align: right;
-  padding:0 10px;
+  padding:0 px2vw(20);
   letter-spacing: 1px;
   color: #ccc;
 }
 .order-vouchers-item__content {
-  padding:0 10px;
+  padding:0 px2vw(20);
   display: flex;
 }
 .order-vouchers-item-content__left {
-  font-size: 32px;
+  font-size: px2vw(64);
   font-weight: bold;
-  padding:  20px 0;
+  padding:  px2vw(40) 0;
   width: 32%;
 }
 .order-vouchers-item-content__right {
@@ -123,7 +123,7 @@ export default {
   text-align: left;
 }
 .order-vouchers-item__rule {
-  padding: 8px 10px;
+  padding: px2vw(16) px2vw(20);
   text-align: justify;
   overflow: hidden;
   max-height: 0;
