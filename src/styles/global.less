@@ -35,3 +35,16 @@ body {
 img {
   display: block;
 }
+
+::placeholder {
+  color: @font-size-third-color;
+  font-weight: 300;
+}
+
+button.weui-btn {
+  color: #000;
+
+  &::after {
+    border: none;
+  }
+}
