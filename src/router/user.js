@@ -14,6 +14,9 @@ export default [
     path: '/user/index',
     name: 'UserIndex',
     component: views.UserIndex,
+    meta: {
+      title: '个人中心',
+    },
   },
   {
     path: '/user/order/:type',

@@ -8,7 +8,9 @@ import user from './user';
 
 Vue.use(Router);
 
-export default new Router({
+const STATIC_TITLE = '爱考拉';
+
+const router = new Router({
   mode: 'history',
 
   routes: [
@@ -32,3 +34,15 @@ export default new Router({
     ...user,
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  } else {
+    document.title = STATIC_TITLE;
+  }
+
+  next();
+});
+
+export default router;
