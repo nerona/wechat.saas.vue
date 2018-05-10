@@ -49,7 +49,7 @@ export default {
     // 独立设置标签宽度
     labelWidth: {
       type: String,
-      default: '0',
+      default: '4em',
     },
   },
 
