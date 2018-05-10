@@ -23,4 +23,7 @@ export { default as LearnIndex } from './Learn';
 
 /* 用户中心 */
 
-export { default as UserIndex } from './User';
+export { default as UserIndex } from './User/Index/Index';
+export { default as UserEdit } from './User/Edit';
+export { default as UserActivity } from './User/ActivityRecord';
+export { default as UserOrder } from './User/Order/Order';

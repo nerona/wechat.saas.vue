@@ -15,4 +15,19 @@ export default [
     name: 'UserIndex',
     component: views.UserIndex,
   },
+  {
+    path: '/user/order/:type',
+    name: 'UserOrder',
+    component: views.UserOrder,
+  },
+  {
+    path: '/user/edit',
+    name: 'UserEdit',
+    component: views.UserEdit,
+  },
+  {
+    path: '/user/activity-record',
+    name: 'UserActivity',
+    component: views.UserActivity,
+  },
 ];
