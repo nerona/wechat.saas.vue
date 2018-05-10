@@ -23,6 +23,9 @@ const router = new Router({
       path: '/sign-in',
       name: 'SignIn',
       component: views.SignIn,
+      meta: {
+        title: '登录',
+      },
     },
 
     ...activity,
