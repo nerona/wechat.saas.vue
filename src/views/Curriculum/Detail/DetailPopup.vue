@@ -27,6 +27,7 @@ export default {
         {
           id: 1,
           range: '2018-05-05至2018-05-06',
+          full: true,
           cycle: [
             '星期一 16:00-16:40', '星期三 16:00-16:40', '星期五 16:00-16:40',
           ],
@@ -34,6 +35,7 @@ export default {
         {
           id: 2,
           range: '2018-05-05至2018-05-06',
+          full: false,
           cycle: [
             '星期一 16:00-16:40', '星期三 16:00-16:40', '星期五 16:00-16:40',
           ],
@@ -41,6 +43,7 @@ export default {
         {
           id: 3,
           range: '2018-05-05至2018-05-06',
+          full: false,
           cycle: [
             '星期一 16:00-16:40', '星期三 16:00-16:40', '星期五 16:00-16:40',
           ],
@@ -49,6 +52,7 @@ export default {
     };
   },
   methods: {
+    // 选择校区
     chooseSchool(index) {
       if (this.isSchoolActive !== index) {
         this.isSchoolActive = index;
@@ -56,13 +60,16 @@ export default {
         this.isSchoolActive = null;
       }
     },
-    chooseDate(index) {
-      if (this.isDateActive !== index) {
-        this.isDateActive = index;
+    // 选择上课时间
+    chooseDate(item) {
+      if (item.full) { return; }
+      if (this.isDateActive !== item.id) {
+        this.isDateActive = item.id;
       } else {
         this.isDateActive = null;
       }
     },
+    // 提交
     submit() {
       const query = {};
       if (this.isSchoolActive === null) {
@@ -119,13 +126,17 @@ export default {
         <div
           v-for="item in date"
           :key="item.id"
-          :class="{active: item.id == isDateActive}"
+          :class="{'active': item.id == isDateActive,
+                   'curriculum-detail-order-date-list__item--full': item.full}"
           class="curriculum-detail-order-date-list__item"
-          @click="chooseDate(item.id)">
+          @click="chooseDate(item)">
           <div>{{ item.range }}</div>
           <div
             v-for="(cycle, cindex) in item.cycle"
             :key="cindex">{{ cycle }}</div>
+          <div
+            v-if="item.full"
+            class="curriculum-detail-order-date-list-item__full">爆满</div>
         </div>
       </div>
     </div>
@@ -143,7 +154,7 @@ export default {
   height: 100%;
   overflow-y: scroll;
   background-color: #fff;
-  font-size: px2vw(32);
+  font-size: px2vw(@font-size-big);
   padding-bottom: px2vw(100);
 }
 .curriculum-detail-order__card {
@@ -151,7 +162,8 @@ export default {
   display: flex;
 }
 .curriculum-detail-order-card__header {
-  margin-right: px2vw(40);
+  width: 32%;
+  margin-right: 4%;
 }
 .curriculum-detail-order-card__header > img {
   width: 100%;
@@ -161,12 +173,12 @@ export default {
 }
 .curriculum-detail-order-card-content__price {
   font-size: px2vw(48);
-  color: red;
+  color: @font-size-error-color;
 }
 .curriculum-detail-order-card-content__left {
   margin-left: px2vw(10);
-  font-size: px2vw(30);
-  color: #FFEF7D;
+  font-size: px2vw(@font-size-big);
+  color: @button-background-color;
   letter-spacing: 1px;
 }
 .curriculum-detail-order__school,
@@ -183,12 +195,12 @@ export default {
   flex-wrap: wrap;
   justify-content: space-between;
   margin-top: px2vw(16);
-  font-size: px2vw(30);
+  font-size: px2vw(@font-size-big);
 }
 .curriculum-detail-order-school-list__item {
   min-width: 47%;
-  line-height: px2vw(64);
-  height: px2vw(64);
+  line-height: px2vw(66);
+  height: px2vw(66);
   border: 1px solid #ccc;
   text-align: center;
   letter-spacing: 1px;
@@ -198,14 +210,30 @@ export default {
   margin-top: px2vw(16);
 }
 .curriculum-detail-order-date-list__item {
-  border: 1px solid #ccc;
+  border: 1px solid #333;
   padding: px2vw(16) px2vw(32);
   margin-bottom: px2vw(30);
+  position: relative;
+}
+.curriculum-detail-order-date-list__item--full {
+  color: @font-size-third-color;
+  border-color: @font-size-third-color;
+}
+.curriculum-detail-order-date-list-item__full {
+  position: absolute;
+  border: 2px solid @font-size-error-color;
+  color: @font-size-error-color;
+  font-size: px2vw(@font-size-big);
+  font-weight: bold;
+  padding: 0 px2vw(16);
+  top: px2vw(36);
+  right: px2vw(30);
+  letter-spacing: 1px;
+  transform: rotateZ(30deg);
 }
 .curriculum-detail-order .active {
-  border-color: red;
+  border-color: @font-size-error-color;
 }
-
 .curriculum-detail-sure {
   width: 100%;
   position: fixed;

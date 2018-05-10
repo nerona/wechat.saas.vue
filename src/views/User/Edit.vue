@@ -31,6 +31,7 @@ export default {
   },
   methods: {
     onChange(val) {
+      // eslint-disable-next-line
       console.log('val change', val);
     },
     submit() {

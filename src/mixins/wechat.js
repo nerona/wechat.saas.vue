@@ -47,12 +47,14 @@ export default {
         signType: config.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
         paySign: config.paySign, // 支付签名
         success(response) {
+          // eslint-disable-next-line
           console.log(response);
           this.$vux.toast.show('支付成功');
           this.$rotuer.push('/curriculum/index');
         },
         cancel(re) {
           console.log(re);
+          // eslint-disable-next-line
           this.$vux.toast.show({
             text: '支付已取消',
             type: 'cancel',
@@ -126,6 +128,7 @@ export default {
             const longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
             const speed = res.speed; // 速度，以米/每秒计
             const accuracy = res.accuracy; // 位置精度
+            // eslint-disable-next-line
             console.log(latitude, longitude, speed, accuracy);
             const lnglatXY = [latitude, longitude]; // 已知点坐标
             this.$_geocoder(lnglatXY);
@@ -140,6 +143,7 @@ export default {
      *
     */
     $_geocoder(lnglatXY) {
+      // eslint-disable-next-line
       console.log(lnglatXY);
       // const geocoder = new AMap.Geocoder({
       //   radius: 1000,
@@ -148,7 +152,6 @@ export default {
       // geocoder.getAddress(lnglatXY, (status, result) => {
       //   if (status === 'complete' && result.info === 'OK') {
       //     const address = result.regeocode.formattedAddress; // 返回地址描述
-      //     alert(address);
       //   }
       // });
     },
@@ -168,9 +171,9 @@ export default {
      *
     */
     $_wechatError() {
-      this.$wechat.error((res) => {
-        alert(`调用微信jsapi返回的状态:${res.errMsg}`);
-      });
+      // this.$wechat.error((res) => {
+        // `调用微信jsapi返回的状态:${res.errMsg}`;
+      // });
     },
   },
 };

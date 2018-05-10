@@ -36,7 +36,7 @@ export default {
           id: 1,
           thumb: 'http://placeholder.qiniudn.com/120x120/caac23/fff',
           title: '进阶课程1',
-          desc: '课程简介课程简简课程简介课程简介程程',
+          desc: '课程简介课程简简课程简课程',
           status: 0,
           price: 2990,
           left: 10,
@@ -61,7 +61,6 @@ export default {
   },
   methods: {
     goActivity() {
-      alert('我要跳到活动页面咯');
       // this.$router.push(`/action/${this.banner.id}`)
     },
     // 打开位置选择
@@ -116,8 +115,7 @@ export default {
 <style lang="less">
 .curriculum-index {}
 .curriculum-index__location {
-  font-size: px2vw(28);
-  height: px2vw(60);
+  font-size: px2vw(@font-size-big);
   position: relative;
   background-color: #fff;
 }
@@ -126,7 +124,7 @@ export default {
   padding-right: px2vw(50);
   padding-left: px2vw(40);
   display: inline-block;
-  line-height: px2vw(60);
+  line-height: px2vw(64);
 }
 .curriculum-index-location__content::after {
   content: '';

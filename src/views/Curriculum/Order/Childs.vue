@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     goAddChild() {
-      alert('go add child');
+
     },
     updateChild(id) {
       this.selected = id;

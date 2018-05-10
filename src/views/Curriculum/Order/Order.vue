@@ -71,7 +71,6 @@ export default {
   methods: {
     // 添加小孩
     addChild() {
-      alert('go add child');
       // this.$router.push('/learn/addchild')
     },
     // 跳出选择小孩弹窗
@@ -142,7 +141,6 @@ export default {
       //     });
       //   }
       // }).catch((error) => {
-      //   console.error(error);
       //   this.$vux.loading.hide();
       //   this.$vux.toast.show({
       //     text: '网络错误',

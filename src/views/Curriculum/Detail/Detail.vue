@@ -26,6 +26,10 @@ export default {
       info: {
         id: 1,
         type: 0, // 0购买-1试听
+        curriculum_name: '暑期课程-Phonics',
+        curriculum_desc: 'Phonics1-进阶Phonics1-进阶',
+        price_old: 2880,
+        price_new: 100,
         swiperList: [{
           img: 'http://placeholder.qiniudn.com/750x350/FF3B3B/ffffff',
           title: '送你一朵fua',
@@ -41,8 +45,6 @@ export default {
     };
   },
   created() {
-      // 获取id
-    console.log(this.$route.params.id);
   },
   methods: {
     // 打开购买详情
@@ -61,7 +63,7 @@ export default {
     },
     // 前往活动页
     goActivity() {
-      alert('我要去活动页面了哦');
+
     },
   },
 };
@@ -75,19 +77,19 @@ export default {
     <!-- 课程信息 -->
     <div class="curriculum-detail__info">
       <div class="curriculum-detail-info__name">
-        暑期课程-Phonics
+        {{ info.curriculum_name }}
       </div>
       <div class="curriculum-detail-info__desc">
-        Phonics1-进阶Phonics1-进阶Phonics1-进阶Phonics1-进阶
+        {{ info.curriculum_desc }}
       </div>
       <div class="curriculum-detail-info__price">
-        <span class="curriculum-detail-info__price--old">￥2990元</span>
+        <span class="curriculum-detail-info__price--old">￥{{ info.price_old }}元</span>
         <span
           v-if="info.type == 1"
           class="curriculum-detail-info__price--null">￥0元</span>
         <span
           v-if="info.type == 0"
-          class="curriculum-detail-info__price--new">￥100元</span>
+          class="curriculum-detail-info__price--new">￥{{ info.price_new }}元</span>
       </div>
     </div>
 
@@ -155,22 +157,23 @@ export default {
 </template>
 
 <style lang="less">
+@button-global-height: px2vw(@button-default-height);
+@button-global-font-size: px2vw(@font-size-big);
+
 .curriculum-detail {
-    color: #585859;
+  color: @font-size-default-color;
 }
 .curriculum-detail__info {
   background-color: #fff;
   padding: px2vw(30) px2vw(28);
-  font-size: px2vw(32);
+  font-size: px2vw(@font-size-big);
   overflow: hidden;
 }
 .curriculum-detail-info__name {
-  font-size: px2vw(32);
+  font-size: px2vw(@font-size-bigger);
   letter-spacing: 1px;
-  font-weight: bold;
 }
 .curriculum-detail-info__desc {
-  font-size: px2vw(28);
   line-height: px2vw(44);
   margin-top: px2vw(8);
   text-align: justify;
@@ -178,24 +181,25 @@ export default {
 }
 .curriculum-detail-info__price {
   margin-top: px2vw(16);
-  color: red;
-  font-size: px2vw(36);
+  font-size: px2vw(@font-size-bigger);
 }
 .curriculum-detail-info__price--old {
-  margin-right: px2vw(22);
+  margin-right: px2vw(30);
   text-decoration:line-through
+}
+.curriculum-detail-info__price--new {
+  color: @font-size-error-color;
 }
 .curriculum-detail__detail {
   background-color: #fff;
-  margin-top: px2vw(16);
+  margin-top: px2vw(20);
   padding: px2vw(30) px2vw(30);
-  font-size: px2vw(28);
+  font-size: px2vw(@font-size-big);
   overflow: hidden;
 }
 .curriculum-detail-detail__title {
-  font-size: px2vw(32);
+  font-size: px2vw(@font-size-bigger);
   letter-spacing: 1px;
-  font-weight: bold;
 }
 .curriculum-detail-detail__content {
   margin-top: px2vw(10);
