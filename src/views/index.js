@@ -8,8 +8,9 @@ export { default as SignIn } from './SignIn';
 
 /* 活动页 */
 
-export { default as Activity } from './Activity';
-export { default as ActivityLearn } from './Activity/ActivityLearn';
+export { default as ActivityLearnIndex } from './Activity/Learn/Index';
+export { default as ActivityLearnOver } from './Activity/Learn/Gameover';
+export { default as ActivityLearnShare } from './Activity/Learn/Share';
 
 /* 课程中心 */
 
