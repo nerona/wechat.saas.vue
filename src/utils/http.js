@@ -175,9 +175,7 @@ class Http {
   }
 }
 
-const productionURL = location.host === 'oa-v2-admin.caihonggou.com'
-  ? 'https://oa-v2-admin-api.caihonggou.com'
-  : 'https://oa-v2-admin-api.aikaola.com';
+const productionURL = 'https://wechat.caihonggou.com';
 
 const apiRoot = (process.env.NODE_ENV === 'production')
   ? productionURL : '';

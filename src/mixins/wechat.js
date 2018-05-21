@@ -53,8 +53,8 @@ export default {
           this.$rotuer.push('/curriculum/index');
         },
         cancel(re) {
-          console.log(re);
           // eslint-disable-next-line
+          console.log(re);
           this.$vux.toast.show({
             text: '支付已取消',
             type: 'cancel',

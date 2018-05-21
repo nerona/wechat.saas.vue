@@ -44,6 +44,8 @@ export default {
      * @param { Object | string } error
      */
     $_formMixin_alertError(error) {
+      this.$_checkSession(error);
+
       const message = typeof error === 'object'
         ? this.$_resolveError(error) : error;
 
@@ -71,6 +73,15 @@ export default {
         ? errors[key][0] : errors[key];
 
       return message;
+    },
+
+    // 验证是否登录有效，无效跳转登录页
+    $_checkSession({ status }) {
+      if (status === 401) {
+        const from = this.$route.fullpath;
+
+        this.$router.push(`/sign-in?from=${from}`);
+      }
     },
   },
 };

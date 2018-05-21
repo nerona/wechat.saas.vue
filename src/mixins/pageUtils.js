@@ -21,6 +21,15 @@ export default {
     $_pageMixin_hideLoading() {
       this.$vux.loading.hide();
     },
+
+    // 验证是否登录有效，无效跳转登录页
+    $_pageMixin_checkSession({ status }) {
+      if (status === 401) {
+        const from = this.$route.fullpath;
+
+        this.$router.push(`/sign-in?from=${from}`);
+      }
+    },
   },
 
   created() {

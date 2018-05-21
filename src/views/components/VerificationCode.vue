@@ -95,6 +95,7 @@ export default {
     keyboard="number"
     title="验证码"
     placeholder="请输入验证码"
+    required
     @input="code => $emit('input', code)"
   >
     <XButton

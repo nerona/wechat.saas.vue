@@ -46,19 +46,31 @@ export default {
 
     // 提交数据的后端接口地址
     url: '/bind/bind_phone',
+
+    submitLoading: false,
   }),
+
+  computed: {
+    isFormValid() {
+      return this.data.mobile.match(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/)
+        && this.data.code;
+    },
+  },
 
   methods: {
     directRoute() {
-      const to = this.userInfo.students.length
-        ? this.from
-        : `/child-binding?from=${this.from}`;
+      const to = this.$route.params.from || '/curriculum';
 
-      this.toResultPage({
-        title: '绑定结果',
-        message: '绑定成功，稍后跳转',
-        to,
-      });
+      this.$router.replace(to);
+    },
+
+    v_submit() {
+      this.submitLoading = true;
+
+      this.$http.post('/bind/bind_phone', { ...this.data })
+        .then(this.directRoute)
+        .catch(this.$_formMixin_alertError)
+        .finally(() => { this.submitLoading = false; });
     },
   },
 };
@@ -78,12 +90,12 @@ export default {
       gutter="15px"
     >
       <XInput
-        :min="11"
-        :max="11"
         v-model="data.mobile"
+        is-type="china-mobile"
         title="+86"
         placeholder="请输入手机号"
         keyboard="number"
+        required
       />
       <VerificationCode
         v-model="data.code"
@@ -91,6 +103,7 @@ export default {
       />
     </Group>
     <XButton
+      :disabled="!isFormValid"
       :show-loading="submitLoading"
       class="signin__confirm"
       type="primary"
