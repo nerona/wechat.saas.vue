@@ -14,15 +14,24 @@ export default [
     path: '/curriculum/index',
     name: 'CurriculumIndex',
     component: views.CurriculumIndex,
+    meta: {
+      title: '课程中心',
+    },
   },
   {
     path: '/curriculum/detail/:id',
     name: 'CurriculumDetail',
     component: views.CurriculumDetail,
+    meta: {
+      title: '课程详情',
+    },
   },
   {
     path: '/curriculum/order',
     name: 'CurriculumOrder',
     component: views.CurriculumOrder,
+    meta: {
+      title: '订单详情',
+    },
   },
 ];

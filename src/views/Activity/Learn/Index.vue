@@ -30,11 +30,34 @@ export default {
       phone: '',
       showCode: false,
       titleNumber: '3000',
-      activityLimit: '20000',
-      activityRange: '6月1日至8月31日',
+      activityLimit: '-',
+      activityRange: '--月--日',
+      prizeId: 1,
+      source: 3,
+      activityId: 1,
     };
   },
+  created() {
+    this.source = this.$route.query.source || 3;
+
+    this.getActivity();
+    this.visit();
+  },
   methods: {
+    // 活动详情
+    getActivity() {
+      this.$http.get(`/activity/${this.activityId}`).then((res) => {
+        if (res.progress === '已结束') {
+          this.$router.push('/activity/learn/over');
+        }
+        this.prizeId = res.activity_prize.id;
+        this.activityLimit = res.user_limit;
+        this.activityRange = `${res.start_at.split(' ')[0].split('-')[1]}月${
+           res.start_at.split(' ')[0].split('-')[2]}日${
+           res.end_at.split(' ')[0].split('-')[1]}月${
+           res.end_at.split(' ')[0].split('-')[2]}日`;
+      });
+    },
     toCurriculum() {
       this.$router.push('/curriculum/index');
     },
@@ -42,6 +65,14 @@ export default {
     openCode(val) {
       this.showCode = true;
       this.phone = val;
+    },
+    closeCode() {
+      this.showCode = false;
+    },
+    // 上传统计次数
+    visit() {
+      // eslint-disable-next-line
+      this.$http.post(`/activity/${this.activityId}/visit`, { source: this.source }).then((res) => {});
     },
   },
 };
@@ -72,23 +103,30 @@ export default {
         家门口的美国小学英语
       </div>
     </div>
+
     <!-- range -->
     <div class="learn-index-range">
       <div class="learn-index-range__all">[全国仅限{{ activityLimit }}名]</div>
       <div class="learn-index-range__time">活动时间: {{ activityRange }}</div>
     </div>
+
     <!-- advance -->
     <div class="learn-index-advance">
       <img src="./../../../assets/activity/learn/l11.png">
       <img src="./../../../assets/activity/learn/l12.png">
       <img src="./../../../assets/activity/learn/l13.png">
     </div>
+
     <!-- curriculum -->
     <curriculum
+      :prize-id="prizeId"
+      :activity-id="activityId"
       class="learn-index-board"
       @openCode="openCode"/>
+
     <!-- rule -->
     <rule class="learn-index-board"/>
+
     <!-- class -->
     <class class="learn-index-board"/>
 
@@ -118,6 +156,7 @@ export default {
         <validate-code
           v-if="showCode"
           :phone="phone"
+          @closeCode="closeCode"
         />
       </popup>
     </div>

@@ -67,7 +67,9 @@
             电话: (0592) 7812964
           </div>
           <div class="learn-index-class-citys-school-item_2">
-            <img src="./../../../assets/activity/learn/l4.png">
+            <a href="tel:0592-5995993">
+              <img src="./../../../assets/activity/learn/l4.png">
+            </a>
           </div>
         </div>
       </div>
@@ -86,7 +88,9 @@
             电话: (0592) 7812964
           </div>
           <div class="learn-index-class-citys-school-item_2">
-            <img src="./../../../assets/activity/learn/l4.png">
+            <a href="tel:0592-5995993">
+              <img src="./../../../assets/activity/learn/l4.png">
+            </a>
           </div>
         </div>
       </div>
@@ -108,7 +112,9 @@
             电话: (0592) 7812964
           </div>
           <div class="learn-index-class-citys-school-item_2">
-            <img src="./../../../assets/activity/learn/l4.png">
+            <a href="tel:0592-5995993">
+              <img src="./../../../assets/activity/learn/l4.png">
+            </a>
           </div>
         </div>
       </div>
@@ -136,7 +142,9 @@
             电话: (0592) 7812964
           </div>
           <div class="learn-index-class-citys-school-item_2">
-            <img src="./../../../assets/activity/learn/l4.png">
+            <a href="tel:0592-5995993">
+              <img src="./../../../assets/activity/learn/l4.png">
+            </a>
           </div>
         </div>
       </div>
@@ -155,7 +163,9 @@
             电话: (0592) 7812964
           </div>
           <div class="learn-index-class-citys-school-item_2">
-            <img src="./../../../assets/activity/learn/l4.png">
+            <a href="tel:0592-5995993">
+              <img src="./../../../assets/activity/learn/l4.png">
+            </a>
           </div>
         </div>
       </div>
@@ -179,10 +189,6 @@
   text-align: justify;
   font-size: px2vw(30);
   position: relative;
-
-  a {
-    -webkit-touch-callout: default;
-  }
 
   &::before,
   &::after {
@@ -293,10 +299,21 @@
   flex: 1;
 }
 .learn-index-class-citys-school-item_2 {
+  position: relative;
+  width: px2vw(36);
+  height: px2vw(36);
+  margin-left: px2vw(20);
+  a {
+    -webkit-touch-callout: default;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
   img {
     width: px2vw(36);
     height: px2vw(36);
-    margin-left: px2vw(20);
   }
 }
 

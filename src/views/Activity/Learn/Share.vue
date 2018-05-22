@@ -5,18 +5,33 @@
  * @author lindongfang
  */
 // 二维码
+import { wechat } from '@/mixins';
 import qrcode from './../../../assets/activity/learn/l16.png';
 import Qrcode from './Qrcode';
 
 export default {
   name: 'ActivityShare',
   components: { Qrcode },
+  mixins: [wechat],
   data() {
     return {
       qrcode,
+      title: '',
+      link: '',
+      imgUrl: '',
+      desc: '',
     };
   },
+  created() {
+    // this.$_wechatConfig();
+    this.$wechat.ready(() => {
+    // this.$_wechatShareTimeline(this.title, this.link, this.imgUrl);
+    // this.$_wechatShareAppMessage(this.title, this.link, this.imgUrl, this.desc) ;
+    });
+  },
+  methods: {
 
+  },
 };
 </script>
 

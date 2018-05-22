@@ -23,7 +23,6 @@ export default {
         this.$vux.loading.hide();
         if (response.status === 200 && response.data.status === 1) {
           this.$wechat.config(JSON.parse(response.data.data));
-          this.$wechat.ready(() => {});
         } else {
           this.$vux.toast.show({
             text: '微信参数错误',

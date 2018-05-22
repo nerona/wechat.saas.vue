@@ -52,24 +52,20 @@ export default {
     },
     code4(val) {
       if (val !== '' && val !== null) {
-        this.$refs.code5.focus();
-      }
-    },
-    code5(val) {
-      if (val !== '' && val !== null) {
-        this.$refs.code6.focus();
-      }
-    },
-    code6(val) {
-      if (val !== '' && val !== null) {
         this.active = true;
       }
     },
   },
   mounted() {
     this.$refs.code1.focus();
+
+    this.sendCode();
   },
   methods: {
+    sendCode() {
+      // eslint-disable-next-line
+      this.$http.post('/bind/send_code', { mobile: this.phone}).then((res) => {});
+    },
     // 倒计时结束
     finish() {
       this.show = false;
@@ -79,11 +75,32 @@ export default {
     getCode() {
       this.time = 60;
       this.show = true;
+      this.sendCode();
     },
 
     // 提交
     submit() {
+      const code = this.$refs.code1.value +
+      this.$refs.code2.value +
+      this.$refs.code3.value +
+      this.$refs.code4.value;
 
+      this.$http.post('/bind/bind_phone', { mobile: this.phone, code }).then(() => {
+        this.$vux.toast.show({
+          text: '登录成功',
+          type: 'text',
+          width: 'auto',
+          position: 'bottom',
+        });
+        this.$emit('closeCode');
+      }).catch((err) => {
+        this.$vux.toast.show({
+          text: err.message,
+          type: 'text',
+          width: 'auto',
+          position: 'bottom',
+        });
+      });
     },
   },
 };
@@ -110,16 +127,6 @@ export default {
       <input
         ref="code4"
         v-model="code4"
-        type="tel"
-        maxlength="1">
-      <input
-        ref="code5"
-        v-model="code5"
-        type="tel"
-        maxlength="1">
-      <input
-        ref="code6"
-        v-model="code6"
         type="tel"
         maxlength="1">
     </div>
@@ -160,9 +167,9 @@ export default {
 
   input {
     display: block;
-    width: px2vw(60);
-    height: px2vw(60);
-    margin-right: px2vw(20);
+    width: px2vw(70);
+    height: px2vw(70);
+    margin-right: px2vw(40);
     text-align: center;
     font-size: px2vw(50);
   }
@@ -187,4 +194,5 @@ export default {
 .popup-code__submit--active {
   background-color: #fe9a00;
 }
+
 </style>

@@ -18,7 +18,7 @@ export default [
     name: 'ActivityLearnShare',
     component: views.ActivityLearnShare,
     meta: {
-      title: '活动已结束',
+      title: '3000万英语课程免费学',
     },
   },
   {
@@ -26,7 +26,7 @@ export default [
     name: 'ActivityLearnOver',
     component: views.ActivityLearnOver,
     meta: {
-      title: '3000万英语课程免费学',
+      title: '活动已结束',
     },
   },
 ];

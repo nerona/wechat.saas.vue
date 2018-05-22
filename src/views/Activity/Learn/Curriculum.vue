@@ -4,8 +4,23 @@
  *
  * @author lindongfang
  */
+import { formUtils } from '@/mixins';
+
 export default {
   name: 'LearnCurriculum',
+
+  mixins: [formUtils],
+  props: {
+    prizeId: {
+      type: Number,
+      default: 1,
+    },
+    activityId: {
+      type: Number,
+      default: 1,
+    },
+  },
+
   data() {
     return {
       phone: '',
@@ -28,7 +43,7 @@ export default {
   },
   watch: {
     phone(newVal) {
-      const pattern = /^(13[0-9]|14[579]|15[0-3,5-9]|17[0135678]|18[0-9]|19[0-9])\d{8}$/;
+      const pattern = /^[^]{11}$/;
       if (pattern.test(newVal)) {
         this.active = true;
       } else {
@@ -37,11 +52,11 @@ export default {
     },
   },
   methods: {
-      // eslint-disable-next-line
-      goDetail(id) {
-        console.log(id);
-        // this.$router.push(`/curriculum/detail/${id}`);
-      },
+    // eslint-disable-next-line
+    goDetail(id) {
+      console.log(id);
+      // this.$router.push(`/curriculum/detail/${id}`);
+    },
     submit() {
       if (!this.active) {
         return;
@@ -55,9 +70,30 @@ export default {
         });
         return;
       }
+
       // eslint-disable-next-line
-      this.$emit('openCode', this.phone);
-      // this.$http.post();
+      this.$http.post(`/activity/${this.activityId}/reserve`, { prize_id: this.prizeId }).then((res) => {
+        this.$vux.toast.show({
+          text: '领取成功',
+          type: 'text',
+          width: 'auto',
+        });
+        setTimeout(() => {
+          this.$router.push('/activity/learn/share');
+        }, 1500);
+      }).catch((err) => {
+        console.log(err);
+        if (err.status === 401) {
+           // 未登录
+          this.$emit('openCode', this.phone);
+        } else {
+          this.$vux.toast.show({
+            text: err.message,
+            type: 'text',
+            width: 'auto',
+          });
+        }
+      });
     },
   },
 };

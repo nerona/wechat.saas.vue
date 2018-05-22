@@ -77,7 +77,7 @@
     font-weight: bold;
     font-size: px2vw(30);
     letter-spacing: px2vw(2);
-    -webkit-touch-callout: initial;
+    -webkit-touch-callout: default;
   }
 }
 </style>
