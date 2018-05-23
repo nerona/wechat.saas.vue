@@ -95,6 +95,9 @@ export default {
             type: 'text',
             width: 'auto',
           });
+          setTimeout(() => {
+            this.$router.push('/activity/learn/share');
+          }, 1000);
         }
       });
     },

@@ -18,8 +18,8 @@ export default {
       qrcode,
       title: '3000万英语课程免费学',
       link: 'https://wechat.caihonggou.com/activity/learn/index',
-      imgUrl: 'http://oa-statics.caihonggou.com/image/201805/5af3aedbbb3f3.jpg',
-      desc: '亲，终于等到您，免费体验家门口的美国小学英语课堂，名额有限，搓我免费上>>',
+      imgUrl: 'https://oa-statics.caihonggou.com/iamkid_wechat_share.png',
+      desc: '一起参加吧！家门口的美国小学英语课堂，名额有限。',
     };
   },
   created() {
