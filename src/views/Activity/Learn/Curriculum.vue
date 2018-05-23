@@ -51,10 +51,10 @@ export default {
       }
     },
   },
+
   methods: {
     // eslint-disable-next-line
     goDetail(id) {
-      console.log(id);
       // this.$router.push(`/curriculum/detail/${id}`);
     },
     submit() {
@@ -71,8 +71,11 @@ export default {
         return;
       }
 
+      this.$vux.loading.show();
+
       // eslint-disable-next-line
-      this.$http.post(`/activity/${this.activityId}/reserve`, { prize_id: this.prizeId }).then((res) => {
+      this.$http.postNoRedirect(`/activity/${this.activityId}/reserve`, { prize_id: this.prizeId }).then((res) => {
+        this.$vux.loading.hide();
         this.$vux.toast.show({
           text: '领取成功',
           type: 'text',
@@ -80,9 +83,9 @@ export default {
         });
         setTimeout(() => {
           this.$router.push('/activity/learn/share');
-        }, 1500);
+        }, 1000);
       }).catch((err) => {
-        console.log(err);
+        this.$vux.loading.hide();
         if (err.status === 401) {
            // 未登录
           this.$emit('openCode', this.phone);

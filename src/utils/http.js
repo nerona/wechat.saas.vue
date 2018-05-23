@@ -26,7 +26,7 @@ class Http {
   removeToken() {
     localStorage.removeItem('token');
     this.token = '';
-    location.href = '/login';
+    location.href = '/sign-in';
   }
 
   /**
@@ -54,7 +54,7 @@ class Http {
    * @param {Object} [headers]
    */
   get(uri, headers) {
-    return this.fetchWithoutBody('GET', uri, headers);
+    return this.fetchWithoutBody('GET', uri, headers).catch(this.checkToken);
   }
 
   /**
@@ -63,7 +63,7 @@ class Http {
    * @param {Object} [headers]
    */
   delete(uri, headers) {
-    return this.fetchWithoutBody('DELETE', uri, headers);
+    return this.fetchWithoutBody('DELETE', uri, headers).catch(this.checkToken);
   }
 
   /**
@@ -73,6 +73,16 @@ class Http {
    * @param {Object} [headers]
    */
   post(uri, body, headers) {
+    return this.fetchWithBody('POST', uri, body, headers).catch(this.checkToken);
+  }
+
+  /**
+   * post请求-401不跳转
+   * @param {string} uri
+   * @param {Object} body
+   * @param {Object} [headers]
+   */
+  postNoRedirect(uri, body, headers) {
     return this.fetchWithBody('POST', uri, body, headers);
   }
 
@@ -83,7 +93,7 @@ class Http {
    * @param {Object} [headers]
    */
   patch(uri, body, headers) {
-    return this.fetchWithBody('PATCH', uri, body, headers);
+    return this.fetchWithBody('PATCH', uri, body, headers).catch(this.checkToken);
   }
 
   /**
@@ -93,7 +103,7 @@ class Http {
    * @param {Object} [headers]
    */
   put(uri, body, headers) {
-    return this.fetchWithBody('PUT', uri, body, headers);
+    return this.fetchWithBody('PUT', uri, body, headers).catch(this.checkToken);
   }
 
   /**
@@ -105,13 +115,13 @@ class Http {
   fetchWithoutBody(method, uri, headers) {
     return fetch(this.getFullUri(uri), {
       method,
+      credentials: 'include',
       headers: {
         ...this.getCommonHeaders(),
         ...headers,
       },
     })
-      .then(this.handleResponse)
-      .catch(this.checkToken);
+      .then(this.handleResponse);
   }
 
   /**
@@ -125,6 +135,7 @@ class Http {
     const isFormData = body instanceof FormData;
     return fetch(this.getFullUri(uri), {
       method,
+      credentials: 'include',
       headers: {
         ...this.getCommonHeaders(),
         ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
@@ -132,8 +143,7 @@ class Http {
       },
       body: isFormData ? body : JSON.stringify(body),
     })
-      .then(this.handleResponse)
-      .catch(this.checkToken);
+      .then(this.handleResponse);
   }
 
   /**
