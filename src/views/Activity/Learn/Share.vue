@@ -22,15 +22,19 @@ export default {
       desc: '一起参加吧！家门口的美国小学英语课堂，名额有限。',
     };
   },
+  created() {
+    // if (!/(Android)/i.test(navigator.userAgent)) {
+    //   window.location.reload();
+    // }
+  },
 
   mounted() {
     const vm = this;
     // ios 坑
-    const url = /(Android)/i.test(navigator.userAgent) ?
-                location.href :
-                localStorage.getItem('linkUrl');
+    console.log(document.URL);
+    const url = document.URL;
 
-    vm.$http.post('/bind/jssdk', { url: url.split('?')[0] }).then((res) => {
+    vm.$http.post('/bind/jssdk', { url }).then((res) => {
       vm.$wechat.config(res);
     });
 
