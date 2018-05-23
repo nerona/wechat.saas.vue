@@ -5,32 +5,83 @@
  * @author lindongfang
  */
 // 二维码
-import { wechat } from '@/mixins';
 import qrcode from './../../../assets/activity/learn/l16.png';
 import Qrcode from './Qrcode';
 
 export default {
   name: 'ActivityShare',
   components: { Qrcode },
-  mixins: [wechat],
+
   data() {
     return {
+      activityId: 1,
       qrcode,
-      title: '',
-      link: '',
-      imgUrl: '',
-      desc: '',
+      title: '3000万英语课程免费学',
+      link: 'https://wechat.caihonggou.com/activity/learn/index',
+      imgUrl: 'http://oa-statics.caihonggou.com/image/201805/5af3aedbbb3f3.jpg',
+      desc: '亲，终于等到您，免费体验家门口的美国小学英语课堂，名额有限，搓我免费上>>',
     };
   },
   created() {
-    // this.$_wechatConfig();
-    this.$wechat.ready(() => {
-    // this.$_wechatShareTimeline(this.title, this.link, this.imgUrl);
-    // this.$_wechatShareAppMessage(this.title, this.link, this.imgUrl, this.desc) ;
+    const vm = this;
+    const url = location.href;
+    vm.$http.post('/bind/jssdk', { url }).then((res) => {
+      vm.$wechat.config(res);
+    });
+    vm.$wechat.ready(() => {
+      vm.$wechat.onMenuShareAppMessage({
+        title: vm.title,
+        link: vm.link,
+        imgUrl: vm.imgUrl,
+        desc: vm.desc,
+        success() {
+          vm.share();
+        },
+        cancel() {
+          vm.$vux.toast.show({
+            text: '分享取消',
+            type: 'text',
+            width: 'auto',
+            position: 'middle',
+          });
+        },
+      });
+      vm.$wechat.onMenuShareTimeline({
+        title: vm.title,
+        link: vm.link,
+        imgUrl: vm.imgUrl,
+        desc: vm.desc,
+        success() {
+          vm.share();
+        },
+        cancel() {
+          vm.$vux.toast.show({
+            text: '分享取消',
+            type: 'text',
+            width: 'auto',
+          });
+        },
+      });
     });
   },
   methods: {
-
+    share() {
+      this.$http.post(`/activity/${this.activityId}/share`).then(() => {
+        this.$vux.toast.show({
+          text: '分享成功',
+          type: 'text',
+          width: 'auto',
+          position: 'middle',
+        });
+      }).catch((err) => {
+        this.$vux.toast.show({
+          text: err.message,
+          type: 'text',
+          width: 'auto',
+          position: 'middle',
+        });
+      });
+    },
   },
 };
 </script>

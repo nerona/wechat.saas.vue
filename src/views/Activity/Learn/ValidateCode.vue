@@ -57,7 +57,7 @@ export default {
     },
   },
   mounted() {
-    this.$refs.code1.focus();
+    this.$refs.code1.click();
 
     this.sendCode();
   },
