@@ -26,9 +26,19 @@ export default {
     const vm = this;
     const url = location.href;
     vm.$http.post('/bind/jssdk', { url }).then((res) => {
+      console.log(res);
       vm.$wechat.config(res);
     });
+
+
     vm.$wechat.ready(() => {
+      alert('wechat ready');
+      vm.$wechat.checkJsApi({
+        jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+        success(res) {
+          alert(JSON.stringify(res));
+        },
+      });
       vm.$wechat.onMenuShareAppMessage({
         title: vm.title,
         link: vm.link,
@@ -45,6 +55,9 @@ export default {
             position: 'middle',
           });
         },
+        fail(res) {
+          alert(JSON.stringify(res));
+        },
       });
       vm.$wechat.onMenuShareTimeline({
         title: vm.title,
@@ -60,6 +73,9 @@ export default {
             type: 'text',
             width: 'auto',
           });
+        },
+        fail(res) {
+          alert(JSON.stringify(res));
         },
       });
     });
