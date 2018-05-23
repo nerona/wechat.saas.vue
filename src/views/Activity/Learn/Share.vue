@@ -34,10 +34,7 @@ export default {
       alert('wechat ready');
       vm.$wechat.checkJsApi({
         jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
-        success(res) {
-          // eslint-disable-next-line
-          alert(JSON.stringify(res));
-        },
+        success() {},
       });
       vm.$wechat.onMenuShareAppMessage({
         title: vm.title,
@@ -45,13 +42,9 @@ export default {
         imgUrl: vm.imgUrl,
         desc: vm.desc,
         success() {
-          // eslint-disable-next-line
-          alert('success');
           vm.share();
         },
         cancel() {
-          // eslint-disable-next-line
-          alert('cancel');
           vm.$vux.toast.show({
             text: '分享取消',
             type: 'text',
@@ -70,13 +63,9 @@ export default {
         imgUrl: vm.imgUrl,
         desc: vm.desc,
         success() {
-          // eslint-disable-next-line
-          alert('success');
           vm.share();
         },
         cancel() {
-          // eslint-disable-next-line
-          alert('cancel');
           vm.$vux.toast.show({
             text: '分享取消',
             type: 'text',
