@@ -31,7 +31,6 @@ export default {
 
 
     vm.$wechat.ready(() => {
-      alert('wechat ready');
       vm.$wechat.checkJsApi({
         jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
         success() {},
