@@ -51,9 +51,11 @@ export default {
   mounted() {
     const vm = this;
     // ios 坑
-    const url = /(Android)/i.test(navigator.userAgent) ? location.href : localStorage.getItem('linkUrl');
+    const url = /(Android)/i.test(navigator.userAgent) ?
+                location.href :
+                localStorage.getItem('linkUrl');
 
-    vm.$http.post('/bind/jssdk', { url }).then((res) => {
+    vm.$http.post('/bind/jssdk', { url: url.split('?')[0] }).then((res) => {
       vm.$wechat.config(res);
     });
 
