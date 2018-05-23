@@ -83,7 +83,7 @@ export default {
         });
         setTimeout(() => {
           this.$router.push('/activity/learn/share');
-        }, 1000);
+        }, 2000);
       }).catch((err) => {
         this.$vux.loading.hide();
         if (err.status === 401) {
@@ -97,7 +97,7 @@ export default {
           });
           setTimeout(() => {
             this.$router.push('/activity/learn/share');
-          }, 1000);
+          }, 2000);
         }
       });
     },

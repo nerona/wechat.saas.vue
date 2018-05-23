@@ -35,6 +35,11 @@ export default {
       prizeId: 1,
       source: 3,
       activityId: 1,
+
+      title: '3000万英语课程免费学',
+      link: 'https://wechat.caihonggou.com/activity/learn/index',
+      imgUrl: 'https://oa-statics.caihonggou.com/iamkid_wechat_share.png',
+      desc: '一起参加吧！家门口的美国小学英语课堂，名额有限。',
     };
   },
   created() {
@@ -42,6 +47,63 @@ export default {
 
     this.getActivity();
     this.visit();
+  },
+  mounted() {
+    const vm = this;
+    // ios 坑
+    const url = /(Android)/i.test(navigator.userAgent) ? location.href : localStorage.getItem('linkUrl');
+
+    vm.$http.post('/bind/jssdk', { url }).then((res) => {
+      vm.$wechat.config(res);
+    });
+
+    vm.$wechat.ready(() => {
+      vm.$wechat.checkJsApi({
+        jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+        success() {},
+      });
+      vm.$wechat.onMenuShareAppMessage({
+        title: vm.title,
+        link: vm.link,
+        imgUrl: vm.imgUrl,
+        desc: vm.desc,
+        success() {
+          vm.share();
+        },
+        cancel() {
+          vm.$vux.toast.show({
+            text: '分享取消',
+            type: 'text',
+            width: 'auto',
+            position: 'middle',
+          });
+        },
+        fail(res) {
+          // eslint-disable-next-line
+          alert(JSON.stringify(res));
+        },
+      });
+      vm.$wechat.onMenuShareTimeline({
+        title: vm.title,
+        link: vm.link,
+        imgUrl: vm.imgUrl,
+        desc: vm.desc,
+        success() {
+          vm.share();
+        },
+        cancel() {
+          vm.$vux.toast.show({
+            text: '分享取消',
+            type: 'text',
+            width: 'auto',
+          });
+        },
+        fail(res) {
+          // eslint-disable-next-line
+          alert(JSON.stringify(res));
+        },
+      });
+    });
   },
   methods: {
     // 活动详情
@@ -73,6 +135,24 @@ export default {
     visit() {
       // eslint-disable-next-line
       this.$http.post(`/activity/${this.activityId}/visit`, { source: this.source }).then((res) => {});
+    },
+    //
+    share() {
+      this.$http.post(`/activity/${this.activityId}/share`).then(() => {
+        this.$vux.toast.show({
+          text: '分享成功',
+          type: 'text',
+          width: 'auto',
+          position: 'middle',
+        });
+      }).catch((err) => {
+        this.$vux.toast.show({
+          text: err.message,
+          type: 'text',
+          width: 'auto',
+          position: 'middle',
+        });
+      });
     },
   },
 };

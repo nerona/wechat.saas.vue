@@ -5,6 +5,10 @@
 
 export default {
   name: 'App',
+  created() {
+    // 记录进入路由
+    localStorage.setItem('linkUrl', location.protocol + location.host + this.$router.currentRoute.fullPath);
+  },
 };
 </script>
 
