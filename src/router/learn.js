@@ -43,7 +43,7 @@ export default [
     },
   },
   {
-    path: '/learn/curriculum',
+    path: '/learn/curriculum/:id',
     name: 'LearnCurriculum',
     component: views.LearnCurriculum,
     meta: {

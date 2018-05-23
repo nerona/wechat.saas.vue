@@ -20,10 +20,10 @@ export { default as CurriculumOrder } from './Curriculum/Order/Order';
 
 /* 学习中心 */
 
-export { default as LearnIndex } from './Learn/Index';
-export { default as LearnKid } from './Learn/Kid';
-export { default as LearnDetail } from './Learn/Detail';
-export { default as LearnCurriculum } from './Learn/Curriculum';
+export { default as LearnIndex } from './Learn/index';
+export { default as LearnKid } from './Learn/kid';
+export { default as LearnDetail } from './Learn/detail';
+export { default as LearnCurriculum } from './Learn/curriculum';
 
 /* 用户中心 */
 
