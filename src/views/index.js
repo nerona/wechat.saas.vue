@@ -28,6 +28,6 @@ export { default as LearnCurriculum } from './Learn/curriculum';
 /* 用户中心 */
 
 export { default as UserIndex } from './User/Index/Index';
-export { default as UserEdit } from './User/Edit';
-export { default as UserActivity } from './User/ActivityRecord';
+export { default as UserEdit } from './User/Index/Edit';
+export { default as UserActivity } from './User/Index/ActivityRecord';
 export { default as UserOrder } from './User/Order/Order';

@@ -25,14 +25,30 @@ export default {
         nickname: '张娜',
         tel: '18689238934',
       },
+      roles: [],
       banner: {
         id: 1,
-        src: 'http://placeholder.qiniudn.com/750x240/FFEF7D/fff',
+        src: 'http://placeholder.qiniudn.com/750x300/FFEF7D/fff',
       },
-      activityRecord: 12,
+      activityRecord: null,
     };
   },
+  created() {
+    this.getInfo();
+  },
   methods: {
+    getInfo() {
+      this.$http.get('/wechat_user/show').then((res) => {
+        // eslint-disable-next-line
+        this.info = res;
+        if (this.info.headimgurl === null || this.info.headimgurl === '') {
+          this.info.headimgurl = 'http://placeholder.qiniudn.com/60x60/FFEF7D/fff';
+        }
+        if (this.info.nickname === null || this.info.nickname === '') {
+          this.info.nickname = 'imkid';
+        }
+      });
+    },
     goEdit() {
       this.$router.push('/user/edit');
     },
@@ -46,18 +62,17 @@ export default {
 <template>
   <AppPageWithTabbar class="user-index">
     <!-- 个人信息 -->
-    <div class="user-index-info">
-      <div class="user-index-info__header">
-        <img :src="info.headerUrl">
-      </div>
-      <div class="user-index-info__name">{{ info.name || info.nickname || '暂无昵称' }}</div>
-      <div class="user-index-info__tel">{{ info.tel }}</div>
-      <x-icon
-        class="user-index-info__edit"
-        type="ios-ionic-outline"
-        size="30"
-        @click.native="goEdit()"/>
-    </div>
+    <cell
+      :title="info.name || info.nickname"
+      :inline-desc="info.phone"
+      is-link
+      link="/user/edit">
+      <img
+        slot="icon"
+        :src="info.headimgurl"
+        width="60"
+        style="display:block;margin-right:12px;border-radius: 50%;">
+    </cell>
 
     <!-- 订单信息 -->
     <card :header="{title: '课程订单'}">
@@ -67,7 +82,7 @@ export default {
         <div
           class="vux-1px-r"
           @click="goOrder(0)">
-          <span>1130</span>
+          <span>30</span>
           <br>
           全部
         </div>
@@ -108,7 +123,12 @@ export default {
 </template>
 
 <style lang="less">
-.user-index {}
+.user-index {
+  .weui-cell {
+    background-color: #fff;
+    margin-top: px2vw(20);
+  }
+}
 .user-index-info {
   background-color: #fff;
   position: relative;
@@ -116,25 +136,7 @@ export default {
   padding-top: px2vw(40);
   text-align: center;
 }
-.user-index-info__header {}
-.user-index-info__header > img {
-  margin: 0 auto;
-  width: px2vw(120);
-  border-radius: 50%;
-  overflow: hidden;
-}
-.user-index-info__name {
-  margin-top: px2vw(14);
-}
-.user-index-info__tel {
-  margin-top: px2vw(4);
-  padding-bottom: px2vw(28);
-}
-.user-index-info__edit {
-  position: absolute;
-  top: px2vw(40);
-  right: px2vw(40);
-}
+
 .user-index-card {
   display: flex;
   font-size: px2vw(28);
