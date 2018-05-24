@@ -10,16 +10,79 @@
       return {
         range: '7月1日至8月31日',
         citys: [{
+          id: 'xm',
           link: '#xm',
           name: '厦门',
+          area: [
+            {
+              name: '思明区地点',
+              school: [
+                {
+                  name: '五缘湾旗舰校区',
+                  location: '环岛东路1803号君尚广场2楼20015号',
+                  prefix: '0592',
+                  tel: '7812964',
+                  phone: 'tel:0592-7812964',
+                },
+                {
+                  name: 'XXXX 校区',
+                  location: '环岛东路1803号君尚广场2楼20015号',
+                  prefix: '0592',
+                  tel: '7812964',
+                  phone: 'tel:0592-7812964',
+                },
+              ],
+            },
+            {
+              name: '湖里区地点',
+              school: [
+                {
+                  name: 'XXXX 校区',
+                  location: '环岛东路1803号君尚广场2楼20015号',
+                  prefix: '0592',
+                  tel: '7812964',
+                  phone: 'tel:0592-7812964',
+                },
+              ],
+            },
+          ],
         }, {
+          id: 'fz',
           link: '#fz',
           name: '福州',
+          area: [
+            {
+              name: '鼓楼区地点',
+              school: [
+                {
+                  name: '南街旗舰校区',
+                  location: '环岛东路1803号君尚广场2楼20015号',
+                  prefix: '0592',
+                  tel: '7812964',
+                  phone: 'tel:0592-7812964',
+                },
+                {
+                  name: 'XXXX 校区',
+                  location: '环岛东路1803号君尚广场2楼20015号',
+                  prefix: '0592',
+                  tel: '7812964',
+                  phone: 'tel:0592-7812964',
+                },
+              ],
+            },
+          ],
         }, {
+          id: 'other',
           link: '#other',
           name: '其他地区',
         }],
       };
+    },
+    methods: {
+      // 经纬度
+      openMap(addr) {
+        console.log(addr);
+      },
     },
   };
 </script>
@@ -43,138 +106,51 @@
     </div>
 
     <div class="learn-index-class__citys">
-      <!--  -->
       <div
-        id="xm"
-        class="learn-index-class-citys__name">
-        厦门
-      </div>
-      <div class="learn-index-class-citys__disname">
-        <span>思明区地点</span>
-      </div>
-      <div class="learn-index-class-citys__school">
-        <div class="learn-index-class-citys-school__name">五缘湾旗舰校区</div>
-        <div class="learn-index-class-citys-school__item">
-          <div class="learn-index-class-citys-school-item_1">
-            地址: 环岛东路1803号君尚广场2楼20015号
-          </div>
-          <div class="learn-index-class-citys-school-item_2">
-            <img src="./../../../assets/activity/learn/l1.png">
-          </div>
+        v-for="item in citys"
+        :key="item.id"
+      >
+        <div
+          :id="item.id"
+          class="learn-index-class-citys__name">
+          {{ item.name }}
         </div>
-        <div class="learn-index-class-citys-school__item">
-          <div class="learn-index-class-citys-school-item_1">
-            电话: (0592) 7812964
+        <div
+          v-for="innerItem in item.area"
+          :key="innerItem.name">
+          <div class="learn-index-class-citys__disname">
+            <span>{{ innerItem.name }}</span>
           </div>
-          <div class="learn-index-class-citys-school-item_2">
-            <a href="tel:0592-5995993">
-              <img src="./../../../assets/activity/learn/l4.png">
+          <div
+            v-for="school in innerItem.school"
+            :key="school.name"
+            class="learn-index-class-citys__school">
+            <div class="learn-index-class-citys-school__name">{{ school.name }}</div>
+            <div
+              class="learn-index-class-citys-school__item"
+              @click="openMap(school.location)">
+              <div class="learn-index-class-citys-school-item_1">
+                地址: {{ school.location }}
+              </div>
+              <div class="learn-index-class-citys-school-item_2">
+                <img src="./../../../assets/activity/learn/l1.png">
+              </div>
+            </div>
+            <a
+              :href="school.phone"
+              class="learn-index-class-citys-school__item">
+              <div class="learn-index-class-citys-school-item_1">
+                电话: ({{ school.prefix }}) {{ school.tel }}
+              </div>
+              <div class="learn-index-class-citys-school-item_2">
+                <img src="./../../../assets/activity/learn/l4.png">
+              </div>
             </a>
           </div>
         </div>
       </div>
-      <div class="learn-index-class-citys__school">
-        <div class="learn-index-class-citys-school__name">XXXX 校区</div>
-        <div class="learn-index-class-citys-school__item">
-          <div class="learn-index-class-citys-school-item_1">
-            地址: 环岛东路1803号君尚广场2楼20015号
-          </div>
-          <div class="learn-index-class-citys-school-item_2">
-            <img src="./../../../assets/activity/learn/l1.png">
-          </div>
-        </div>
-        <div class="learn-index-class-citys-school__item">
-          <div class="learn-index-class-citys-school-item_1">
-            电话: (0592) 7812964
-          </div>
-          <div class="learn-index-class-citys-school-item_2">
-            <a href="tel:0592-5995993">
-              <img src="./../../../assets/activity/learn/l4.png">
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="learn-index-class-citys__disname">
-        <span>湖里区地点</span>
-      </div>
-      <div class="learn-index-class-citys__school">
-        <div class="learn-index-class-citys-school__name">XXXX 校区</div>
-        <div class="learn-index-class-citys-school__item">
-          <div class="learn-index-class-citys-school-item_1">
-            地址: 环岛东路1803号君尚广场2楼20015号
-          </div>
-          <div class="learn-index-class-citys-school-item_2">
-            <img src="./../../../assets/activity/learn/l1.png">
-          </div>
-        </div>
-        <div class="learn-index-class-citys-school__item">
-          <div class="learn-index-class-citys-school-item_1">
-            电话: (0592) 7812964
-          </div>
-          <div class="learn-index-class-citys-school-item_2">
-            <a href="tel:0592-5995993">
-              <img src="./../../../assets/activity/learn/l4.png">
-            </a>
-          </div>
-        </div>
-      </div>
+
       <!--  -->
-      <div
-        id="fz"
-        class="learn-index-class-citys__name">
-        福州
-      </div>
-      <div class="learn-index-class-citys__disname">
-        <span>鼓楼区地点</span>
-      </div>
-      <div class="learn-index-class-citys__school">
-        <div class="learn-index-class-citys-school__name">南街旗舰校区</div>
-        <div class="learn-index-class-citys-school__item">
-          <div class="learn-index-class-citys-school-item_1">
-            地址: 环岛东路1803号君尚广场2楼20015号
-          </div>
-          <div class="learn-index-class-citys-school-item_2">
-            <img src="./../../../assets/activity/learn/l1.png">
-          </div>
-        </div>
-        <div class="learn-index-class-citys-school__item">
-          <div class="learn-index-class-citys-school-item_1">
-            电话: (0592) 7812964
-          </div>
-          <div class="learn-index-class-citys-school-item_2">
-            <a href="tel:0592-5995993">
-              <img src="./../../../assets/activity/learn/l4.png">
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="learn-index-class-citys__school">
-        <div class="learn-index-class-citys-school__name">XXXX 校区</div>
-        <div class="learn-index-class-citys-school__item">
-          <div class="learn-index-class-citys-school-item_1">
-            地址: 环岛东路1803号君尚广场2楼20015号
-          </div>
-          <div class="learn-index-class-citys-school-item_2">
-            <img src="./../../../assets/activity/learn/l1.png">
-          </div>
-        </div>
-        <div class="learn-index-class-citys-school__item">
-          <div class="learn-index-class-citys-school-item_1">
-            电话: (0592) 7812964
-          </div>
-          <div class="learn-index-class-citys-school-item_2">
-            <a href="tel:0592-5995993">
-              <img src="./../../../assets/activity/learn/l4.png">
-            </a>
-          </div>
-        </div>
-      </div>
-      <!--  -->
-      <div
-        id="other"
-        class="learn-index-class-citys__name">
-        其他校区
-      </div>
       <div class="learn-index-class-citys_other">
         泉州、漳州、XXXX正在筹备中，敬请期待！
       </div>
@@ -294,6 +270,8 @@
 .learn-index-class-citys-school__item {
  display: flex;
  align-items: center;
+ color: #666;
+ -webkit-touch-callout: default;
 }
 .learn-index-class-citys-school-item_1 {
   flex: 1;
@@ -303,14 +281,14 @@
   width: px2vw(36);
   height: px2vw(36);
   margin-left: px2vw(20);
-  a {
-    -webkit-touch-callout: default;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
+  // a {
+  //   -webkit-touch-callout: default;
+  //   width: 100%;
+  //   height: 100%;
+  //   position: absolute;
+  //   top: 0;
+  //   left: 0;
+  // }
   img {
     width: px2vw(36);
     height: px2vw(36);
