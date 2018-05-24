@@ -86,7 +86,18 @@ export default {
 
   beforeRouteEnter(to, from, next) {
     next((vm) => {
-      const routePage = (from.matched.length > 0) ? from.path : '/learn/index';
+      let routePage = (from.matched.length > 0) ? from.path : '/learn/index';
+
+      if (Object.keys(from.query).length > 0) {
+        routePage += '?';
+        from.query.forEach((item, index) => {
+          if (index !== (Object.keys(from.query).length - 1)) {
+            routePage = `${routePage + item}=${from.query[item]}&`;
+          } else {
+            routePage = `${routePage + item}=${from.query[item]}`;
+          }
+        });
+      }
       vm.getBackPage(routePage);
     });
   },
@@ -255,6 +266,7 @@ export default {
       <x-input
         v-model="formData.name"
         title="小孩姓名"
+        placeholder-align="right"
         placeholder="请输入小孩姓名"
         required/>
       <datetime
