@@ -69,12 +69,6 @@ export default {
       return productionURL;
     },
 
-    uploadHeaders() {
-      return {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      };
-    },
-
     isSubmit() {
       const pattern = /^[A-Za-z0-9\u4e00-\u9fa5]{0,10}$/;
       const isName = pattern.test(this.formData.name);
@@ -166,7 +160,7 @@ export default {
 
         fetch(this.action, {
           method: 'POST',
-          headers: this.uploadHeaders,
+          credentials: 'include',
           body: formData,
         })
         // eslint-disable-next-line
