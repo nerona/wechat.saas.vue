@@ -12,61 +12,76 @@ export default {
   components: {
     XButton,
   },
+  filters: {
+    toDay(str) {
+      switch (str) {
+        case 1:
+          return '星期一';
+        case 2:
+          return '星期二';
+        case 3:
+          return '星期三';
+        case 4:
+          return '星期四';
+        case 5:
+          return '星期五';
+        case 6:
+          return '星期六';
+        case 7:
+          return '星期日';
+        default:
+          return '星期一';
+      }
+    },
+  },
+  props: {
+    popupData: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
   data() {
     return {
+      stock_remain: null,
+      curriculum: [],
+
       isSchoolActive: null,
       isDateActive: null,
-      school: [
-         { id: 1, name: '爱考拉旗舰校区1' },
-         { id: 2, name: '爱考拉旗舰校区2' },
-         { id: 3, name: '爱考拉旗舰校区3' },
-         { id: 4, name: '爱考拉旗舰校区4' },
-         { id: 5, name: '爱考拉旗舰校区5' },
-      ],
-      date: [
-        {
-          id: 1,
-          range: '2018-05-05至2018-05-06',
-          full: true,
-          cycle: [
-            '星期一 16:00-16:40', '星期三 16:00-16:40', '星期五 16:00-16:40',
-          ],
-        },
-        {
-          id: 2,
-          range: '2018-05-05至2018-05-06',
-          full: false,
-          cycle: [
-            '星期一 16:00-16:40', '星期三 16:00-16:40', '星期五 16:00-16:40',
-          ],
-        },
-        {
-          id: 3,
-          range: '2018-05-05至2018-05-06',
-          full: false,
-          cycle: [
-            '星期一 16:00-16:40', '星期三 16:00-16:40', '星期五 16:00-16:40',
-          ],
-        },
-      ],
     };
   },
+  created() {
+    this.curriculum = this.popupData.department[0].curriculum;
+    this.stock_remain = this.popupData.stock_remain;
+  },
+
   methods: {
     // 选择校区
     chooseSchool(index) {
       if (this.isSchoolActive !== index) {
         this.isSchoolActive = index;
+
+        const currentItem = this.popupData.department.find(item =>
+                        item.department_id === index);
+        this.curriculum = currentItem.curriculum;
+        this.stock_remain = currentItem.stock_remain;
+        // this.isDateActive = null;
       } else {
         this.isSchoolActive = null;
       }
     },
     // 选择上课时间
     chooseDate(item) {
-      if (item.full) { return; }
+      if (item.stock_remain === 0) { return; }
       if (this.isDateActive !== item.id) {
         this.isDateActive = item.id;
+        this.stock_remain = item.stock_remain;
       } else {
         this.isDateActive = null;
+        if (this.isSchoolActive) {
+          const schools = this.popupData.department.find(school =>
+                        school.department_id === this.isSchoolActive);
+          this.stock_remain = schools.stock_remain;
+        }
       }
     },
     // 提交
@@ -80,9 +95,10 @@ export default {
         this.$vux.toast.text('请选择上课时间！', 'middle');
         return;
       }
-      query.school_id = this.isSchoolActive;
-      query.date_id = this.isDateActive;
-      query.curriculum_id = this.$route.params.id;
+      query.department_id = this.isSchoolActive;
+      query.curriculum_id = this.isDateActive;
+      query.course_packet_id = this.$route.params.id;
+
       this.$router.push({ path: '/curriculum/order', query });
     },
   },
@@ -94,11 +110,15 @@ export default {
     <!--  -->
     <div class="curriculum-detail-order__card">
       <div class="curriculum-detail-order-card__header">
-        <img src="http://placeholder.qiniudn.com/110x100/FF3B3B/fff">
+        <img :src="popupData.cover_url">
       </div>
       <div class="curriculum-detail-order-card__content">
-        <div class="curriculum-detail-order-card-content__price">￥2880</div>
-        <div class="curriculum-detail-order-card-content__left">剩余50个名额</div>
+        <div class="curriculum-detail-order-card-content__price">
+          ￥{{ popupData.price }}
+        </div>
+        <div class="curriculum-detail-order-card-content__left">
+          剩余{{ stock_remain }}个名额
+        </div>
       </div>
     </div>
     <!--  -->
@@ -108,12 +128,12 @@ export default {
       </div>
       <div class="curriculum-detail-order-school__list">
         <div
-          v-for="item in school"
-          :key="item.id"
-          :class="{active: item.id == isSchoolActive}"
+          v-for="item in popupData.department"
+          :key="item.department_id"
+          :class="{active: item.department_id == isSchoolActive}"
           class="curriculum-detail-order-school-list__item"
-          @click="chooseSchool(item.id)">
-          {{ item.name }}
+          @click="chooseSchool(item.department_id)">
+          {{ item.department_name }}
         </div>
       </div>
     </div>
@@ -124,18 +144,21 @@ export default {
       </div>
       <div class="curriculum-detail-order-date__list">
         <div
-          v-for="item in date"
+          v-for="item in curriculum"
           :key="item.id"
           :class="{'active': item.id == isDateActive,
-                   'curriculum-detail-order-date-list__item--full': item.full}"
+                   'curriculum-detail-order-date-list__item--full': item.stock_remain == 0}"
           class="curriculum-detail-order-date-list__item"
           @click="chooseDate(item)">
           <div>{{ item.range }}</div>
           <div
             v-for="(cycle, cindex) in item.cycle"
-            :key="cindex">{{ cycle }}</div>
+            :key="cindex">
+            {{ cycle.day | toDay }}<span style="display:inline-block;width: 4px;"/>
+            {{ cycle.start_time.substring(0,5) }}-{{ cycle.end_time.substring(0,5) }}
+          </div>
           <div
-            v-if="item.full"
+            v-if="item.stock_remain == 0"
             class="curriculum-detail-order-date-list-item__full">爆满</div>
         </div>
       </div>
@@ -198,7 +221,7 @@ export default {
   font-size: px2vw(@font-size-big);
 }
 .curriculum-detail-order-school-list__item {
-  min-width: 47%;
+  min-width: 48%;
   line-height: px2vw(66);
   height: px2vw(66);
   border: 1px solid #ccc;
@@ -217,7 +240,7 @@ export default {
 }
 .curriculum-detail-order-date-list__item--full {
   color: @font-size-third-color;
-  border-color: @font-size-third-color;
+  // border-color: @font-size-third-color;
 }
 .curriculum-detail-order-date-list-item__full {
   position: absolute;
@@ -232,7 +255,8 @@ export default {
   transform: rotateZ(30deg);
 }
 .curriculum-detail-order .active {
-  border-color: @font-size-error-color;
+  border-color: #ffd900;
+  color: #ffd900;
 }
 .curriculum-detail-sure {
   width: 100%;

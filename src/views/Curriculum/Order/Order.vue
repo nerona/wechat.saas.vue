@@ -5,8 +5,8 @@
  * @author  lindongfnag
  */
 
-import { wechat } from '@/mixins';
-import { Cell, Group } from 'vux';
+import { Cell, Group, Popup } from 'vux';
+
 import Childs from './Childs';
 import Voucher from './Voucher';
 
@@ -15,25 +15,22 @@ export default {
   components: {
     Cell,
     Group,
+    Popup,
     Childs,
     Voucher,
   },
-  mixins: [wechat],
 
   data() {
     return {
-      childs: [{
-        id: 1,
-        src: 'http://placeholder.qiniudn.com/150x150/8AEEB1/fff',
-        name: '张晓1',
+      product: {
+        price: '',
       },
-      {
-        id: 2,
-        src: 'http://placeholder.qiniudn.com/150x150/8AEEB1/fff',
-        name: '张晓2',
-      }],
+      // 小孩
+      childs: [],
       childValue: '',
+      childId: '',
       showChilds: false,
+      // 优惠券
       vouchersValue: '',
       showVouchers: false,
       vouchers: [
@@ -60,28 +57,57 @@ export default {
   },
 
   created() {
-    if (this.childs.length > 0) {
-      this.childValue = this.childs[0].name;
-    }
-    if (this.vouchers.length > 0) {
-      this.vouchersValue = this.vouchers[0].price;
-    }
+    this.getInherit();
+    this.getChilds();
+
+    // 优惠券
+    // if (this.vouchers.length > 0) {
+    //   this.vouchersValue = this.vouchers[0].price;
+    // }
   },
 
   methods: {
+    getInherit() {
+      this.$http.get(`/course_packet/surface/${this.$route.query.course_packet_id}`).then((res) => {
+        this.product = res;
+      }).catch((err) => {
+        this.$vux.toast.show({
+          text: err.message,
+          type: 'text',
+          width: 'auto',
+        });
+      });
+    },
+    getChilds() {
+      this.$http.get('/student').then((res) => {
+        this.childs = res.students;
+         // 小孩
+        if (this.childs.length > 0) {
+          this.childValue = this.childs[0].name;
+          this.childId = this.childs[0].id;
+        }
+      }).catch((err) => {
+        this.$vux.toast.show({
+          text: err.message,
+          type: 'text',
+          width: 'auto',
+        });
+      });
+    },
     // 添加小孩
     addChild() {
-      // this.$router.push('/learn/addchild')
+      this.$router.push('/learn/kid');
     },
     // 跳出选择小孩弹窗
     chooseChild() {
       this.showChilds = true;
     },
     // 更新选中小孩
-    updateChild(e) {
+    updateChild(id) {
       this.showChilds = false;
+      this.childId = id;
       this.childs.forEach((item) => {
-        if (item.id === e) {
+        if (item.id === id) {
           this.childValue = item.name;
         }
       });
@@ -118,15 +144,26 @@ export default {
         });
         return;
       }
-      // const order = {
-      //   id: '',
-      //   create_time: Date.parse(new Date()),
-      // };
-      // this.$vux.loading.show({ text: '创建订单中' });
-      this.$vux.toast.show({
-        text: '创建订单',
-        type: 'success',
-        position: 'middle',
+
+      this.$http.post('/order', {
+        department_id: Number.parseInt(this.$route.query.department_id, 10),
+        curriculum_id: Number.parseInt(this.$route.query.curriculum_id, 10),
+        course_packet_id: Number.parseInt(this.$route.query.course_packet_id, 10),
+        student_id: this.childId,
+      }).then((res) => {
+        // eslint-disable-next-line
+        console.log(res);
+        this.$vux.toast.show({
+          text: '订单创建成功',
+          type: 'success',
+          position: 'middle',
+        });
+      }).catch((err) => {
+        this.$vux.toast.show({
+          text: err.message,
+          type: 'text',
+          position: 'middle',
+        });
       });
 
       // const url = location.href;
@@ -173,25 +210,25 @@ export default {
     <!-- 课程信息 -->
     <div class="curriculum-order-info">
       <div class="curriculum-order-info__thumb">
-        <img src="http://placeholder.qiniudn.com/100x80/FF3B3B/fff">
+        <img :src="product.cover_url">
       </div>
       <div class="curriculum-order-info__desc">
-        <div class="curriculum-order-info-desc__name">秋季自然拼读</div>
-        <div class="curriculum-order-info-desc__price">￥2800</div>
+        <div class="curriculum-order-info-desc__name">{{ product.name }}</div>
+        <div class="curriculum-order-info-desc__price">￥{{ product.price }}</div>
       </div>
     </div>
 
     <group>
       <cell
-        value="试听课程"
+        :value="product.category_type === 1 ? '正常课程' : '试听课程'"
         title="订单类型"/>
     </group>
     <group>
       <cell
-        value="0.00"
+        value="￥0.00"
         title="押金抵扣"/>
     </group>
-    <group>
+    <!-- <group>
       <cell
         v-if="vouchers.length === 0"
         value="无可用"
@@ -204,40 +241,48 @@ export default {
         title="优惠券"
         is-link
         @click.native="chooseVoucher"/>
-    </group>
+    </group> -->
     <group>
       <cell
-        value="2880.00"
+        :value="`￥${product.price}`"
+        class="curriculum-order-cur-price"
         title="课程金额"/>
     </group>
 
     <!-- 支付方式 -->
     <group title="支付方式">
-      <cell
-        title="微信支付"
-        inline-desc="微信安全支付">
+      <cell style="padding: 15px 15px;">
         <img
           slot="icon"
-          width="60"
+          width="120"
           style="display:block;margin-right:5px;"
-          src="http://placeholder.qiniudn.com/80x60/8AEEB1/fff">
+          src="./../../../assets/wepay.png">
       </cell>
     </group>
 
     <!-- 支付 -->
     <div class="curriculum-order-pay">
-      <div class="curriculum-order-pay__amount">实付金额: ￥2800</div>
+      <div class="curriculum-order-pay__amount">实付金额: <span>￥ {{ product.price }}元</span></div>
       <div
         class="curriculum-order-pay__sure"
         @click="createOrder">去支付</div>
     </div>
 
     <!-- 选择小孩 -->
-    <childs
-      :show-childs="showChilds"
-      :childs="childs"
-      @updateChild="updateChild"
-    />
+    <div
+      v-transfer-dom>
+      <popup
+        v-model="showChilds"
+        position="bottom"
+        height="100%">
+        <childs
+          v-if="showChilds"
+          :child-value="childValue"
+          :childs="childs"
+          @updateChild="updateChild"
+        />
+      </popup>
+    </div>
 
     <!-- 优惠券 -->
     <voucher
@@ -248,8 +293,6 @@ export default {
 </template>
 
 <style lang="less">
-@group-title-margin-top: px2vw(24);
-.curriculum-order {}
 .curriculum-order-block {
   width: 100%;
   height: px2vw(24);
@@ -262,24 +305,32 @@ export default {
   padding: px2vw(24)
 }
 .curriculum-order-info__thumb {
-  margin-right: px2vw(24);
+  margin-right: px2vw(28);
+  img {
+    width: px2vw(160);
+  }
 }
 .curriculum-order-info__desc {
   flex: 1;
-  font-size: px2vw(32);
+  font-size: px2vw(34);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  font-weight: bold;
 }
 .curriculum-order-info-desc__name {
-  letter-spacing: 1px;
+  letter-spacing: px2vw(2);
   overflow : hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 }
+.curriculum-order-info-desc__price,
+.curriculum-order-cur-price .weui-cell__ft,
+.curriculum-order-pay__amount > span {
+  color: #e60012;
+}
+
 .curriculum-order-pay {
   position: fixed;
   bottom: 0;
@@ -289,7 +340,8 @@ export default {
   line-height: px2vw(100);
   display: flex;
   justify-content: flex-end;
-  background-color: #fff;
+  background-color: #efefef;
+  box-shadow: 0 -1px 5px #999;
 }
 .curriculum-order-pay__sure {
   background-color: #ccc;
@@ -297,5 +349,6 @@ export default {
   width: 30%;
   letter-spacing: 1px;
   margin-left: px2vw(30);
+  background-color: #ffd900;
 }
 </style>

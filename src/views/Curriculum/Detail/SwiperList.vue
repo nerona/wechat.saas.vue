@@ -14,7 +14,7 @@ export default {
     SwiperItem,
   },
   props: {
-    swiperList: {
+    attachment: {
       type: Array,
       default: () => ([]),
     },
@@ -24,15 +24,21 @@ export default {
   },
   computed: {
     auto() {
-      return this.swiperList.length !== 1;
+      return this.attachment.length !== 1;
     },
+  },
+  mounted() {
+    this.attachment.forEach((item) => {
+      // eslint-disable-next-line
+      item.img = item.url;
+    });
   },
 };
 </script>
 <template>
   <div class="swiper-list">
     <swiper
-      :list="swiperList"
+      :list="attachment"
       :show-desc-mask="false"
       :auto="auto"
       :aspect-ratio="350/750"

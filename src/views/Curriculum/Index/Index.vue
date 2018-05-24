@@ -31,37 +31,43 @@ export default {
       addressData: ChinaAddressV4Data,
       showAddress: false,
       addressValue: [],
-      thumbs: [
-        {
-          id: 1,
-          thumb: 'http://placeholder.qiniudn.com/120x120/caac23/fff',
-          title: '进阶课程1',
-          desc: '课程简介课程简简课程简课程',
-          status: 0,
-          price: 2990,
-          left: 10,
-          created: '2018-05-05 至 2018-05-06',
-        },
-        {
-          id: 2,
-          thumb: 'http://placeholder.qiniudn.com/120x120/caac23/fff',
-          title: '进阶课程2',
-          desc: '课程简介课程',
-          status: 1,
-          price: 2990,
-          left: 10,
-          created: '2018-05-05 至 2018-05-06',
-        },
 
-      ],
+      thumbs: [],
     };
   },
   created() {
+    this.$vux.loading.show();
     this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
+
+    this.getCurriculum();
+  },
+  mounted() {
+    // const url = /(Android)/i.test(navigator.userAgent) ?
+    // location.href : localStorage.getItem('linkUrl');
+
+    // this.$http.post('/bind/jssdk', { url }).then((res) => {
+    //   this.$wechat.config(res);
+    // });
+    // this.$wechat.ready(() => {
+    //   this.$wechat.getLocation({
+    //     type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+    //     success(res) {
+    //       localStorage.setItem('getLocation', 'no');
+    //       // eslint-disable-next-line
+    //       const latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+    //       // eslint-disable-next-line
+    //       const longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+    //       // eslint-disable-next-line
+    //       const speed = res.speed; // 速度，以米/每秒计
+    //       // eslint-disable-next-line
+    //       const accuracy = res.accuracy; // 位置精度
+    //     },
+    //   });
+    // });
   },
   methods: {
     goActivity() {
-      // this.$router.push(`/action/${this.banner.id}`)
+      this.$router.push('/activity/learn/index');
     },
     // 打开位置选择
     openAddress() {
@@ -73,6 +79,14 @@ export default {
       if (!str) return;
       // 确定
       this.location = value2name(this.addressValue, ChinaAddressV4Data);
+      this.$vux.loading.show();
+      this.getCurriculum();
+    },
+    getCurriculum() {
+      this.$http.get(`/course_packet/${this.addressValue[2]}`).then((res) => {
+        this.$vux.loading.hide();
+        this.thumbs = res.course_packets;
+      });
     },
   },
 };
@@ -101,8 +115,7 @@ export default {
         @click="goActivity">
         <img
           :src="banner.src"
-          class="curriculum-index-banner__image"
-          alt="">
+          class="curriculum-index-banner__image">
       </div>
 
       <!-- 课程列表 -->
@@ -113,7 +126,6 @@ export default {
 </template>
 
 <style lang="less">
-.curriculum-index {}
 .curriculum-index__location {
   font-size: px2vw(@font-size-big);
   position: relative;
@@ -121,24 +133,34 @@ export default {
 }
 .curriculum-index-location__content {
   position: relative;
-  padding-right: px2vw(50);
-  padding-left: px2vw(40);
+  padding-right: px2vw(40);
+  padding-left: px2vw(50);
   display: inline-block;
   line-height: px2vw(64);
+}
+.curriculum-index-location__content::before {
+  content: '';
+  display: block;
+  width: px2vw(18);
+  height: px2vw(26);
+  background: url('./../../../assets/location.png') no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  left: px2vw(22);
+  top: px2vw(20);
 }
 .curriculum-index-location__content::after {
   content: '';
   display: block;
   width: 0;
   height: 0;
-  border-width: px2vw(16) px2vw(16);
+  border-width: px2vw(16) px2vw(8);
   border-style: solid;
   border-color: #999 transparent transparent transparent;
   position: absolute;
-  right: 0px;
-  top: px2vw(24);
+  right: px2vw(10);
+  top: px2vw(26);
 }
-.curriculum-index__banner {}
 .curriculum-index-banner__image {
   width: 100%;
 }

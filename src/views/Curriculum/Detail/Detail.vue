@@ -5,7 +5,7 @@
  * @author  lindongfnag
  */
 
-import { XButton, ViewBox, Popup, Confirm } from 'vux';
+import { XButton, ViewBox, Popup, Confirm, Alert } from 'vux';
 import SwiperList from './SwiperList';
 import DetailPopup from './DetailPopup';
 
@@ -18,52 +18,55 @@ export default {
     Popup,
     DetailPopup,
     Confirm,
+    Alert,
   },
   data() {
     return {
       showPopup: false,
       noPermissionActivity: false,
-      info: {
-        id: 1,
-        type: 0, // 0购买-1试听
-        curriculum_name: '暑期课程-Phonics',
-        curriculum_desc: 'Phonics1-进阶Phonics1-进阶',
-        price_old: 2880,
-        price_new: 100,
-        swiperList: [{
-          img: 'http://placeholder.qiniudn.com/750x350/FF3B3B/ffffff',
-          title: '送你一朵fua',
-        }, {
-          img: 'http://placeholder.qiniudn.com/750x350/FFEF7D/ffffff',
-          title: '送你一次旅行',
-        }, {
-          img: 'http://placeholder.qiniudn.com/750x350/8AEEB1/ffffff',
-          title: '送你一朵fua',
-        }],
-      },
+      alertMsg: false,
+      errMsg: '',
 
+      popupData: {},
+
+      info: {
+        attachment: [],
+      },
     };
   },
   created() {
+    this.getDetail();
   },
   methods: {
     // 打开购买详情
     openPopup() {
-      // 购买
-      if (this.info.type === 0) {
-        this.showPopup = true;
-      } else if (this.info.type === 1) {
-        // 试听
-        this.noPermissionActivity = true;
-      }
+      this.$http.get(`/course_packet/inherent/${this.$route.params.id}`).then((res) => {
+         // 未领取试听课程
+        if (res.status === 2) {
+          this.noPermissionActivity = true;
+        } else {
+          this.popupData = res;
+          this.showPopup = true;
+        }
+      }).catch((err) => {
+        this.alertMsg = true;
+        this.errMsg = err.message;
+      });
     },
+
     // 知道了
     getIt() {
       this.noPermissionActivity = false;
     },
     // 前往活动页
     goActivity() {
+      this.$router.push('/activity/learn/index');
+    },
 
+    getDetail() {
+      this.$http.get(`/course_packet/surface/${this.$route.params.id}`).then((res) => {
+        this.info = res;
+      });
     },
   },
 };
@@ -72,24 +75,25 @@ export default {
 <template>
   <app-page class="curriculum-detail">
     <!-- 轮播图 -->
-    <swiper-list :swiper-list="info.swiperList" />
+    <swiper-list
+      v-if="info.attachment.length != 0"
+      :attachment="info.attachment" />
 
     <!-- 课程信息 -->
     <div class="curriculum-detail__info">
       <div class="curriculum-detail-info__name">
-        {{ info.curriculum_name }}
+        {{ info.name }}
       </div>
       <div class="curriculum-detail-info__desc">
-        {{ info.curriculum_desc }}
+        {{ info.introduce }}
       </div>
       <div class="curriculum-detail-info__price">
-        <span class="curriculum-detail-info__price--old">￥{{ info.price_old }}元</span>
+        <span class="curriculum-detail-info__price--old">￥{{ info.original_price }}元</span>
+        <!-- <span
+          v-if="info.category_type == 2"
+          class="curriculum-detail-info__price--null">￥0元</span> -->
         <span
-          v-if="info.type == 1"
-          class="curriculum-detail-info__price--null">￥0元</span>
-        <span
-          v-if="info.type == 0"
-          class="curriculum-detail-info__price--new">￥{{ info.price_new }}元</span>
+          class="curriculum-detail-info__price--new">￥{{ info.price }}元</span>
       </div>
     </div>
 
@@ -97,36 +101,18 @@ export default {
     <div class="curriculum-detail__detail">
       <div class="curriculum-detail-detail__title">课程详情</div>
       <div class="curriculum-detail-detail__content">
-        Phonics 1 进阶课程<br>
-        Phonics 1 进阶课程<br>
-        Phonics 1 进阶课程Phonics 1<br>
-        进阶课程Phonics 1 <br>
-        进阶课程Phonics 1<br>
-        进阶课程Phonics 1<br>
-        进阶课程Phonics 1<br>
-        进阶课程Phonics 1<br>
-        进阶课程Phonics 1 <br>
-        进阶课程Phonics 1<br>
-        进阶课程Phonics 1<br>
-        进阶课程Phonics 1<br>
-        进阶课程Phonics 1<br>
-        进阶课程Phonics 1 <br>
-        进阶课程Phonics 1<br>
-        进阶课程Phonics 1<br>
-        进阶课程Phonics 1<br>
-        进阶课程Phonics 1<br>
-        进阶课程Phonics 1 进阶课程<br>
+        <div v-html="info.info"/>
       </div>
     </div>
 
     <!-- 购买-试听 -->
     <div class="curriculum-detail__btns">
       <x-button
-        v-if="info.type == 0"
+        v-if="info.category_type == 1"
         type="primary"
         @click.native="openPopup">购买</x-button>
       <x-button
-        v-if="info.type == 1"
+        v-if="info.category_type == 2"
         type="primary"
         @click.native="openPopup">试听</x-button>
     </div>
@@ -138,7 +124,9 @@ export default {
         :should-scroll-top-on-show="true"
         height="75%"
       >
-        <detail-popup/>
+        <detail-popup
+          v-if="showPopup"
+          :popup-data="popupData"/>
       </popup>
     </div>
 
@@ -151,6 +139,11 @@ export default {
         cancel-text="知道了"
         @on-cancel="getIt"
         @on-confirm="goActivity"/>
+    </div>
+
+    <!-- 错误弹窗 -->
+    <div v-transfer-dom>
+      <alert v-model="alertMsg"> {{ errMsg }}</alert>
     </div>
 
   </app-page>
@@ -187,6 +180,7 @@ export default {
   margin-right: px2vw(30);
   text-decoration:line-through
 }
+.curriculum-detail-info__price--null,
 .curriculum-detail-info__price--new {
   color: @font-size-error-color;
 }

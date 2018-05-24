@@ -4,22 +4,16 @@
  *
  * @author  lindongfnag
  */
-
-import { Popup } from 'vux';
-
 export default {
   name: 'OrderChilds',
-  components: {
-    Popup,
-  },
   props: {
-    showChilds: {
-      type: Boolean,
-      default: () => (false),
-    },
     childs: {
       type: Array,
       default: () => ([]),
+    },
+    childValue: {
+      type: String,
+      default: '',
     },
   },
   data() {
@@ -27,48 +21,47 @@ export default {
       selected: null,
     };
   },
+  created() {
+    this.childs.forEach((item) => {
+      if (item.name === this.childValue) {
+        this.selected = item.id;
+      }
+    });
+  },
   methods: {
     goAddChild() {
-
+      this.$router.push('/learn/kid');
     },
     updateChild(id) {
-      this.selected = id;
       this.$emit('updateChild', id);
     },
   },
 };
 </script>
 <template>
-  <div
-    v-transfer-dom>
-    <popup
-      v-model="showChilds"
-      position="bottom"
-      height="100%">
-
-      <div class="order-childs">
-        <div
-          v-for="item in childs"
-          :key="item.id"
-          :class="{'active': item.id === selected}"
-          class="order-childs-item"
-          @click="updateChild(item.id)">
-          <img
-            :src="item.src"
-            class="order-childs-item__header">
-          <div class="order-childs-item__name">{{ item.name }}</div>
-        </div>
+  <div>
+    <div class="order-childs">
+      <div
+        v-for="item in childs"
+        :key="item.id"
+        :class="{'active': item.id === selected}"
+        class="order-childs-item"
+        @click="updateChild(item.id)">
+        <img
+          :src="item.head_url"
+          class="order-childs-item__header">
+        <div class="order-childs-item__name">{{ item.name }}</div>
       </div>
+    </div>
 
-      <div class="order-childs-btns">
-        <div
-          class="order-childs-btns__add"
-          @click="goAddChild" >
-          添加小孩
-        </div>
-        <!-- <div class="order-childs-btns__sure">确定</div> -->
+    <div class="order-childs-btns">
+      <div
+        class="order-childs-btns__add"
+        @click="goAddChild" >
+        添加小孩
       </div>
-    </popup>
+      <!-- <div class="order-childs-btns__sure">确定</div> -->
+    </div>
   </div>
 </template>
 
@@ -77,15 +70,20 @@ export default {
   display: flex;
   flex-wrap: wrap;
   text-align: center;
-  padding: px2vw(30) px2vw(30) px2vw(110) px2vw(30);
+  padding: px2vw(60) px2vw(30) px2vw(60) px2vw(30);
   overflow-y: scroll;
+  background-color: #fff;
 }
 .order-childs-item {
   width: 30%;
   margin-bottom: px2vw(40);
+  box-sizing: border-box;
+  img {
+    border-radius: 50%;
+  }
 }
-.order-childs-item.active {
-  transform: scale(1.05);
+.order-childs-item.active img {
+  border: 3px solid #ffd900;
 }
 .order-childs .order-childs-item:not(:nth-child(3n)) {
   margin-right: 5%;
