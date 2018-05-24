@@ -185,7 +185,7 @@ class Http {
   }
 }
 
-const productionURL = 'https://wechat.caihonggou.com';
+const productionURL = location.host;
 
 const apiRoot = (process.env.NODE_ENV === 'production')
   ? productionURL : '';
