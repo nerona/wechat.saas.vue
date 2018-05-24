@@ -80,8 +80,8 @@
     },
     methods: {
       // 经纬度
-      openMap(addr) {
-        console.log(addr);
+      openMap() {
+
       },
     },
   };

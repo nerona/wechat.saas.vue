@@ -86,12 +86,6 @@ export default {
       this.$refs.code4.value;
 
       this.$http.post('/bind/bind_phone', { mobile: this.phone, code }).then(() => {
-        this.$vux.toast.show({
-          text: '登录成功',
-          type: 'text',
-          width: 'auto',
-          position: 'bottom',
-        });
         this.$emit('closeCode');
       }).catch((err) => {
         this.$vux.toast.show({

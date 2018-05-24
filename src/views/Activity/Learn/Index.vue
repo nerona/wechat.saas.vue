@@ -52,7 +52,6 @@ export default {
     const vm = this;
     // ios 坑
     // const url = location.href;
-    console.log(localStorage.getItem('linkUrl'));
     const url = /(Android)/i.test(navigator.userAgent) ? location.href : localStorage.getItem('linkUrl');
 
     vm.$http.post('/bind/jssdk', { url }).then((res) => {
@@ -132,6 +131,37 @@ export default {
     },
     closeCode() {
       this.showCode = false;
+      this.$vux.loading.show();
+
+      // eslint-disable-next-line
+      this.$http.postNoRedirect(`/activity/${this.activityId}/reserve`, { prize_id: this.prizeId }).then((res) => {
+        this.$vux.loading.hide();
+        this.$vux.toast.show({
+          text: '领取成功',
+          type: 'text',
+          width: 'auto',
+        });
+        setTimeout(() => {
+          this.$router.push('/activity/learn/share');
+        }, 2000);
+      }).catch((err) => {
+        this.$vux.loading.hide();
+        if (err.status === 401) {
+           // 未登录
+          this.$emit('openCode', this.phone);
+        } else {
+          this.$vux.toast.show({
+            text: err.message,
+            type: 'text',
+            width: 'auto',
+          });
+          setTimeout(() => {
+            if (err.message.indexOf('已领取') !== -1) {
+              this.$router.push('/activity/learn/share');
+            }
+          }, 2000);
+        }
+      });
     },
     // 上传统计次数
     visit() {
