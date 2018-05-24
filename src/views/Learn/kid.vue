@@ -90,7 +90,7 @@ export default {
 
       if (Object.keys(from.query).length > 0) {
         routePage += '?';
-        from.query.forEach((item, index) => {
+        Object.keys(from.query).forEach((item, index) => {
           if (index !== (Object.keys(from.query).length - 1)) {
             routePage = `${routePage + item}=${from.query[item]}&`;
           } else {
@@ -267,6 +267,7 @@ export default {
         v-model="formData.name"
         title="小孩姓名"
         placeholder-align="right"
+        text-align="right"
         placeholder="请输入小孩姓名"
         required/>
       <datetime
