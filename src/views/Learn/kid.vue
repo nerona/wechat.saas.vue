@@ -267,6 +267,7 @@ export default {
         v-model="formData.name"
         :show-clear="false"
         title="小孩姓名"
+        text-align="right"
         placeholder-align="right"
         placeholder="请输入小孩姓名"
         required/>
