@@ -18,6 +18,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    studentId: {
+      type: Number,
+      default: null,
+    },
   },
 
   data() {
@@ -32,7 +36,7 @@ export default {
     },
 
     lookDetail(id) {
-      this.$router.push(`/learn/detail/${id}`);
+      this.$router.push(`/learn/detail/${this.studentId}_${id}`);
     },
   },
 };
@@ -57,10 +61,18 @@ export default {
       @click="lookDetail(item.curriculum_id)">
       <p>
         <span>课程名称：{{ item.curriculum_name }}</span>
-        <span class="course-list-fill__span">{{ item.curriculum_status_name }}</span>
+        <span class="course-list-fill__span">
+          <span v-if="item.curriculum_status === 1">{{ item.curriculum_status_name }}</span>
+          <span
+            v-else-if="item.curriculum_status === 2"
+            class="course-list-fill-span__red">{{ item.curriculum_status_name }}</span>
+          <span
+            v-else
+            class="course-list-fill-span__orange">{{ item.curriculum_status_name }}</span>
+        </span>
       </p>
       <p>课程时间：{{ item.range }}</p>
-      <p>学时：共{{ item.period }}课时，剩余{{ item.remain }}课时</p>
+      <p>学时：共{{ item.course_total }}课时，剩余{{ item.course_total - item.course_finish }}课时</p>
       <p>校区：{{ item.department_name }}</p>
     </div>
   </div>
@@ -79,6 +91,7 @@ export default {
 }
 .course-list-empty__button{
   width: px2vw(260) !important;
+  font-size: px2vw(32);
 }
 .course-list__fill{
   width: 100%;
@@ -86,9 +99,16 @@ export default {
   margin-top: px2vw(4);
   padding: px2vw(10) px2vw(30);
   position: relative;
+  font-size: px2vw(32);
 }
 .course-list-fill__span{
   position: absolute;
   right: px2vw(100);
+}
+.course-list-fill-span__red{
+  color: red;
+}
+.course-list-fill-span__orange{
+  color: #F9D500;
 }
 </style>

@@ -23,7 +23,7 @@ export default {
 
   data() {
     return {
-      kidInfo: {},
+      kidInfo: { current: {} },
 
       kidMenus: [],
       currKidId: null,
@@ -63,7 +63,7 @@ export default {
     },
 
     addKId() {
-      this.$router.push('/learn/kid');
+      this.$router.push({ path: '/learn/kid', query: { id: this.currKidId, name: 'hehe' } });
       this.showSheeet = false;
     },
 
@@ -71,8 +71,8 @@ export default {
       this.$router.push(`/learn/edit/${id}`);
     },
 
-    goCurriculum() {
-      this.$router.push('/learn/curriculum');
+    goCurriculum(curriculumId) {
+      this.$router.push(`/learn/curriculum/${this.currKidId}_${curriculumId}`);
     },
   },
 
@@ -87,8 +87,12 @@ export default {
           :src="kidInfo.head_url"
           class="learn-index-header__img">
         <div class="learn-index-header__info">
-          <span>{{ kidInfo.name }}</span>
-          <span @click="editAdd(kidInfo.id)"><icon type="info"/></span>
+          <span>{{ kidInfo.name }}</span>&nbsp;&nbsp;
+          <span @click="editAdd(kidInfo.id)">
+            <img
+              src="./../../assets/edit.png"
+              class="learn-index-header__edit">
+          </span>
           <br>
           <span>{{ kidInfo.birth_at }}</span>
         </div>
@@ -135,11 +139,11 @@ export default {
       <div class="learn-index__body">
         <group>
           <cell
-            v-if="kidInfo.current > 0"
-            :value="kidInfo.current + '有课'"
+            v-if="Object.keys(kidInfo.current).length > 0"
+            :value="kidInfo.current.range + '有课'"
             title="课程信息"
             is-link
-            @click.native="goCurriculum"/>
+            @click.native="goCurriculum(kidInfo.current.curriculum_id)"/>
           <cell
             v-else
             value="无课"
@@ -148,7 +152,10 @@ export default {
         </group>
       </div>
 
-      <course-list :course-data="kidInfo.curriculum"/>
+      <course-list
+        :course-data="kidInfo.curriculum"
+        :student-id="currKidId"
+      />
 
     </div>
   </AppPageWithTabbar>
@@ -173,6 +180,13 @@ export default {
   width: px2vw(100);
   height: px2vw(100);
   border-radius: 50%;
+}
+.learn-index-header__edit{
+  display: inline-block;
+  width: px2vw(30);
+  height: px2vw(30);
+  position: relative;
+  top: px2vw(6);
 }
 .learn-index-header__info{
   margin-left: px2vw(30);

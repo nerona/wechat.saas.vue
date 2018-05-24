@@ -6,6 +6,7 @@
  */
 
 import { Datetime, PopupPicker, Group, InlineCalendar } from 'vux';
+import { times } from '@/utils';
 
 export default {
   name: 'LearnCurriculum',
@@ -15,54 +16,109 @@ export default {
     Group,
     InlineCalendar,
   },
+  filters: {
+    getTime(str) {
+      const timeArr = str.split(':');
+      return `${timeArr[0]}:${timeArr[1]}`;
+    },
+  },
 
   data() {
     return {
-      currList: [['全部', '小学英语', '自然拼读']],
-      currVal: ['全部'],
+      studenId: this.$route.params.id.split('_')[0],
+      curriculumId: this.$route.params.id.split('_')[1],
 
+      currList: [['全部']],
+      currVal: ['全部'],
+      schedule: [],
+      curriculum: [],
+      curriculumInfo: {
+        curriculum_name: '',
+        block_status_name: '',
+        name: '',
+        start_time: '',
+        end_time: '',
+        performance: [],
+      },
+
+      showDot: false,
       show: true,
       value: 'TODAY',
-      listValue: '',
-      useCustomFn: false,
       buildSlotFn: (line, index, data) => this.changeDate(line, index, data),
       replaceTextList: { TODAY: '今' },
-      dateTime: `${new Date().getFullYear()}-${new Date().getMonth() + 1}`,
+      dateTime: `${new Date().getFullYear()}-${(new Date().getMonth() + 1) < 10 ? `0${new Date().getMonth() + 1}` : (new Date().getMonth() + 1)}`,
     };
   },
-  watch: {
+
+  created() {
+    this.getFormData(this.studenId, this.curriculumId);
   },
 
   methods: {
-    changeCurr() {
-      // console.log(val);
+    getFormData(studenId, curriculumId) {
+      this.$http.get(`/student/schedule/${studenId}/${curriculumId}`)
+      .then((res) => {
+        this.schedule = res.schedule;
+        this.curriculum = res.curriculum;
+
+        if (!this.showDot) {
+          this.currList = [];
+          const initCurr = ['全部'];
+          res.curriculum.forEach((item) => {
+            initCurr.push(item.name);
+          });
+          this.currList.push(initCurr);
+          const curriculum = res.curriculum.find(item => item.id === Number(curriculumId));
+          this.currVal = [curriculum.name];
+        }
+
+        this.showDot = true;
+        this.onChange(this.value);
+      })
+      .catch(({ message }) => {
+        this.$vux.toast.text(message, 'middle');
+      });
     },
-    onChange() {
-      // console.log('on-change', val);
+
+    changeCurr(val) {
+      if (val[0] === '全部') {
+        this.getFormData(this.studenId, 0);
+      } else {
+        const curriculum = this.curriculum.find(item => item.name === val[0]);
+        this.getFormData(this.studenId, curriculum.id);
+      }
     },
-    onViewChange() {
-      // console.log('on view change', val, count);
+    onChange(val) {
+      if (this.showDot) {
+        const dotDate = this.schedule.find(item => times.dateChange(item.date) === val);
+        this.curriculumInfo = dotDate;
+      }
     },
     changeTime(val) {
-      // console.log(val);
       const dateArr = val.split('-');
       this.$refs.calendar.switchViewToMonth(dateArr[0] * 1, dateArr[1] * 1);
     },
+
     changeDate(line, index, data) {
-      let strHtml = '';
-      if (/8/.test(data.date)) {
-        strHtml = '<div style="font-size:12px;text-align:center;"><span style="display:inline-block;width:5px;height:5px;background-color:red;border-radius:50%;"></span></div>';
-      } else if (/5/.test(data.date)) {
-        strHtml = '<div style="font-size:12px;text-align:center;"><span style="display:inline-block;width:5px;height:5px;background-color:gray;border-radius:50%;"></span></div>';
-      } else if (/6/.test(data.date)) {
-        strHtml = '<div style="font-size:12px;text-align:center;"><span style="display:inline-block;width:5px;height:5px;background-color:orange;border-radius:50%;"></span></div>';
-      } else if (/9/.test(data.date)) {
-        strHtml = '<div style="font-size:12px;text-align:center;"><span style="display:inline-block;width:5px;height:5px;background-color:blue;border-radius:50%;"></span></div>';
-      } else {
-        strHtml = '<div style="height:19px;"></div>';
+      let strHtml = '<div class="undotDiv"></div>';
+      if (this.showDot) {
+        const dotDate = this.schedule.find(item =>
+        times.dateChange(item.date) === data.formatedDate);
+        if (dotDate) {
+          if (dotDate.block_status === 1) {
+            strHtml = '<div class="dotDiv"><span class="dotSpan" style="background-color:blue;"></span></div>';
+          } else if (dotDate.block_status === 2) {
+            strHtml = '<div class="dotDiv"><span class="dotSpan" style="background-color:red;"></span></div>';
+          } else if (dotDate.block_status === 3) {
+            strHtml = '<div class="dotDiv"><span class="dotSpan" style="background-color:#69FFFE;"></span></div>';
+          } else {
+            strHtml = '<div class="undotDiv"></div>';
+          }
+        }
       }
       return strHtml;
     },
+
   },
 };
 </script>
@@ -95,15 +151,36 @@ export default {
         :render-function="buildSlotFn"
         :hide-header="true"
         class="learn-curriculum__calendar"
-        @on-change="onChange"
-        @on-view-change="onViewChange"/>
+        @on-change="onChange"/>
       <div class="learn-curriculum__inline">
         <div>
-          <span class="learn-curriculum-inline__span learn-curriculum-inline__red"/>&nbsp;缺勤
-          <span class="learn-curriculum-inline__span learn-curriculum-inline__orange"/>&nbsp;已评价
-          <span class="learn-curriculum-inline__span learn-curriculum-inline__blue"/>&nbsp;已上课
-          <span class="learn-curriculum-inline__span learn-curriculum-inline__gray"/>&nbsp;待上课
+          <span class="learn-curriculum-inline__span learn-curriculum-inline__red"/>&nbsp;上课中
+          <span class="learn-curriculum-inline__span learn-curriculum-inline__blue"/>&nbsp;待上课
+          <span class="learn-curriculum-inline__span learn-curriculum-inline__cyan"/>&nbsp;已上课
         </div>
+      </div>
+    </div>
+    <div class="learn-curriculum__info">
+      <div>
+        <span>课程名称：{{ curriculumInfo.curriculum_name }}</span>
+        <span style="float:right;">{{ curriculumInfo.block_status_name }}</span>
+      </div>
+      <div>教学内容：{{ curriculumInfo.name }}</div>
+      <div>上课时间：
+        <span v-if="curriculumInfo.start_time && curriculumInfo.end_time">
+          {{ curriculumInfo.start_time | getTime }} - {{ curriculumInfo.end_time | getTime }}
+        </span>
+      </div>
+    </div>
+    <div
+      v-if="curriculumInfo.performance.legth > 0"
+      class="learn-curriculum__performance">
+      <div style="color:gray">课堂表现</div>
+      <div
+        v-for="item in curriculumInfo.performance"
+        :key="item.name + item.score_name">
+        <span>{{ item.name }}</span>
+        <span style="float:right;">{{ item.score_name }}</span>
       </div>
     </div>
   </div>
@@ -115,6 +192,7 @@ export default {
 }
 .learn-curriculum .vux-no-group-title{
   margin-top: 0px;
+  font-size: px2vw(32);
 }
 .learn-curriculum__group .weui-cells:after{
   border-bottom: none;
@@ -142,20 +220,69 @@ export default {
 .learn-curriculum-inline__red{
   background: red;
 }
-.learn-curriculum-inline__orange{
-  background: orange;
-}
 .learn-curriculum-inline__blue{
   background: blue;
 }
-.learn-curriculum-inline__gray{
-  background: gray;
+.learn-curriculum-inline__cyan{
+  background: #69FFFE;
 }
 .learn-curriculum .inline-calendar td.current > span.vux-calendar-each-date{
   background: dodgerblue;
 }
 .learn-curriculum .inline-calendar td.is-today, .inline-calendar td.is-today.is-disabled{
   color:dodgerblue;
+}
+.learn-curriculum .inline-calendar td > span.vux-calendar-each-date{
+  width: px2vw(52);
+  height: px2vw(52);
+  line-height: px2vw(52);
+}
+.learn-curriculum .weui-cell_access .weui-cell__ft:after{
+    content: " ";
+    display: inline-block;
+    height: px2vw(12);
+    width: px2vw(12);
+    border-width: px2vw(4) px2vw(4) 0 0;
+    border-color: #C8C8CD;
+    border-style: solid;
+    transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+    position: absolute;
+    top: 50%;
+    margin-top: px2vw(-8);
+    right: px2vw(-5);
+}
+.learn-curriculum .inline-calendar,.learn-curriculum .vux-calendar-each-date{
+  font-size: px2vw(32);
+}
+
+.learn-curriculum__info{
+  background: #FFFFFF;
+  margin: px2vw(10) 0;
+  padding: px2vw(10);
+  font-size: px2vw(32);
+}
+.learn-curriculum__info div,.learn-curriculum__performance div{
+  padding: px2vw(10) px2vw(20);
+}
+.learn-curriculum__performance{
+  background: #FFFFFF;
+  padding: px2vw(10);
+  font-size: px2vw(32);
+}
+
+//上课中  待上课  已上课 在日期中的显示样式
+.dotDiv{
+  font-size: px2vw(24);
+  text-align: center;
+}
+.dotSpan{
+  display: inline-block;
+  width: px2vw(10);
+  height: px2vw(10);
+  border-radius: 50%;
+}
+.undotDiv{
+  height: px2vw(38);
 }
 </style>
 

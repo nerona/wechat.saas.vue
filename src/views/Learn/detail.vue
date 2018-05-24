@@ -19,22 +19,32 @@ export default {
 
   data() {
     return {
+      formData: {
+        course_finish: 0,
+        course_total: 0,
+        curriculum_introduce: '',
+        curriculum_name: '',
+        department_name: '',
+        schedule: [],
+      },
+
       showContent: true,
-      courseData: [
-        { id: 1, date: '05.05', week: '周一', time: '17:00-18:00', content: 'Learn A B' },
-        { id: 2, date: '05.10', week: '周二', time: '17:00-18:00', content: 'Learn A B' },
-      ],
     };
   },
 
+  created() {
+    const arrId = this.$route.params.id.split('_');
+    this.$http.get(`/student/curriculum/${arrId[0]}/${arrId[1]}`)
+    .then((res) => {
+      this.formData = res;
+    })
+    .catch(({ message }) => {
+      this.$vux.toast.text(message, 'middle');
+    });
+  },
+
   methods: {
-    lookDetail(key) {
-      if (key === 1) {
-        this.showContent = true;
-      } else {
-        this.showContent = false;
-      }
-    },
+
   },
 };
 </script>
@@ -42,31 +52,37 @@ export default {
 <template>
   <div class="learn-detail">
     <div class="learn-detail__header">
-      <p>课程名称：自然拼读</p>
-      <p>课时数：共20学时，剩余15学时</p>
-      <p>校区：五缘湾校区</p>
+      <p>课程名称：{{ formData.curriculum_name }}</p>
+      <p>课时数：共{{ formData.course_total }}学时，
+      剩余{{ formData.course_total - formData.course_finish }}学时</p>
+      <p>校区：{{ formData.department_name }}</p>
     </div>
     <div class="learn-detail__tab">
       <button-tab>
         <button-tab-item
           selected
-          @on-item-click="lookDetail(1)">课程介绍</button-tab-item>
+          @on-item-click="showContent = true">课程介绍</button-tab-item>
         <button-tab-item
-          @on-item-click="lookDetail(2)">课程目录</button-tab-item>
+          @on-item-click="showContent = false">课程目录</button-tab-item>
       </button-tab>
     </div>
     <div class="learn-detail__content">
       <div
         v-if="showContent === true"
         class="learn-detail-content__none">
-        <p>课程介绍内容</p>
-        <p>暂无</p>
+        <div v-if="!formData.curriculum_introduce">
+          <p>课程介绍内容</p>
+          <p>暂无</p>
+        </div>
+        <div v-else>
+          <p>{{ formData.curriculum_introduce }}</p>
+        </div>
       </div>
       <div
         v-else
         class="learn-detail-content__menu">
         <courseMenu
-          :course-data="courseData"/>
+          :course-data="formData.schedule"/>
       </div>
     </div>
   </div>
@@ -77,6 +93,8 @@ export default {
   width: 100%;
   padding: px2vw(40) px2vw(30);
   background: white;
+  height: px2vw(150);
+  font-size: px2vw(32);
 }
 .learn-detail__tab{
   margin: px2vw(20) 0;
@@ -87,6 +105,7 @@ export default {
   height: px2vw(105);
   border-radius: 0px !important;
   line-height: px2vw(105);
+  font-size: px2vw(32);
 }
 .learn-detail__tab .vux-button-group-current{
   color: black !important;
@@ -98,5 +117,6 @@ export default {
 .learn-detail-content__none{
   text-align: center;
   margin: px2vw(100) auto;
+  font-size: px2vw(32);
 }
 </style>

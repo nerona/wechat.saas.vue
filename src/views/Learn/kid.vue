@@ -265,7 +265,9 @@ export default {
     <div class="learn-kid__body">
       <x-input
         v-model="formData.name"
+        :show-clear="false"
         title="小孩姓名"
+        text-align="right"
         placeholder-align="right"
         text-align="right"
         placeholder="请输入小孩姓名"
