@@ -17,26 +17,27 @@ export default {
   },
   data() {
     return {
-      info: {
-        id: 1,
-        openid: '12341234adsfdsf',
-        headerUrl: 'http://placeholder.qiniudn.com/60x60/FFEF7D/fff',
-        name: '张娜',
-        nickname: '张娜',
-        tel: '18689238934',
-      },
+      info: {},
       roles: [],
       banner: {
         id: 1,
         src: 'http://placeholder.qiniudn.com/750x300/FFEF7D/fff',
       },
       activityRecord: null,
+
+      order: {},
     };
   },
   created() {
+    this.getBefore();
     this.getInfo();
   },
   methods: {
+    getBefore() {
+      this.$http.get('/order/count').then((res) => {
+        this.order = res;
+      });
+    },
     getInfo() {
       this.$http.get('/wechat_user/show').then((res) => {
         // eslint-disable-next-line
@@ -66,7 +67,8 @@ export default {
       :title="info.name || info.nickname"
       :inline-desc="info.phone"
       is-link
-      link="/user/edit">
+      link="/user/edit"
+      style="margin-top: 10px;">
       <img
         slot="icon"
         :src="info.headimgurl"
@@ -82,19 +84,19 @@ export default {
         <div
           class="vux-1px-r"
           @click="goOrder(0)">
-          <span>30</span>
+          <span>{{ order.all }}</span>
           <br>
           全部
         </div>
         <div
           class="vux-1px-r"
           @click="goOrder(1)">
-          <span>15</span>
+          <span>{{ order.unpaid }}</span>
           <br>
           代付款
         </div>
         <div @click="goOrder(2)">
-          <span>0</span>
+          <span>{{ order.paid }}</span>
           <br>
           已付款
         </div>
@@ -126,7 +128,6 @@ export default {
 .user-index {
   .weui-cell {
     background-color: #fff;
-    margin-top: px2vw(20);
   }
 }
 .user-index-info {

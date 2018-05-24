@@ -36,7 +36,7 @@
       >
         <div class="curriculum-item__thumb">
           <img
-            :src="item.cover_url">
+            v-lazy="item.cover_url">
             <!-- <div
             v-if="item.stock_remain === 0"
             class="curriculum-item__thumb--full">满员</div> -->
