@@ -56,6 +56,18 @@ export default {
     goOrder(type) {
       this.$router.push(`/user/order/${type}`);
     },
+    // 退出登录
+    logout() {
+      this.$http.post('/bind/logout').then(() => {
+        this.$router.push('/sign-in');
+      }).catch(({ message }) => {
+        this.$vux.toast.show({
+          text: message,
+          type: 'text',
+          width: 'auto',
+        });
+      });
+    },
   },
 };
 </script>
@@ -118,7 +130,9 @@ export default {
     </group>
 
     <div class="user-index-logout">
-      <x-button type="primary">退出</x-button>
+      <x-button
+        type="primary"
+        @click.native="logout">退出</x-button>
     </div>
 
   </AppPageWithTabbar>
