@@ -4,7 +4,7 @@
  *
  * @author lindongfang
  */
-
+import AMap from 'AMap';
 import {
   XAddress,
   ChinaAddressV4Data,
@@ -37,33 +37,23 @@ export default {
   },
   created() {
     this.$vux.loading.show();
-    this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
-
-    this.getCurriculum();
   },
   mounted() {
-    // const url = /(Android)/i.test(navigator.userAgent) ?
-    // location.href : localStorage.getItem('linkUrl');
+    // 微信config
+    const url = /(Android)/i.test(navigator.userAgent) ?
+    location.href : localStorage.getItem('linkUrl');
 
-    // this.$http.post('/bind/jssdk', { url }).then((res) => {
-    //   this.$wechat.config(res);
-    // });
-    // this.$wechat.ready(() => {
-    //   this.$wechat.getLocation({
-    //     type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-    //     success(res) {
-    //       localStorage.setItem('getLocation', 'no');
-    //       // eslint-disable-next-line
-    //       const latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-    //       // eslint-disable-next-line
-    //       const longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-    //       // eslint-disable-next-line
-    //       const speed = res.speed; // 速度，以米/每秒计
-    //       // eslint-disable-next-line
-    //       const accuracy = res.accuracy; // 位置精度
-    //     },
-    //   });
-    // });
+    this.$http.post('/bind/jssdk', { url, debug: true }).then((res) => {
+      this.$wechat.config(res);
+    });
+
+    // 判断是否第一次用微信进入
+    if (localStorage.getItem('_getLocation') === null && /MicroMessenger/i.test(navigator.userAgent)) {
+      this.getLocation();
+    } else {
+      this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
+      this.getCurriculum();
+    }
   },
   methods: {
     goActivity() {
@@ -87,6 +77,55 @@ export default {
         this.$vux.loading.hide();
         this.thumbs = res.course_packets;
       });
+    },
+    getLocation() {
+      const vm = this;
+      vm.$wechat.ready(() => {
+        vm.$wechat.getLocation({
+          type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+          success(res) {
+            localStorage.setItem('_getLocation', 'no');
+          // eslint-disable-next-line
+          const latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+          // eslint-disable-next-line
+          const longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+            vm.regeocoder(res.latitude, res.longitude);
+          },
+          fail() {
+            vm.addressValue = name2value(vm.location.split(' '), ChinaAddressV4Data).split(' ');
+            vm.getCurriculum();
+          },
+          cancel() {
+            vm.addressValue = name2value(vm.location.split(' '), ChinaAddressV4Data).split(' ');
+            vm.getCurriculum();
+          },
+        });
+      });
+    },
+
+    // 逆向地理编码
+    regeocoder(latitude, longitude) {
+      const lnglatXY = [latitude, longitude]; // 已知点坐标
+      const geocoder = new AMap.Geocoder({
+        radius: 1000,
+        extensions: 'all',
+      });
+      geocoder.getAddress(lnglatXY, (status, result) => {
+      // eslint-disable-next-line
+        if (status === 'complete' && result.info === 'OK') {
+          this.geocoder_CallBack(result);
+        }
+      });
+    },
+    geocoder_CallBack(data) {
+      const address = data.regeocode.addressComponent; // 返回地址描述
+      const { province, city, district } = address;
+      // eslint-disable-next-line
+      console.log(province, city, district);
+      this.location = `${province} ${city} ${district}`;
+      this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
+
+      this.getCurriculum();
     },
   },
 };
