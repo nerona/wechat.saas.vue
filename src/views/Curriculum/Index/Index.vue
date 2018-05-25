@@ -48,12 +48,13 @@ export default {
     });
 
     // 判断是否第一次用微信进入
-    if (localStorage.getItem('_getLocation') === null && /MicroMessenger/i.test(navigator.userAgent)) {
-      this.getLocation();
-    } else {
-      this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
-      this.getCurriculum();
-    }
+    // if (localStorage.getItem('_getLocation') === null
+    // && /MicroMessenger/i.test(navigator.userAgent)) {
+    this.getLocation();
+    // } else {
+    //   this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
+    //   this.getCurriculum();
+    // }
   },
   methods: {
     goActivity() {
