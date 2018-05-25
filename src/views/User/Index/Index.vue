@@ -54,7 +54,7 @@ export default {
       this.$router.push('/user/edit');
     },
     goOrder(type) {
-      this.$router.push(`/user/order/${type}`);
+      this.$router.push(`/user/order?type=${type}`);
     },
     // 退出登录
     logout() {

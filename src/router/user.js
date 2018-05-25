@@ -19,7 +19,7 @@ export default [
     },
   },
   {
-    path: '/user/order/:type',
+    path: '/user/order',
     name: 'UserOrder',
     component: views.UserOrder,
   },
