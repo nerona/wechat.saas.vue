@@ -43,18 +43,18 @@ export default {
     const url = /(Android)/i.test(navigator.userAgent) ?
     location.href : localStorage.getItem('linkUrl');
 
-    this.$http.post('/bind/jssdk', { url, debug: true }).then((res) => {
+    this.$http.post('/bind/jssdk', { url }).then((res) => {
       this.$wechat.config(res);
     });
 
-    // 判断是否第一次用微信进入
-    // if (localStorage.getItem('_getLocation') === null
-    // && /MicroMessenger/i.test(navigator.userAgent)) {
-    this.getLocation();
-    // } else {
-    //   this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
-    //   this.getCurriculum();
-    // }
+    // 判断是否第一次用微信进入;
+    if (localStorage.getItem('_getLocation') === null
+    && /MicroMessenger/i.test(navigator.userAgent)) {
+      this.getLocation();
+    } else {
+      this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
+      this.getCurriculum();
+    }
   },
   methods: {
     goActivity() {
@@ -106,34 +106,21 @@ export default {
 
     // 逆向地理编码
     regeocoder(latitude, longitude) {
-      // eslint-disable-next-line
-      alert('enter recode');
       const lnglatXY = [latitude, longitude]; // 已知点坐标
-      // eslint-disable-next-line
-      alert(lnglatXY);
       const geocoder = new AMap.Geocoder({
         radius: 1000,
         extensions: 'all',
       });
       geocoder.getAddress(lnglatXY, (status, result) => {
-        // eslint-disable-next-line
-        alert(status);
-        // eslint-disable-next-line
-        alert(JSON.stringify(result));
         if (status === 'complete' && result.info === 'OK') {
-          // eslint-disable-next-line
-          alert("enter result");
           this.geocoder_CallBack(result);
         }
       });
     },
     geocoder_CallBack(data) {
-      // eslint-disable-next-line
-      alert('enter callback');
       const address = data.regeocode.addressComponent; // 返回地址描述
       const { province, city, district } = address;
-      // eslint-disable-next-line
-      alert(province, city, district);
+
       this.location = `${province} ${city} ${district}`;
       this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
 
