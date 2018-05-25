@@ -37,19 +37,20 @@ export default {
   },
   created() {
     this.$vux.loading.show();
+    localStorage.removeItem('_getLocation');
   },
   mounted() {
     // 微信config
     const url = /(Android)/i.test(navigator.userAgent) ?
     location.href : localStorage.getItem('linkUrl');
 
-    this.$http.post('/bind/jssdk', { url }).then((res) => {
+    this.$http.post('/bind/jssdk', { url, debug: true }).then((res) => {
       this.$wechat.config(res);
     });
 
     // 判断是否第一次用微信进入;
     if (localStorage.getItem('_getLocation') === null
-    && /MicroMessenger/i.test(navigator.userAgent)) {
+          && /MicroMessenger/i.test(navigator.userAgent)) {
       this.getLocation();
     } else {
       this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
