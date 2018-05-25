@@ -85,10 +85,10 @@ export default {
           type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
           success(res) {
             localStorage.setItem('_getLocation', 'no');
-          // eslint-disable-next-line
-          const latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-          // eslint-disable-next-line
-          const longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+            // eslint-disable-next-line
+            const latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+            // eslint-disable-next-line
+            const longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
             vm.regeocoder(res.latitude, res.longitude);
           },
           fail() {
@@ -105,13 +105,15 @@ export default {
 
     // 逆向地理编码
     regeocoder(latitude, longitude) {
+      // eslint-disable-next-line
+      alert('enter recode');
       const lnglatXY = [latitude, longitude]; // 已知点坐标
       const geocoder = new AMap.Geocoder({
         radius: 1000,
         extensions: 'all',
       });
       geocoder.getAddress(lnglatXY, (status, result) => {
-      // eslint-disable-next-line
+        // eslint-disable-next-line
         if (status === 'complete' && result.info === 'OK') {
           this.geocoder_CallBack(result);
         }
@@ -121,7 +123,7 @@ export default {
       const address = data.regeocode.addressComponent; // 返回地址描述
       const { province, city, district } = address;
       // eslint-disable-next-line
-      console.log(province, city, district);
+      alert(province, city, district);
       this.location = `${province} ${city} ${district}`;
       this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
 
