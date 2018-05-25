@@ -109,6 +109,8 @@ export default {
       // eslint-disable-next-line
       alert('enter recode');
       const lnglatXY = [latitude, longitude]; // 已知点坐标
+      // eslint-disable-next-line
+      alert(lnglatXY);
       const geocoder = new AMap.Geocoder({
         radius: 1000,
         extensions: 'all',
@@ -117,7 +119,7 @@ export default {
         // eslint-disable-next-line
         alert(status);
         // eslint-disable-next-line
-        alert(result);
+        alert(JSON.stringify(result));
         if (status === 'complete' && result.info === 'OK') {
           // eslint-disable-next-line
           alert("enter result");
