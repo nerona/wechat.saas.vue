@@ -37,7 +37,8 @@ export default {
   },
   created() {
     this.$vux.loading.show();
-    localStorage.removeItem('_getLocation');
+    // 清除位置信息
+    // localStorage.removeItem('_getLocation');
   },
   mounted() {
     // 微信config
@@ -52,6 +53,10 @@ export default {
     if (localStorage.getItem('_getLocation') === null
           && /MicroMessenger/i.test(navigator.userAgent)) {
       this.getLocation();
+    } else if (localStorage.getItem('_getLocation') !== null) {
+      this.location = localStorage.getItem('_getLocation');
+      this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
+      this.getCurriculum();
     } else {
       this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
       this.getCurriculum();
@@ -71,22 +76,24 @@ export default {
       if (!str) return;
       // 确定
       this.location = value2name(this.addressValue, ChinaAddressV4Data);
+      localStorage.setItem('_getLocation', this.location);
       this.$vux.loading.show();
       this.getCurriculum();
     },
+    // 获取课程包信息
     getCurriculum() {
       this.$http.get(`/course_packet/${this.addressValue[2]}`).then((res) => {
         this.$vux.loading.hide();
         this.thumbs = res.course_packets;
       });
     },
+    // 微信获取位置
     getLocation() {
       const vm = this;
       vm.$wechat.ready(() => {
         vm.$wechat.getLocation({
           type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
           success(res) {
-            localStorage.setItem('_getLocation', 'no');
             // eslint-disable-next-line
             const latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
             // eslint-disable-next-line
@@ -124,6 +131,7 @@ export default {
 
       this.location = `${province} ${city} ${district}`;
       this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
+      localStorage.setItem('_getLocation', this.location);
 
       this.getCurriculum();
     },
