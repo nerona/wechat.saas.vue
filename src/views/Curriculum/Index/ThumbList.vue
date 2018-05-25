@@ -67,7 +67,7 @@
 
 <style lang="less">
 .curriculum-list {
-  margin-top: px2vw(20);
+  margin-top: px2vw(10);
 }
 .curriculum-item {
   background-color: #fff;
@@ -75,7 +75,7 @@
   padding: px2vw(26) px2vw(26);
   overflow: hidden;
   font-size: px2vw(@font-size-big);
-  margin-bottom: px2vw(20);
+  margin-bottom: px2vw(10);
 }
 .curriculum-item__thumb {
   width: 36%;
