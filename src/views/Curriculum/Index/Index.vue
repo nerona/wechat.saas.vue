@@ -44,19 +44,15 @@ export default {
     const url = /(Android)/i.test(navigator.userAgent) ?
     location.href : localStorage.getItem('linkUrl');
 
-    this.$http.post('/bind/jssdk', { url, debug: true }).then((res) => {
+    this.$http.post('/bind/jssdk', { url }).then((res) => {
       this.$wechat.config(res);
     });
 
     // 判断是否第一次用微信进入;
     if (localStorage.getItem('_getLocation') === null
           && /MicroMessenger/i.test(navigator.userAgent)) {
-            // eslint-disable-next-line
-            alert('first time');
       this.getLocation();
     } else {
-      // eslint-disable-next-line
-       alert('times');
       this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
       this.getCurriculum();
     }
