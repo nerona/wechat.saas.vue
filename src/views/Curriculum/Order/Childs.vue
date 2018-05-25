@@ -70,23 +70,27 @@ export default {
   display: flex;
   flex-wrap: wrap;
   text-align: center;
-  padding: px2vw(60) px2vw(30) px2vw(60) px2vw(30);
+  padding: px2vw(60) px2vw(25) px2vw(60) px2vw(25);
   overflow-y: scroll;
   background-color: #fff;
 }
 .order-childs-item {
-  width: 30%;
   margin-bottom: px2vw(40);
   box-sizing: border-box;
   img {
     border-radius: 50%;
+    width: px2vw(200);
+    height: px2vw(200);
+    border-width: px2vw(8);
+    border-style: solid;
+    border-color: transparent;
   }
 }
 .order-childs-item.active img {
-  border: 3px solid #ffd900;
+  border-color: #ffd900;
 }
 .order-childs .order-childs-item:not(:nth-child(3n)) {
-  margin-right: 5%;
+  margin-right: px2vw(26);
 }
 .order-childs-item__header {
   width: 100%;
