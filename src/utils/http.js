@@ -185,9 +185,4 @@ class Http {
   }
 }
 
-const productionURL = location.host;
-
-const apiRoot = (process.env.NODE_ENV === 'production')
-  ? productionURL : '';
-
-export default new Http(apiRoot, 'v1');
+export default new Http('', 'v1');
