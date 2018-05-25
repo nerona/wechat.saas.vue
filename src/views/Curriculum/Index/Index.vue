@@ -115,12 +115,19 @@ export default {
       });
       geocoder.getAddress(lnglatXY, (status, result) => {
         // eslint-disable-next-line
+        alert(status);
+        // eslint-disable-next-line
+        alert(result);
         if (status === 'complete' && result.info === 'OK') {
+          // eslint-disable-next-line
+          alert("enter result");
           this.geocoder_CallBack(result);
         }
       });
     },
     geocoder_CallBack(data) {
+      // eslint-disable-next-line
+      alert('enter callback');
       const address = data.regeocode.addressComponent; // 返回地址描述
       const { province, city, district } = address;
       // eslint-disable-next-line
