@@ -60,9 +60,6 @@ export default {
         if (this.info.headimgurl === null || this.info.headimgurl === '') {
           this.info.headimgurl = 'http://placeholder.qiniudn.com/60x60/FFEF7D/fff';
         }
-        if (this.info.nickname === null || this.info.nickname === '') {
-          this.info.nickname = 'imkid';
-        }
       });
     },
     onChange(str) {
@@ -136,7 +133,7 @@ export default {
         v-model="info.nickname"
         :readonly="true"
         type="text"
-        placeholder="请输入昵称"
+        placeholder="暂无昵称"
         text-align="right"
         title="微信昵称"/>
     </group>

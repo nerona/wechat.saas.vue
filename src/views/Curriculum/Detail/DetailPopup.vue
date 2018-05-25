@@ -224,7 +224,7 @@ export default {
   min-width: 48%;
   line-height: px2vw(66);
   height: px2vw(66);
-  border: 1px solid #ccc;
+  border: 1px solid #333;
   text-align: center;
   letter-spacing: 1px;
   margin-bottom: px2vw(20);

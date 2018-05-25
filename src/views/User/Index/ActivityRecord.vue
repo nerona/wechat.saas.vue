@@ -9,30 +9,18 @@ export default {
   name: 'UserActivity',
   data() {
     return {
-      list: [
-        {
-          id: 1,
-          img: 'http://placeholder.qiniudn.com/750x350/FF3B3B/ffffff',
-          title: '送你一朵fua',
-          created: '2018-05-05',
-          result: 4,
-        },
-        {
-          id: 2,
-          img: 'http://placeholder.qiniudn.com/750x350/FFEF7D/ffffff',
-          title: '送你一次旅行',
-          created: '2018-05-05',
-          result: 6,
-        },
-        {
-          id: 3,
-          img: 'http://placeholder.qiniudn.com/750x350/8AEEB1/ffffff',
-          title: '送你一朵fua',
-          created: '2018-05-05',
-          result: 8,
-        },
-      ],
+      list: [],
     };
+  },
+  created() {
+    this.getBefore();
+  },
+  methods: {
+    getBefore() {
+      this.$http.get('/activity/record').then((res) => {
+        this.list = res.data;
+      });
+    },
   },
 };
 
@@ -43,17 +31,17 @@ export default {
       <div
         v-for="item in list"
         :key="item.id"
-        class="user-activity-item">
+        class="user-activity-item vux-1px-b">
         <img
-          :src="item.img"
+          :src="item.activity.cover"
           class="user-activity-item__img">
         <div class="user-activity-item__title">
-          <div>{{ item.title }}</div>
-          <div>{{ item.created }}</div>
+          <div>{{ item.activity.name }}</div>
+          <div>{{ item.created_at.split(' ')[0] }}</div>
         </div>
-        <div class="user-activity-item__result">
-          获得学时 {{ item.result }}
-        </div>
+        <!-- <div class="user-activity-item__result">
+          获得学时 {{ item.prize_status }}
+        </div> -->
       </div>
     </div>
   </AppPage>
