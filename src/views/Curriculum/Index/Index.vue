@@ -90,7 +90,7 @@ export default {
             const latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
             // eslint-disable-next-line
             const longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-            vm.regeocoder(res.latitude, res.longitude);
+            vm.regeocoder(res.longitude, res.latitude);
           },
           fail() {
             vm.addressValue = name2value(vm.location.split(' '), ChinaAddressV4Data).split(' ');
