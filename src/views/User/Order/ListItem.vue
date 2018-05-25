@@ -24,6 +24,10 @@ export default {
   },
 
   methods: {
+    toDetail() {
+      this.$router.push(`/user/order/${this.data.id}`);
+    },
+
     toPay() {
 
     },
@@ -32,8 +36,8 @@ export default {
 </script>
 
 <template>
-  <div class="user-order-item">
-    <div class="user-order-item__header">
+  <div class="order-item">
+    <div class="order-item__header">
       <span>{{ data.order_type_name }}</span>
       <span
         :style="
@@ -42,14 +46,17 @@ export default {
         "
       >{{ data.order_status_name }}</span>
     </div>
-    <div class="user-order-item__body">
+    <div
+      class="order-item__body"
+      @click="toDetail"
+    >
       <div
         :style="{
           'background-image': `url(${data.course_packet.cover_url})`
         }"
-        class="user-order-item__avatar"
+        class="order-item__avatar"
       />
-      <ul class="user-order-item__info">
+      <ul class="order-item__info">
         <li>{{ data.course_packet.name }}</li>
         <li>{{ data.created_date }}</li>
         <li>课程金额: <span>￥{{ data.amount_paid }}</span></li>
@@ -57,7 +64,7 @@ export default {
     </div>
     <div
       v-if="data.pay_count_down"
-      class="user-order-item__footer"
+      class="order-item__footer"
     >
       <XButton
         type="primary"
@@ -75,34 +82,34 @@ export default {
 @bg-default: #999;
 @color-split: lighten(@border-line-color, 20%);
 
-.user-order-item {
+.order-item {
   margin-bottom: 0.6em;
   background-color: white;
 }
 
-.user-order-item__header,
-.user-order-item__body,
-.user-order-item__footer {
+.order-item__header,
+.order-item__body,
+.order-item__footer {
   display: flex;
   padding: px2vw(@gutter-y) px2vw(@gutter-x);
 }
 
-.user-order-item__body,
-.user-order-item__footer {
+.order-item__body,
+.order-item__footer {
   border-top: 1px solid @color-split;
 }
 
-.user-order-item__header {
+.order-item__header {
   color: @font-size-second-color;
   justify-content: space-between;
   align-items: stretch;
 }
 
-.user-order-item__header > span:first-child {
+.order-item__header > span:first-child {
   display: inline-block;
 }
 
-.user-order-item__header > span:first-child::after {
+.order-item__header > span:first-child::after {
   content: '';
   display: inline-block;
   width: 0.5em;
@@ -112,35 +119,35 @@ export default {
   transform: rotateZ(45deg);
 }
 
-.user-order-item__info {
+.order-item__info {
   display: flex;
   flex-direction: column;
 }
 
-.user-order-item__info > li {
+.order-item__info > li {
   list-style: none;
 }
 
-.user-order-item__info > li:first-child {
+.order-item__info > li:first-child {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.user-order-item__info > li:nth-child(2) {
+.order-item__info > li:nth-child(2) {
   color: @font-size-third-color;
   font-size: 0.9em;
 }
 
-.user-order-item__info > li:last-child {
+.order-item__info > li:last-child {
   margin-top: auto;
 }
 
-.user-order-item__info > li:last-child > span {
+.order-item__info > li:last-child > span {
   font-size: 1.2em;
 }
 
-.user-order-item__avatar {
+.order-item__avatar {
   flex-shrink: 0;
   background-size: 100% 100%;
   margin-right: px2vw(@gutter-x);
@@ -149,16 +156,16 @@ export default {
   background-color: @bg-default;
 }
 
-.user-order-item__info {
+.order-item__info {
   flex: auto;
   min-width: 0;
 }
 
-.user-order-item__footer {
+.order-item__footer {
   justify-content: flex-end;
 }
 
-.user-order-item__footer .weui-btn {
+.order-item__footer .weui-btn {
   margin: 0;
 }
 </style>

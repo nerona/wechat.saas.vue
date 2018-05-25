@@ -18,10 +18,17 @@ export default [
       title: '个人中心',
     },
   },
+  // 订单列表
   {
     path: '/user/order',
-    name: 'UserOrder',
-    component: views.UserOrder,
+    name: 'UserOrderList',
+    component: views.UserOrderList,
+  },
+  // 订单详情
+  {
+    path: '/user/order/:id',
+    name: 'UserOrderDetail',
+    component: views.UserOrderDetail,
   },
   {
     path: '/user/edit',

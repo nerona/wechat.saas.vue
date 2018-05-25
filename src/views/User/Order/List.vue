@@ -7,7 +7,7 @@
 
 import { Tab, TabItem } from 'vux';
 import { pageUtils, formUtils } from '@/mixins';
-import OrderItem from './OrderItem';
+import ListItem from './ListItem';
 
 export default {
   name: 'UserOrder',
@@ -15,7 +15,7 @@ export default {
   components: {
     Tab,
     TabItem,
-    OrderItem,
+    ListItem,
   },
 
   mixins: [pageUtils, formUtils],
@@ -72,17 +72,17 @@ export default {
 };
 </script>
 <template>
-  <AppPageWithTabbar class="user-order">
+  <AppPageWithTabbar class="order-list">
     <Tab
-      class="user-order__tab"
+      class="order-list__tab"
       active-color="black"
     >
       <TabItem
         v-for="item in orderTypes"
         :key="item.state"
         :class="{
-          'user-order__tab-item': true,
-          'user-order__tab-item--active': item.state === $route.params.type,
+          'order-list__tab-item': true,
+          'order-list__tab-item--active': item.state === $route.params.type,
         }"
         @on-item-click="() => changeOrderState(item.state)"
       >
@@ -90,7 +90,7 @@ export default {
       </TabItem>
     </Tab>
 
-    <OrderItem
+    <ListItem
       v-for="order in orderList"
       :key="order.id"
       :data="order"
@@ -99,19 +99,19 @@ export default {
 </template>
 
 <style lang="less">
-.user-order {
+.order-list {
   font-size: 14px;
 }
 
-.user-order .weui-tab__panel {
+.order-list .weui-tab__panel {
   padding-top: 51px;
 }
 
-.user-order .vux-tab-ink-bar {
+.order-list .vux-tab-ink-bar {
   display: none !important;
 }
 
-.user-order__tab {
+.order-list__tab {
   position: fixed !important;
   z-index: 1;
   top: 0;
@@ -119,7 +119,7 @@ export default {
   margin-bottom: 0.5em !important;
 }
 
-.user-order__tab-item--active {
+.order-list__tab-item--active {
   color: black !important;
   background-color: @button-background-color !important;
 }

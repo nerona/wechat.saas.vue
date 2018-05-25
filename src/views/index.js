@@ -30,4 +30,5 @@ export { default as LearnCurriculum } from './Learn/curriculum';
 export { default as UserIndex } from './User/Index/Index';
 export { default as UserEdit } from './User/Index/Edit';
 export { default as UserActivity } from './User/Index/ActivityRecord';
-export { default as UserOrder } from './User/Order';
+export { default as UserOrderList } from './User/Order/List';
+export { default as UserOrderDetail } from './User/Order/Detail';
