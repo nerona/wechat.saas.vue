@@ -82,7 +82,7 @@ export default {
         :key="item.state"
         :class="{
           'order-list__tab-item': true,
-          'order-list__tab-item--active': item.state === $route.params.type,
+          'order-list__tab-item--active': item.state === $route.query.type,
         }"
         @on-item-click="() => changeOrderState(item.state)"
       >
