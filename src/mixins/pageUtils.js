@@ -4,7 +4,11 @@
  * @author  huojinzhao
  */
 
+import httpUtils from './httpUtils';
+
 export default {
+
+  mixins: [httpUtils],
 
   methods: {
     /**
@@ -23,16 +27,21 @@ export default {
     },
 
     // 验证是否登录有效，无效跳转登录页
-    $_pageMixin_checkSession({ status }) {
-      if (status === 401) {
-        const from = this.$route.fullpath;
-
-        this.$router.push(`/sign-in?from=${from}`);
-      }
+    $_pageMixin_checkSession(body) {
+      this.$_checkSession(body);
     },
-  },
 
-  created() {
-    this.$_pageMixin_showLoading();
+    // 请求数据的统一方法
+    $_pageMixin_fetchData(url, callback) {
+      this.$_pageMixin_showLoading();
+
+      return this.$http.get(url)
+        .then(callback)
+        .catch((error) => {
+          this.$_pageMixin_checkSession(error);
+          this.$_alertError(error);
+        })
+        .then(this.$_pageMixin_hideLoading);
+    },
   },
 };
