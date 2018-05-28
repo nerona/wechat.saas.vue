@@ -33,8 +33,9 @@ export default {
     // ios 坑
     // const url = location.href;
     const url = /(Android)/i.test(navigator.userAgent) ? location.href : localStorage.getItem('linkUrl');
-
-    vm.$http.post('/bind/jssdk', { url, debug: true }).then((res) => {
+    // eslint-disable-next-line
+    alert('test:' + url);
+    vm.$http.post('/bind/jssdk', { url }).then((res) => {
       vm.$wechat.config(res);
     });
 

@@ -19,6 +19,14 @@ export default {
       type: Number,
       default: 1,
     },
+    isLogged: {
+      type: Boolean,
+      default: false,
+    },
+    isReserved: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
@@ -57,19 +65,25 @@ export default {
     goDetail(id) {
       // this.$router.push(`/curriculum/detail/${id}`);
     },
-    submit() {
-      if (!this.active) {
-        return;
+    goShare() {
+      this.$router.push('/activity/learn/share');
+    },
+    submit(isLogged) {
+      if (!isLogged) {
+        if (!this.active) {
+          return;
+        }
+        const pattern = /^(13[0-9]|14[579]|15[0-3,5-9]|17[0135678]|18[0-9]|19[0-9])\d{8}$/;
+        if (!pattern.test(this.phone)) {
+          this.$vux.toast.show({
+            text: '请输入正确的手机号',
+            type: 'text',
+            width: 'auto',
+          });
+          return;
+        }
       }
-      const pattern = /^(13[0-9]|14[579]|15[0-3,5-9]|17[0135678]|18[0-9]|19[0-9])\d{8}$/;
-      if (!pattern.test(this.phone)) {
-        this.$vux.toast.show({
-          text: '请输入正确的手机号',
-          type: 'text',
-          width: 'auto',
-        });
-        return;
-      }
+
 
       this.$vux.loading.show();
 
@@ -122,7 +136,9 @@ export default {
       </div>
     </div>
 
-    <div class="learn-index-curriculum__receive">
+    <div
+      v-if="!isLogged && !isReserved"
+      class="learn-index-curriculum__receive">
       <div class="learn-index-curriculum-receive-input">
         <input
           v-model="phone"
@@ -133,10 +149,31 @@ export default {
       <div
         :class="[active ? 'learn-index-curriculum-receive-submit--active' : '']"
         class="learn-index-curriculum-receive-submit"
+        @click="submit(false)">
+        免费领取课程
+      </div>
+    </div>
+    <div
+      v-if="isLogged && !isReserved"
+      class="learn-index-curriculum__receive">
+      <div
+        class="learn-index-curriculum-receive-submit learn-index-curriculum-receive-submit--active"
+        style="width: 75%;margin: 0 auto;"
         @click="submit">
         免费领取课程
       </div>
     </div>
+    <div
+      v-if="isLogged && isReserved"
+      class="learn-index-curriculum__receive">
+      <div
+        class="learn-index-curriculum-receive-submit learn-index-curriculum-receive-submit--active"
+        style="width: 75%;margin: 0 auto;"
+        @click="goShare">
+        前往分享
+      </div>
+    </div>
+
   </div>
 </template>
 <style lang="less">

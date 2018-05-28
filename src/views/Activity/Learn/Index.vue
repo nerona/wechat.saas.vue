@@ -37,6 +37,9 @@ export default {
       source: 3,
       activityId: 1,
 
+      isLogged: false,
+      isReserved: false,
+
       title: '3000万英语课程免费学',
       link: 'https://wechat.caihonggou.com/activity/learn/index?source=1',
       imgUrl: 'https://oa-statics.caihonggou.com/iamkid_wechat_share.png',
@@ -117,12 +120,15 @@ export default {
         if (res.progress === '已结束') {
           this.$router.push('/activity/learn/over');
         }
-        this.prizeId = res.activity_prize.id;
+        this.prizeId = res.activity_prize[0].id;
         this.activityLimit = res.user_limit;
         this.activityRange = `${res.start_at.split(' ')[0].split('-')[1]}月${
            res.start_at.split(' ')[0].split('-')[2]}日${
            res.end_at.split(' ')[0].split('-')[1]}月${
            res.end_at.split(' ')[0].split('-')[2]}日`;
+
+        this.isReserved = res.is_reserved;
+        this.isLogged = res.is_logged_in;
       });
     },
     toCurriculum() {
@@ -289,6 +295,8 @@ export default {
     <curriculum
       :prize-id="prizeId"
       :activity-id="activityId"
+      :is-logged="isLogged"
+      :is-reserved="isReserved"
       class="learn-index-board"
       @openCode="openCode"/>
 
