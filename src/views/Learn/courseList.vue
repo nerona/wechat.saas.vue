@@ -91,7 +91,7 @@ export default {
 }
 .course-list-empty__button{
   width: px2vw(260) !important;
-  font-size: px2vw(32);
+  font-size: px2vw(32) !important;
 }
 .course-list__fill{
   width: 100%;
