@@ -16,9 +16,7 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      redirect: () => {
-        location.href = '/activity/learn/index?activity%2Flearn%2Findex=&source=3';
-      },
+      redirect: '/curriculum',
     },
 
     {
