@@ -16,7 +16,7 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      redirect: '/activity/learn/index?activity%2Flearn%2Findex=&from=singlemessage&isappinstalled=0&source=3',
+      redirect: '/curriculum',
     },
 
     {
