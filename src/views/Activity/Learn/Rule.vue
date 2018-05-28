@@ -24,7 +24,9 @@
     <div class="learn-index-rule__text">1.注册即可领取对应课程包。</div>
     <div class="learn-index-rule__text">2.家长可以选择就近校区上课，片区内未开设校区，家长可到官方合作校区或旗舰校区上课。</div>
     <div class="learn-index-rule__text">3.约课成功需要交纳99元座位占用费，课程结束后即可在系统申请退还。
-    （无故缺课则不退座位占用费，特殊情况需要请假，提前与课程顾问联系：电话。）</div>
+    （无故缺课则不退座位占用费，特殊情况需要请假，提前与课程顾问联系：<a
+      href="tel:0592-6666710"
+      style="color:#898989">0592-6666710</a>）</div>
     <div class="learn-index-rule__text">4.关注公众号完善孩子信息，排课将在第一时间通过公众号推送，家长可进行约课。</div>
     <div class="learn-index-rule__text">5.小部分校区未开放幼小衔接课程，自动转为英语启蒙班。</div>
     <div class="learn-index-rule__text">6.幼小衔接班仅接受2018级一年级新生（校区对应小学新生）不符合条件则自动转为英语启蒙课程。</div>
