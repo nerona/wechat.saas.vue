@@ -59,15 +59,14 @@ export default {
       vm.$wechat.config(res);
     });
 
-    // 第一次进入此页面
-    if (localStorage.getItem('_getLocation_code') === null
-          && /MicroMessenger/i.test(navigator.userAgent)) {
-      vm.getLocation();
-    } else {
-      vm.visit();
-    }
-
     vm.$wechat.ready(() => {
+      // 第一次进入此页面
+      if (localStorage.getItem('_getLocation_code') === null
+          && /MicroMessenger/i.test(navigator.userAgent)) {
+        vm.getLocation();
+      } else {
+        vm.visit();
+      }
       vm.$wechat.onMenuShareAppMessage({
         title: vm.title,
         link: vm.link,
