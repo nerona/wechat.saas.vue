@@ -5,6 +5,7 @@
  * @author lindongfang
  */
 
+import AMap from 'AMap';
 import { Popup } from 'vux';
 import Curriculum from './Curriculum';
 import Rule from './Rule';
@@ -37,16 +38,16 @@ export default {
       activityId: 1,
 
       title: '3000万英语课程免费学',
-      link: 'https://wechat.caihonggou.com/activity/learn/index',
+      link: 'https://wechat.caihonggou.com/activity/learn/index?source=1',
       imgUrl: 'https://oa-statics.caihonggou.com/iamkid_wechat_share.png',
       desc: '一起参加吧！家门口的美国小学英语课堂，名额有限。',
     };
   },
   created() {
-    this.source = this.$route.query.source || 3;
+    this.source = Number.parseInt(this.$route.query.source, 10) || 3;
 
     this.getActivity();
-    this.visit();
+    // this.visit();
   },
   mounted() {
     const vm = this;
@@ -58,11 +59,15 @@ export default {
       vm.$wechat.config(res);
     });
 
+    // 第一次进入此页面
+    if (localStorage.getItem('_getLocation_code') === null
+          && /MicroMessenger/i.test(navigator.userAgent)) {
+      vm.getLocation();
+    } else {
+      vm.visit();
+    }
+
     vm.$wechat.ready(() => {
-      vm.$wechat.checkJsApi({
-        jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
-        success() {},
-      });
       vm.$wechat.onMenuShareAppMessage({
         title: vm.title,
         link: vm.link,
@@ -122,7 +127,12 @@ export default {
       });
     },
     toCurriculum() {
-      this.$router.push('/curriculum/index');
+      // this.$router.push('/curriculum/index');
+      this.$vux.toast.show({
+        text: '敬请期待',
+        type: 'text',
+        width: 'auto',
+      });
     },
     // 课程领取打开验证码
     openCode(val) {
@@ -164,9 +174,17 @@ export default {
       });
     },
     // 上传统计次数
-    visit() {
-      // eslint-disable-next-line
-      this.$http.post(`/activity/${this.activityId}/visit`, { source: this.source }).then((res) => {});
+    visit(adcode) {
+      if (adcode) {
+        this.$http.post(`/activity/${this.activityId}/visit`, {
+          source: this.source,
+          district_code: adcode,
+          city_code: `${adcode.substring(0, 4)}00`,
+          province_code: `${adcode.substring(0, 2)}0000`,
+        }).then(() => {});
+      } else {
+        this.$http.post(`/activity/${this.activityId}/visit`, { source: this.source }).then(() => {});
+      }
     },
     //
     share() {
@@ -185,6 +203,45 @@ export default {
           position: 'middle',
         });
       });
+    },
+    getLocation() {
+      const vm = this;
+      vm.$wechat.getLocation({
+        type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+        success(res) {
+          // eslint-disable-next-line
+          const latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+          // eslint-disable-next-line
+          const longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+          vm.regeocoder(res.longitude, res.latitude);
+        },
+        fail() {
+          vm.visit();
+        },
+        cancel() {
+          vm.visit();
+        },
+      });
+    },
+    // 逆向地理编码
+    regeocoder(latitude, longitude) {
+      const lnglatXY = [latitude, longitude]; // 已知点坐标
+      const geocoder = new AMap.Geocoder({
+        radius: 1000,
+        extensions: 'all',
+      });
+      geocoder.getAddress(lnglatXY, (status, result) => {
+        if (status === 'complete' && result.info === 'OK') {
+          this.geocoder_CallBack(result);
+        }
+      });
+    },
+    geocoder_CallBack(data) {
+      const address = data.regeocode.addressComponent; // 返回地址描述
+
+      localStorage.setItem('_getLocation_code', address.adcode);
+
+      this.visit(address.adcode);
     },
   },
 };
