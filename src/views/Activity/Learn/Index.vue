@@ -50,7 +50,7 @@ export default {
     };
   },
   created() {
-    this.source = Number.parseInt(this.$route.query.source, 10) || 3;
+    this.source = Number.parseInt(this.$route.query.source, 10);
 
     this.getActivity();
     // this.visit();
