@@ -94,10 +94,13 @@ export default {
 <style lang="less">
 .learn-detail__header{
   width: 100%;
-  padding: px2vw(40) px2vw(30);
+  padding: px2vw(40) 0;
   background: white;
-  height: px2vw(150);
   font-size: px2vw(32);
+}
+.learn-detail__header p{
+  margin: 0 px2vw(40);
+  word-break: break-all;
 }
 .learn-detail__tab{
   margin: px2vw(20) 0;

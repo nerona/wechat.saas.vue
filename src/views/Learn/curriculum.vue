@@ -166,8 +166,8 @@ export default {
     </div>
     <div class="learn-curriculum__info">
       <div>
-        <span>课程名称：{{ curriculumInfo.curriculum_name }}</span>
         <span style="float:right;">{{ curriculumInfo.block_status_name }}</span>
+        <span>课程名称：{{ curriculumInfo.curriculum_name }}</span>
       </div>
       <div>教学内容：{{ curriculumInfo.name }}</div>
       <div>上课时间：

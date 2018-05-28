@@ -58,7 +58,7 @@ export default {
 <template>
   <div class="course-menu">
     <div
-      v-for="item in courseData"
+      v-for="(item,index) in courseData"
       :key="item.id"
       class="course-menu__detail">
       <div
@@ -74,6 +74,7 @@ export default {
         <div>学习内容：{{ item.name }}</div>
       </div>
       <div
+        v-if="index !== courseData.length - 1"
         :class="item.block_status === 3 ? 'course-menu-detail__line '
         + 'course-menu-detail___lineColor' : 'course-menu-detail__line'"/>
     </div>
@@ -86,8 +87,8 @@ export default {
   font-size: px2vw(32);
 }
 .course-menu__detail{
-  height: px2vw(180);
   position: relative;
+  word-break: break-all;
 }
 .course-menu-detail__round{
   text-align: center;
@@ -97,28 +98,29 @@ export default {
   border-radius: 50%;
   background: white;
   display: inline-block;
-  position: relative;
+  position: absolute;
   z-index: 10000;
 }
 .course-menu-detail__round div{
   height: px2vw(40);
 }
 .course-menu-detail__div{
+  display: inline-block;
+  width:66%;
   padding: px2vw(20);
-  height: px2vw(110);
+  min-height: px2vw(110);
   line-height: px2vw(50);
-  position: relative;
-  top: px2vw(-150);
-  margin: 0 px2vw(50) 0 px2vw(200);
+  margin: 0 0 px2vw(20) px2vw(180);
   background: white;
 }
 .course-menu-detail__line{
+  display: inline-block;
   height: 100%;
   width: px2vw(4);
   background: #ffd900;
   position: absolute;
   left: px2vw(75);
-  top: 0;
+  top: px2vw(75);
   z-index: 1000;
 }
 .course-menu-detail___color{

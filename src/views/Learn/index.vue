@@ -118,7 +118,9 @@ export default {
               <div
                 v-for="item in kidMenus"
                 :key="item.id"
-                class="learn-learn-index-header-manage__div"
+                :class="currKidId === item.id ? 'learn-learn-index-header-manage__speDiv '
+                  + 'learn-learn-index-header-manage__padDiv'
+                : 'learn-learn-index-header-manage__speDiv'"
                 @click="getKid(item.id)">
                 <icon
                   v-if="currKidId === item.id"
@@ -244,6 +246,15 @@ export default {
   text-align: center;
   line-height: px2vw(90);
   border-bottom: px2vw(2) solid gainsboro;
+}
+.learn-learn-index-header-manage__speDiv{
+  padding-left: 40%;
+  padding-top: px2vw(5);
+  padding-bottom: px2vw(20);
+  border-bottom: px2vw(2) solid gainsboro;
+}
+.learn-learn-index-header-manage__padDiv{
+  padding-left: 30%;
 }
 .learn-learn-index-header-manage__img{
   width: px2vw(60);

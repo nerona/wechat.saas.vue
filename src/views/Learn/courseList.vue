@@ -60,7 +60,6 @@ export default {
       class="course-list__fill"
       @click="lookDetail(item.curriculum_id)">
       <p>
-        <span>课程名称：{{ item.curriculum_name }}</span>
         <span class="course-list-fill__span">
           <span v-if="item.curriculum_status === 1">{{ item.curriculum_status_name }}</span>
           <span
@@ -70,6 +69,7 @@ export default {
             v-else
             class="course-list-fill-span__orange">{{ item.curriculum_status_name }}</span>
         </span>
+        <span>课程名称：{{ item.curriculum_name }}</span>
       </p>
       <p>课程时间：{{ item.range }}</p>
       <p>学时：共{{ item.course_total }}课时，剩余{{ item.course_total - item.course_finish }}课时</p>
