@@ -1,6 +1,6 @@
 <script>
 /**
- * @overview 用户中心 - 订单项
+ * @overview 用户中心 - 订单列表 - 订单项
  *
  * @author huojinzhao
  */

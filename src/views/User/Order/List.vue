@@ -10,7 +10,7 @@ import { pageUtils } from '@/mixins';
 import ListItem from './ListItem';
 
 export default {
-  name: 'UserOrder',
+  name: 'UserOrderList',
 
   components: {
     Tab,
