@@ -88,7 +88,7 @@ export default {
       this.$vux.loading.show();
 
       // eslint-disable-next-line
-      this.$http.postNoRedirect(`/activity/${this.activityId}/reserve`, { prize_id: this.prizeId }).then((res) => {
+      this.$http.postNoRedirect(`/activity/${this.activityId}/reserve`, { prize_id: this.prizeId, source: this.source }).then((res) => {
         this.$vux.loading.hide();
         this.$vux.toast.show({
           text: '领取成功',
