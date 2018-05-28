@@ -31,6 +31,10 @@ export default {
       type: Number,
       default: 3,
     },
+    adcode: {
+      type: String,
+      default: '',
+    },
   },
 
   data() {
@@ -92,7 +96,13 @@ export default {
       this.$vux.loading.show();
 
       // eslint-disable-next-line
-      this.$http.postNoRedirect(`/activity/${this.activityId}/reserve`, { prize_id: this.prizeId, source: this.source }).then((res) => {
+      this.$http.postNoRedirect(`/activity/${this.activityId}/reserve`, {
+        prize_id: this.prizeId,
+        source: this.source,
+        district_code: this.adcode,
+        city_code: `${this.adcode.substring(0, 4)}00`,
+        province_code: `${this.adcode.substring(0, 2)}0000`,
+      }).then(() => {
         this.$vux.loading.hide();
         this.$vux.toast.show({
           text: '领取成功',

@@ -37,6 +37,7 @@ export default {
       source: 3,
       activityId: 1,
 
+      adcode: '000000',
       isLogged: false,
       isReserved: false,
 
@@ -145,7 +146,13 @@ export default {
       this.$vux.loading.show();
 
       // eslint-disable-next-line
-      this.$http.postNoRedirect(`/activity/${this.activityId}/reserve`, { prize_id: this.prizeId, source: this.source }).then((res) => {
+      this.$http.postNoRedirect(`/activity/${this.activityId}/reserve`, {
+        prize_id: this.prizeId,
+        source: this.source,
+        district_code: this.adcode,
+        city_code: `${this.adcode.substring(0, 4)}00`,
+        province_code: `${this.adcode.substring(0, 2)}0000`,
+      }).then(() => {
         this.$vux.loading.hide();
         this.$vux.toast.show({
           text: '领取成功',
@@ -246,6 +253,7 @@ export default {
       const address = data.regeocode.addressComponent; // 返回地址描述
 
       localStorage.setItem('_getLocation_code', address.adcode);
+      this.adcode = address.adcode;
 
       this.visit(address.adcode);
     },
@@ -299,6 +307,7 @@ export default {
       :is-logged="isLogged"
       :is-reserved="isReserved"
       :source="source"
+      :adcode="adcode"
       class="learn-index-board"
       @openCode="openCode"/>
 
