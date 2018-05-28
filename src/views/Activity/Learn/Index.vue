@@ -37,7 +37,7 @@ export default {
       source: 3,
       activityId: 1,
 
-      adcode: '000000',
+      adcode: null,
       isLogged: false,
       isReserved: false,
 
@@ -149,9 +149,9 @@ export default {
       this.$http.postNoRedirect(`/activity/${this.activityId}/reserve`, {
         prize_id: this.prizeId,
         source: this.source,
-        district_code: this.adcode,
-        city_code: `${this.adcode.substring(0, 4)}00`,
-        province_code: `${this.adcode.substring(0, 2)}0000`,
+        district_code: this.adcode || 0,
+        city_code: this.adcode ? `${this.adcode.substring(0, 4)}00` : 0,
+        province_code: this.adcode ? `${this.adcode.substring(0, 2)}0000` : 0,
       }).then(() => {
         this.$vux.loading.hide();
         this.$vux.toast.show({
@@ -186,9 +186,6 @@ export default {
       if (adcode !== undefined) {
         this.$http.post(`/activity/${this.activityId}/visit`, {
           source: this.source,
-          district_code: adcode,
-          city_code: `${adcode.substring(0, 4)}00`,
-          province_code: `${adcode.substring(0, 2)}0000`,
         }).then(() => {});
       } else {
         this.$http.post(`/activity/${this.activityId}/visit`, { source: this.source }).then(() => {});
