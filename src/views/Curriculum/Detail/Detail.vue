@@ -35,6 +35,7 @@ export default {
     };
   },
   created() {
+    this.$vux.loading.show();
     this.getDetail();
   },
   methods: {
@@ -65,6 +66,7 @@ export default {
 
     getDetail() {
       this.$http.get(`/course_packet/surface/${this.$route.params.id}`).then((res) => {
+        this.$vux.loading.hide();
         this.info = res;
       });
     },

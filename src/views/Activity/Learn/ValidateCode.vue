@@ -37,22 +37,30 @@ export default {
   watch: {
     code1(val) {
       if (val !== '' && val !== null) {
-        this.$refs.code2.focus();
+        this.$refs.code2.click();
+      } else {
+        this.active = false;
       }
     },
     code2(val) {
       if (val !== '' && val !== null) {
-        this.$refs.code3.focus();
+        this.$refs.code3.click();
+      } else {
+        this.active = false;
       }
     },
     code3(val) {
       if (val !== '' && val !== null) {
-        this.$refs.code4.focus();
+        this.$refs.code4.click();
+      } else {
+        this.active = false;
       }
     },
     code4(val) {
       if (val !== '' && val !== null) {
         this.active = true;
+      } else {
+        this.active = false;
       }
     },
   },
@@ -80,21 +88,23 @@ export default {
 
     // 提交
     submit() {
-      const code = this.$refs.code1.value +
-      this.$refs.code2.value +
-      this.$refs.code3.value +
-      this.$refs.code4.value;
+      if (this.active) {
+        const code = this.$refs.code1.value +
+                     this.$refs.code2.value +
+                     this.$refs.code3.value +
+                     this.$refs.code4.value;
 
-      this.$http.post('/bind/bind_phone', { mobile: this.phone, code }).then(() => {
-        this.$emit('closeCode');
-      }).catch((err) => {
-        this.$vux.toast.show({
-          text: err.message,
-          type: 'text',
-          width: 'auto',
-          position: 'bottom',
+        this.$http.post('/bind/bind_phone', { mobile: this.phone, code }).then(() => {
+          this.$emit('closeCode');
+        }).catch((err) => {
+          this.$vux.toast.show({
+            text: err.message,
+            type: 'text',
+            width: 'auto',
+            position: 'bottom',
+          });
         });
-      });
+      }
     },
   },
 };
