@@ -30,6 +30,12 @@ export default [
     name: 'UserOrderDetail',
     component: views.UserOrderDetail,
   },
+  // 订单退费
+  {
+    path: '/user/refund/:id',
+    name: 'UserOrderRefund',
+    component: views.UserOrderRefund,
+  },
   {
     path: '/user/edit',
     name: 'UserEdit',

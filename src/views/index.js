@@ -32,3 +32,4 @@ export { default as UserEdit } from './User/Index/Edit';
 export { default as UserActivity } from './User/Index/ActivityRecord';
 export { default as UserOrderList } from './User/Order/List';
 export { default as UserOrderDetail } from './User/Order/Detail';
+export { default as UserOrderRefund } from './User/Order/Refund';
