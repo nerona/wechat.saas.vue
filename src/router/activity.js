@@ -6,7 +6,7 @@ import * as views from '@/views';
 
 export default [
   {
-    path: '/activity/learn/index?activity%2Flearn%2Findex=from=singlemessage&isappinstalled=0&source=3',
+    path: '/activity/learn/index?activity%2Flearn%2Findex=&from=singlemessage&isappinstalled=0&source=3',
     name: 'ActivityLearnIndex',
     component: views.ActivityLearnIndex,
     meta: {
