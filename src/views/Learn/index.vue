@@ -33,17 +33,25 @@ export default {
   },
 
   created() {
+    this.$vux.loading.show();
     this.$http.get('/student')
     .then((res) => {
       this.kidMenus = res.students;
       if (res.students.length < 1) {
         this.$router.push('/learn/kid');
+      } else if (this.$route.query.id) {
+        const getKid = res.students.find(item => item.id === (this.$route.query.id * 1));
+        this.kidInfo = getKid;
+        this.currKidId = this.kidInfo.id;
       } else {
         this.kidInfo = res.students[0];
         this.currKidId = this.kidInfo.id;
       }
+
+      this.$vux.loading.hide();
     })
     .catch(({ message }) => {
+      this.$vux.loading.hide();
       this.$vux.toast.text(message, 'middle');
     });
   },
@@ -56,14 +64,13 @@ export default {
     getKid(key) {
       if (key !== this.currKidId) {
         this.currKidId = key;
-        const kidData = this.kidMenus.find(item => item.id === key);
-        this.kidInfo = kidData;
+        window.location.replace(`/learn/index?id=${this.currKidId}`);
       }
       this.showSheeet = false;
     },
 
     addKId() {
-      this.$router.push({ path: '/learn/kid', query: { id: this.currKidId, name: 'hehe' } });
+      this.$router.push('/learn/kid');
       this.showSheeet = false;
     },
 
@@ -81,23 +88,23 @@ export default {
 
 <template>
   <AppPageWithTabbar>
-    <div class="learn-index">
-      <header class="learn-index__header">
+    <div class="learn-learn-index">
+      <header class="learn-learn-index__header">
         <img
           :src="kidInfo.head_url"
-          class="learn-index-header__img">
-        <div class="learn-index-header__info">
+          class="learn-learn-index-header__img">
+        <div class="learn-learn-index-header__info">
           <span>{{ kidInfo.name }}</span>&nbsp;&nbsp;
           <span @click="editAdd(kidInfo.id)">
             <img
               src="./../../assets/edit.png"
-              class="learn-index-header__edit">
+              class="learn-learn-index-header__edit">
           </span>
           <br>
           <span>{{ kidInfo.birth_at }}</span>
         </div>
         <div
-          class="learn-index-header__manage"
+          class="learn-learn-index-header__manage"
           @click="showSheeet = true">
           <span>
             管理小孩&nbsp;&nbsp;&nbsp;
@@ -107,11 +114,11 @@ export default {
           <popup
             v-model="showSheeet"
             is-transparent>
-            <div class="learn-index-header__transfer">
+            <div class="learn-learn-index-header__transfer">
               <div
                 v-for="item in kidMenus"
                 :key="item.id"
-                class="learn-index-header-manage__div"
+                class="learn-learn-index-header-manage__div"
                 @click="getKid(item.id)">
                 <icon
                   v-if="currKidId === item.id"
@@ -119,16 +126,16 @@ export default {
                 <img
                   slot="icon"
                   :src="item.head_url"
-                  class="learn-index-header-manage__img"
+                  class="learn-learn-index-header-manage__img"
                 >
                 <span>{{ item.name }}</span>
               </div>
               <div
-                class="learn-index-header-manage__div"
+                class="learn-learn-index-header-manage__div"
                 @click="addKId"
               >添加小孩</div>
               <div
-                class="learn-index-header-manage__div"
+                class="learn-learn-index-header-manage__div"
                 @click="showSheeet = false">取消</div>
             </div>
           </popup>
@@ -136,7 +143,7 @@ export default {
 
       </header>
       <hr>
-      <div class="learn-index__body">
+      <div class="learn-learn-index__body">
         <group>
           <cell
             v-if="Object.keys(kidInfo.current).length > 0"
@@ -162,43 +169,43 @@ export default {
 </template>
 
 <style lang="less">
-.learn-index__header{
+.learn-learn-index__header{
   padding: px2vw(40);
   display: flex;
   position: relative;
   background: white;
 }
-.learn-index-header__transfer{
+.learn-learn-index-header__transfer{
   width: 100%;
   background-color:#fff;
   font-size: px2vw(32);
 }
-.learn-index-header__transfer .weui-icon-success-no-circle{
+.learn-learn-index-header__transfer .weui-icon-success-no-circle{
   font-size: px2vw(46);
 }
-.learn-index-header__img{
+.learn-learn-index-header__img{
   width: px2vw(100);
   height: px2vw(100);
   border-radius: 50%;
 }
-.learn-index-header__edit{
+.learn-learn-index-header__edit{
   display: inline-block;
   width: px2vw(30);
   height: px2vw(30);
   position: relative;
   top: px2vw(6);
 }
-.learn-index-header__info{
+.learn-learn-index-header__info{
   margin-left: px2vw(30);
   font-size: px2vw(30);
 }
-.learn-index-header__manage{
+.learn-learn-index-header__manage{
   position: absolute;
   right: px2vw(40);
   top: px2vw(60);
   font-size: px2vw(32);
 }
-.learn-index-header__manage>span::after{
+.learn-learn-index-header__manage>span::after{
   content: " ";
   display: inline-block;
   height: px2vw(12);
@@ -212,19 +219,33 @@ export default {
   margin-top: px2vw(-8);
   right: px2vw(4);;
 }
-.learn-index__body{
+.learn-learn-index__body{
   background: white;
 }
-.learn-index__body .weui-cells{
+.learn-learn-index__body .weui-cells{
   margin-top: px2vw(6);
   font-size: px2vw(32);
 }
-.learn-index-header-manage__div{
+.learn-learn-index__body .weui-cell_access .weui-cell__ft:after{
+    content: " ";
+    display: inline-block;
+    height: px2vw(12);
+    width: px2vw(12);
+    border-width: px2vw(4) px2vw(4) 0 0;
+    border-color: #C8C8CD;
+    border-style: solid;
+    transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+    position: absolute;
+    top: 50%;
+    margin-top: px2vw(-8);
+    right: px2vw(-8);
+}
+.learn-learn-index-header-manage__div{
   text-align: center;
   line-height: px2vw(90);
   border-bottom: px2vw(2) solid gainsboro;
 }
-.learn-index-header-manage__img{
+.learn-learn-index-header-manage__img{
   width: px2vw(60);
   height: px2vw(60);
   border-radius: 50%;
