@@ -64,12 +64,8 @@ export default {
 
     vm.$wechat.ready(() => {
       // 第一次进入此页面
-      if (localStorage.getItem('_getLocation_code') === null
-          && /MicroMessenger/i.test(navigator.userAgent)) {
-        vm.getLocation();
-      } else {
-        vm.visit();
-      }
+      vm.getLocation();
+
       vm.$wechat.onMenuShareAppMessage({
         title: vm.title,
         link: vm.link,
@@ -182,9 +178,7 @@ export default {
     visit(adcode) {
       // eslint-disable-next-line
       alert(this.source);
-      // eslint-disable-next-line
-      alert(adcode);
-      if (adcode) {
+      if (adcode !== undefined) {
         this.$http.post(`/activity/${this.activityId}/visit`, {
           source: this.source,
           district_code: adcode,
@@ -215,22 +209,27 @@ export default {
     },
     getLocation() {
       const vm = this;
-      vm.$wechat.getLocation({
-        type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-        success(res) {
+      if (localStorage.getItem('_getLocation_code') === null
+          && /MicroMessenger/i.test(navigator.userAgent)) {
+        vm.$wechat.getLocation({
+          type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+          success(res) {
           // eslint-disable-next-line
           const latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
           // eslint-disable-next-line
           const longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-          vm.regeocoder(res.longitude, res.latitude);
-        },
-        fail() {
-          vm.visit();
-        },
-        cancel() {
-          vm.visit();
-        },
-      });
+            vm.regeocoder(res.longitude, res.latitude);
+          },
+          fail() {
+            vm.visit();
+          },
+          cancel() {
+            vm.visit();
+          },
+        });
+      } else {
+        vm.visit();
+      }
     },
     // 逆向地理编码
     regeocoder(latitude, longitude) {
