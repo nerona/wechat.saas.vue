@@ -32,10 +32,10 @@ export default {
     },
 
     // 请求数据的统一方法
-    $_pageMixin_http(url, callback, method = 'get') {
+    $_pageMixin_http(url, callback, method = 'get', data) {
       this.$_pageMixin_showLoading();
 
-      return this.$http[method](url)
+      return this.$http[method](url, data)
         .then(callback)
         .catch((error) => {
           this.$_pageMixin_checkSession(error);
