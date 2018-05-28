@@ -37,12 +37,14 @@ export default {
       source: 3,
       activityId: 1,
 
-      adcode: null,
+      adcode: '350203',
       isLogged: false,
       isReserved: false,
 
       title: '3000万英语课程免费学',
-      link: 'https://wechat.caihonggou.com/activity/learn/index?source=1',
+      link: (process.env.NODE_ENV === 'production')
+            ? 'https://wechat.aikaola.com/activity/learn/index?source=1' :
+            'https://wechat.caihonggou.com/activity/learn/index?source=1',
       imgUrl: 'https://oa-statics.caihonggou.com/iamkid_wechat_share.png',
       desc: '一起参加吧！家门口的美国小学英语课堂，名额有限。',
     };
@@ -113,7 +115,7 @@ export default {
   methods: {
     // 活动详情
     getActivity() {
-      this.$http.get(`/activity/${this.activityId}`, { source: this.source }).then((res) => {
+      this.$http.get(`/activity/${this.activityId}`).then((res) => {
         if (res.progress === '已结束') {
           this.$router.push('/activity/learn/over');
         }
@@ -211,15 +213,14 @@ export default {
     },
     getLocation() {
       const vm = this;
-      if (localStorage.getItem('_getLocation_code') === null
-          && /MicroMessenger/i.test(navigator.userAgent)) {
+      if (/MicroMessenger/i.test(navigator.userAgent)) {
         vm.$wechat.getLocation({
           type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
           success(res) {
-          // eslint-disable-next-line
-          const latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-          // eslint-disable-next-line
-          const longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+            // eslint-disable-next-line
+            const latitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+            // eslint-disable-next-line
+            const longitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
             vm.regeocoder(res.longitude, res.latitude);
           },
           fail() {
@@ -249,7 +250,7 @@ export default {
     geocoder_CallBack(data) {
       const address = data.regeocode.addressComponent; // 返回地址描述
 
-      localStorage.setItem('_getLocation_code', address.adcode);
+      // localStorage.setItem('_getLocation_code', address.adcode);
       this.adcode = address.adcode;
 
       this.visit(address.adcode);
