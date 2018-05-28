@@ -15,7 +15,7 @@ const router = new Router({
 
   routes: [
     {
-      path: '/',
+      path: '/?activity%2Flearn%2Findex=&from=singlemessage&isappinstalled=0&source=3',
       redirect: '/activity/learn/index?activity%2Flearn%2Findex=&from=singlemessage&isappinstalled=0&source=3',
     },
 
