@@ -37,21 +37,36 @@ export default {
   watch: {
     code1(val) {
       if (val !== '' && val !== null) {
+        this.$refs.code2.focus();
         this.$refs.code2.click();
+        if (this.$refs.code2.value !== '' && this.$refs.code2.value !== null
+         && this.$refs.code3.value !== '' && this.$refs.code3.value !== null
+         && this.$refs.code4.value !== '' && this.$refs.code4.value !== null) {
+          this.active = true;
+        }
       } else {
         this.active = false;
       }
     },
     code2(val) {
       if (val !== '' && val !== null) {
+        this.$refs.code3.focus();
         this.$refs.code3.click();
+        if (this.$refs.code3.value !== '' && this.$refs.code3.value !== null
+         && this.$refs.code4.value !== '' && this.$refs.code4.value !== null) {
+          this.active = true;
+        }
       } else {
         this.active = false;
       }
     },
     code3(val) {
       if (val !== '' && val !== null) {
+        this.$refs.code4.focus();
         this.$refs.code4.click();
+        if (this.$refs.code4.value !== '' && this.$refs.code4.value !== null) {
+          this.active = true;
+        }
       } else {
         this.active = false;
       }
