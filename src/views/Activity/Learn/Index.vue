@@ -112,7 +112,7 @@ export default {
   methods: {
     // 活动详情
     getActivity() {
-      this.$http.get(`/activity/${this.activityId}`).then((res) => {
+      this.$http.get(`/activity/${this.activityId}`, { source: this.source }).then((res) => {
         if (res.progress === '已结束') {
           this.$router.push('/activity/learn/over');
         }
@@ -145,7 +145,7 @@ export default {
       this.$vux.loading.show();
 
       // eslint-disable-next-line
-      this.$http.postNoRedirect(`/activity/${this.activityId}/reserve`, { prize_id: this.prizeId }).then((res) => {
+      this.$http.postNoRedirect(`/activity/${this.activityId}/reserve`, { prize_id: this.prizeId, source: this.source }).then((res) => {
         this.$vux.loading.hide();
         this.$vux.toast.show({
           text: '领取成功',
@@ -176,8 +176,6 @@ export default {
     },
     // 上传统计次数
     visit(adcode) {
-      // eslint-disable-next-line
-      alert(this.source);
       if (adcode !== undefined) {
         this.$http.post(`/activity/${this.activityId}/visit`, {
           source: this.source,
