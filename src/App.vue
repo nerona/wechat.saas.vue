@@ -8,6 +8,8 @@ export default {
   created() {
     // 记录进入路由
     localStorage.setItem('linkUrl', location.href);
+    // eslint-disable-next-line
+    alert('test-app:' + location.href);
   },
 };
 </script>
