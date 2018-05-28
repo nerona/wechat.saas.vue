@@ -56,6 +56,7 @@ export default {
 
   methods: {
     getFormData(studenId, curriculumId) {
+      this.$vux.loading.show();
       this.$http.get(`/student/schedule/${studenId}/${curriculumId}`)
       .then((res) => {
         this.schedule = res.schedule;
@@ -76,6 +77,7 @@ export default {
         this.onChange(this.value);
       })
       .catch(({ message }) => {
+        this.$vux.loading.hide();
         this.$vux.toast.text(message, 'middle');
       });
     },
@@ -90,8 +92,10 @@ export default {
     },
     onChange(val) {
       if (this.showDot) {
+        this.$vux.loading.show();
         const dotDate = this.schedule.find(item => times.dateChange(item.date) === val);
         this.curriculumInfo = dotDate;
+        this.$vux.loading.hide();
       }
     },
     changeTime(val) {

@@ -33,12 +33,15 @@ export default {
   },
 
   created() {
+    this.$vux.loading.show();
     const arrId = this.$route.params.id.split('_');
     this.$http.get(`/student/curriculum/${arrId[0]}/${arrId[1]}`)
     .then((res) => {
+      this.$vux.loading.hide();
       this.formData = res;
     })
     .catch(({ message }) => {
+      this.$vux.loading.hide();
       this.$vux.toast.text(message, 'middle');
     });
   },
