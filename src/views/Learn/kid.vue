@@ -5,7 +5,7 @@
  * @author suyanping
  */
 
-import { XButton, Group, Cell, XInput, Datetime, PopupPicker, ChinaAddressData, XAddress } from 'vux';
+import { XButton, Group, Cell, XInput, Datetime, Picker, PopupPicker } from 'vux';
 
 export default {
   name: 'LearnKid',
@@ -16,20 +16,21 @@ export default {
     Cell,
     XInput,
     Datetime,
+    Picker,
     PopupPicker,
-    ChinaAddressData,
-    XAddress,
   },
 
   data() {
     return {
+      chinaJSON: this.$assets.chinaJSON,
+
       kidId: this.$route.params.id,
 
       formData: {
         name: '',
         gender: null,
         grade: null,
-        school: '',
+        school: null,
         birth_at: '',
         head_name: '',
         head_url: '',
@@ -39,17 +40,21 @@ export default {
       formBefore: {
         gender: [],
         grade: [],
-        school: [],
       },
+      initSchoolList: [],
 
       genderList: [],
       gradeList: [],
+      schoolList: [{
+        name: '无',
+        value: -1,
+      }],
 
 
       gender: [],
       grade: [],
-      addressData: ChinaAddressData,
       address: [],
+      school: [],
 
 
       url: '/student/upload',
@@ -103,6 +108,9 @@ export default {
   },
 
   created() {
+    if (this.kidId) {
+      this.$vux.loading.show();
+    }
     this.$http.get('/student/store_before')
     .then((res) => {
       this.formBefore = res;
@@ -135,8 +143,26 @@ export default {
           if (res.grade_name) {
             this.grade.push(res.grade_name);
           }
+
+          if (res.school && res.school !== '0') {
+            this.$http.get(`/student/city/${res.school}`)
+            .then((resData) => {
+              if (resData.city_code) {
+                this.address = [String(resData.province_code), String(resData.city_code)];
+              } else {
+                this.address = [String(resData.province_code), null];
+              }
+              this.changeAddress(this.address, res.school);
+            })
+            .catch(({ message }) => {
+              this.$vux.toast.text(message, 'middle');
+            });
+          }
+
+          this.$vux.loading.hide();
         })
         .catch(({ message }) => {
+          this.$vux.loading.hide();
           this.$vux.toast.text(message, 'middle');
         });
       }
@@ -211,7 +237,56 @@ export default {
       }
     },
 
+    changeAddress(val, school) {
+      this.formData.school = null;
+      this.initSchoolList = [];
+      this.schoolList = [{ name: '无', value: '-1' }];
+      this.school = [];
+      //eslint-disable-next-line
+      let url;
+      if (!val[1]) {
+        url = `/student/school/${val[0]}`;
+      } else {
+        url = `/student/school/${val[0]}/${val[1]}`;
+      }
+      this.$http.get(url)
+      .then((res) => {
+        this.initSchoolList = res;
+        if (res.length > 0) {
+          this.schoolList = [];
+          res.forEach((item) => {
+            this.schoolList.push({ name: item.name, value: String(item.value) });
+          });
+
+          if (school) {
+            this.school = [String(school)];
+          }
+        }
+      })
+      .catch(({ message }) => {
+        this.$vux.toast.text(message, 'middle');
+      });
+    },
+
+    changeSchool(val) {
+      if (val.length === 0) {
+        this.formData.school = null;
+      } else if (val[0] === '-1') {
+        this.formData.school = null;
+      } else {
+        this.formData.school = val[0] * 1;
+      }
+    },
+
     submit() {
+      if (this.address.length > 0 && this.school.length < 1) {
+        this.$vux.toast.text('请选择学校', 'middle');
+        return;
+      }
+      if (this.address.length > 0 && !this.formData.school) {
+        this.$vux.toast.text('请选择一个有学校的地区在选择学校', 'middle');
+        return;
+      }
       if (this.kidId) {
         this.$http.patch(`/student/${this.kidId}`, this.formData)
         .then(() => {
@@ -232,8 +307,8 @@ export default {
         });
       }
     },
-  },
 
+  },
 };
 </script>
 
@@ -281,12 +356,22 @@ export default {
         title="性别"
         placeholder="请选择"
         @on-change="changeGender"/>
-      <x-address
+      <popup-picker
         v-model="address"
-        :list="addressData"
-        title="就读学校"
+        :data="chinaJSON"
+        :columns="2"
+        :show-name="true"
+        title="选择地区"
         placeholder="请选择"
-        raw-value/>
+        @on-change="changeAddress"/>
+      <popup-picker
+        v-model="school"
+        :data="schoolList"
+        :columns="1"
+        :show-name="true"
+        placeholder="请选择"
+        title="选择学校"
+        @on-change="changeSchool"/>
       <popup-picker
         :data="gradeList"
         v-model="grade"
