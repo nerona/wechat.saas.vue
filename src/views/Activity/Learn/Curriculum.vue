@@ -170,7 +170,7 @@ export default {
         class="learn-index-curriculum-receive-submit learn-index-curriculum-receive-submit--active"
         style="width: 75%;margin: 0 auto;"
         @click="goShare">
-        前往分享
+        您已领取课程
       </div>
     </div>
 
