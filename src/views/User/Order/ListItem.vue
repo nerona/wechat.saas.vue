@@ -29,7 +29,7 @@ export default {
     },
 
     toPay() {
-
+      this.$router.push(`/user/order/${this.data.id}?ispay=true`);
     },
   },
 };

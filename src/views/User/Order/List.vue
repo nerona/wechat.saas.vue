@@ -6,7 +6,7 @@
  */
 
 import { Tab, TabItem } from 'vux';
-import { pageUtils, formUtils } from '@/mixins';
+import { pageUtils } from '@/mixins';
 import ListItem from './ListItem';
 
 export default {
@@ -18,7 +18,7 @@ export default {
     ListItem,
   },
 
-  mixins: [pageUtils, formUtils],
+  mixins: [pageUtils],
 
   data: () => ({
     orderTypes: [
@@ -57,16 +57,11 @@ export default {
 
       const state = Number(route.query.type);
       const api = state ? `/order?order_status=${state}` : '/order';
+      const callback = ({ data }) => {
+        this.orderList = data;
+      };
 
-      return this.$http.get(api)
-        .then(({ data }) => {
-          this.orderList = data;
-        })
-        .catch((error) => {
-          this.$_pageMixin_checkSession(error);
-          this.$_formMixin_alertError(error);
-        })
-        .then(this.$_pageMixin_hideLoading);
+      return this.$_pageMixin_fetchData(api, callback);
     },
   },
 };
