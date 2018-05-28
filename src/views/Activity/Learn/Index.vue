@@ -298,6 +298,7 @@ export default {
       :activity-id="activityId"
       :is-logged="isLogged"
       :is-reserved="isReserved"
+      :source="source"
       class="learn-index-board"
       @openCode="openCode"/>
 
