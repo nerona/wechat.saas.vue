@@ -180,6 +180,10 @@ export default {
     },
     // 上传统计次数
     visit(adcode) {
+      // eslint-disable-next-line
+      alert(this.source);
+      // eslint-disable-next-line
+      alert(adcode);
       if (adcode) {
         this.$http.post(`/activity/${this.activityId}/visit`, {
           source: this.source,
