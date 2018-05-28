@@ -1,4 +1,10 @@
-import { ToastPlugin, LoadingPlugin, WechatPlugin, TransferDom } from 'vux';
+import {
+  ConfirmPlugin,
+  ToastPlugin,
+  LoadingPlugin,
+  WechatPlugin,
+  TransferDom,
+} from 'vux';
 import Vue from 'vue';
 import FastClick from 'fastclick';
 import VueLazyload from 'vue-lazyload';
@@ -26,7 +32,8 @@ Vue.use(pluginsRegister)
   .use(componentsRegister)
   .use(ToastPlugin, { position: 'middle' })
   .use(LoadingPlugin)
-  .use(WechatPlugin);
+  .use(WechatPlugin)
+  .use(ConfirmPlugin);
 
 Vue.directive('transfer-dom', TransferDom);
 

@@ -61,7 +61,7 @@ export default {
         this.orderList = data;
       };
 
-      return this.$_pageMixin_fetchData(api, callback);
+      return this.$_pageMixin_http(api, callback);
     },
   },
 };
