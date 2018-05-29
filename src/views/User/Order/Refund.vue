@@ -16,6 +16,36 @@ import OrderCard from './components/OrderCard';
 
 const dataInit = () => {
   const devData = {
+    amount_curriculum: '99.80',
+    amount_paid: '99.80',
+    amount_pledge: '0.00',
+    course_packet: {
+      cover_url: 'http://oa-statics.caihonggou.com/image/201805/5af3aedbbb3f3.jpg',
+      name: '库存:测试用试听课程包--Prekindergarden',
+    },
+    course_packet_id: 4,
+    created_at: '2018-05-21 16:27:20',
+    created_date: '2018-05-21',
+    curriculum: null,
+    curriculum_introduce: '',
+    department: null,
+    id: 23,
+    is_can_pay: 1,
+    is_can_refund: 0,
+    order_number: '2018052116272049',
+    order_status: 4,
+    order_status_name: '已退款',
+    order_type: 2,
+    order_type_name: '购买课程',
+    paid_at: '2018-05-21 17:06:14',
+    pay_count_down: null,
+    pay_type: 1,
+    pay_type_name: '微信支付',
+    student: {
+      name: '库存学生一',
+    },
+    student_id: 1065,
+    wechat_user_id: 1,
     order_refund: {
       amount_refund: '50.00',
       refunded_at: '2018-05-23 16:23:08', // 退款时间
@@ -93,7 +123,8 @@ export default {
     />
     <OrderNote
       :content="
-        Number(data.order_refund.amount_refund)
+        data.order_refund
+          && data.order_refund.order_refund_status_name === '退款成功'
           ? data.order_refund.amount_refund
           : '申请提交后，客服将联系您退款相关事宜'
       "
@@ -112,7 +143,7 @@ export default {
     <template
       v-if="
         data.order_refund
-          && order_refund_status_name === '退款成功'
+          && data.order_refund.order_refund_status_name === '退款成功'
       "
     >
       <OrderNote
@@ -120,9 +151,9 @@ export default {
         label="退款时间"
         is-joint
       />
-      <!-- 缺少控制字段 -->
+      <!-- 退款方式和支付方式一样 -->
       <OrderNote
-        :content="data.order_refund.pay_type_name"
+        :content="data.pay_type_name"
         label="退款方式"
         is-joint
       />
@@ -137,7 +168,7 @@ export default {
     <template
       v-if="
         !data.order_refund
-          && order_refund_status_name === '退款失败'
+          || data.order_refund.order_refund_status_name === '退款失败'
       "
     >
       <XTextarea
