@@ -540,8 +540,11 @@ export default {
       height: 100%;
     }
   }
+
+  /*
   &--active {
     background-color: #fabe00;
   }
+  */
 }
 </style>

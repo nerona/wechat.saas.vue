@@ -163,7 +163,7 @@
     position: relative;
   }
   a:nth-child(2n) {
-    background-color: #f39800;
+    /* background-color: #f39800; */
   }
   a:nth-child(3n) {
     margin-right: 0;
