@@ -21,7 +21,7 @@ export default {
             ? 'https://wechat.aikaola.com/activity/learn/index?source=1' :
             'https://wechat.caihonggou.com/activity/learn/index?source=1',
       imgUrl: 'https://oa-statics.caihonggou.com/iamkid_wechat_share.png',
-      desc: '一起参加吧！家门口的美国小学英语课堂，名额有限。',
+      desc: '一起参加吧！家门口的美国小学英语课程，名额有限。',
     };
   },
   created() {

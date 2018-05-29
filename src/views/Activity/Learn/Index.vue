@@ -46,7 +46,7 @@ export default {
             ? 'https://wechat.aikaola.com/activity/learn/index?source=1' :
             'https://wechat.caihonggou.com/activity/learn/index?source=1',
       imgUrl: 'https://oa-statics.caihonggou.com/iamkid_wechat_share.png',
-      desc: '一起参加吧！家门口的美国小学英语课堂，名额有限。',
+      desc: '一起参加吧！家门口的美国小学英语课程，名额有限。',
     };
   },
   created() {
@@ -318,7 +318,7 @@ export default {
     <!-- qrcode -->
     <qrcode :qrcode="qrcode"/>
     <!-- anchor -->
-    <div class="learn-index-tabs">
+    <div class="weui-tabbar learn-index-tabs">
       <div
         class="learn-index-tabs--active"
         @click="toCurriculum">课程介绍</div>
@@ -357,7 +357,9 @@ export default {
 .learn-index .weui-tab__panel {
   overflow-x: hidden !important;
   padding-bottom: 0 !important;
+  padding-bottom: px2vw(90) !important;
 }
+
 .learn-index-logo {
   padding-top: px2vw(60);
   position: relative;
@@ -515,12 +517,13 @@ export default {
 }
 
 .learn-index-tabs {
-  display: flex;
+  width: 100%;
   height: px2vw(90);
   line-height: px2vw(90);
   font-size: px2vw(30);
   letter-spacing: px2vw(2);
   background-color: #fff;
+
   div {
     flex: 1;
     text-align: center;
