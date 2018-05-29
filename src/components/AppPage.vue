@@ -26,6 +26,11 @@ export default {
       style="width:100%;position:absolute;left:0;top:0;z-index:100;"/> -->
 
     <slot/>
+
+    <slot
+      slot="bottom"
+      name="bottom"
+    />
   </view-box>
 </template>
 

@@ -317,18 +317,6 @@ export default {
 
     <!-- qrcode -->
     <qrcode :qrcode="qrcode"/>
-    <!-- anchor -->
-    <div class="weui-tabbar learn-index-tabs">
-      <div
-        class="learn-index-tabs--active"
-        @click="toCurriculum">课程介绍</div>
-      <div>
-        <a href="#rule">活动规则</a>
-      </div>
-      <div>
-        <a href="#class">上课地点</a>
-      </div>
-    </div>
 
     <!-- 短信验证 -->
 
@@ -345,15 +333,30 @@ export default {
         />
       </popup>
     </div>
+
+    <!-- anchor -->
+    <div
+      slot="bottom"
+      class="weui-tabbar learn-index-tabs"
+    >
+      <div
+        class="learn-index-tabs--active"
+        @click="toCurriculum">课程介绍</div>
+      <div>
+        <a href="#rule">活动规则</a>
+      </div>
+      <div>
+        <a href="#class">上课地点</a>
+      </div>
+    </div>
   </AppPage>
 </template>
 
 <style lang="less">
 .learn-index {
   background-color: #ffd900;
-  position: relative;
-  overflow-x: hidden;
 }
+
 .learn-index .weui-tab__panel {
   overflow-x: hidden !important;
   padding-bottom: 0 !important;
