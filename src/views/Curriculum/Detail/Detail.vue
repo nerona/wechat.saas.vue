@@ -74,8 +74,10 @@ export default {
       this.$http.get(`/course_packet/surface/${this.$route.params.id}`).then((res) => {
         this.$vux.loading.hide();
         this.info = res;
-      }).catch(this.$_formMixin_alertError)
-      .finally(() => { this.$vux.loading.hide(); });
+      }).catch((err) => {
+        this.$vux.loading.hide();
+        this.$_formMixin_alertError(err);
+      });
     },
   },
 };

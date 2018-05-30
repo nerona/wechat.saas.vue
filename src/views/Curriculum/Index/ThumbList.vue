@@ -78,13 +78,12 @@
   margin-bottom: px2vw(10);
 }
 .curriculum-item__thumb {
-  width: 36%;
   margin-right: px2vw(40);
   position: relative;
 }
 .curriculum-item__thumb > img {
-  width: px2vw(250);
-  height: px2vw(250);
+  width: px2vw(240);
+  height: px2vw(240);
 }
 .curriculum-item__thumb--full {
   position: absolute;
