@@ -38,49 +38,49 @@ export default {
 
     vm.$http.post('/bind/jssdk', { url }).then((res) => {
       vm.$wechat.config(res);
-    });
-
-    vm.$wechat.ready(() => {
-      vm.$wechat.onMenuShareAppMessage({
-        title: vm.title,
-        link: vm.link,
-        imgUrl: vm.imgUrl,
-        desc: vm.desc,
-        success() {
-          vm.share();
-        },
-        cancel() {
-          vm.$vux.toast.show({
-            text: '分享取消',
-            type: 'text',
-            width: 'auto',
-            position: 'middle',
-          });
-        },
-        fail(res) {
+    }).then(() => {
+      vm.$wechat.ready(() => {
+        vm.$wechat.onMenuShareAppMessage({
+          title: vm.title,
+          link: vm.link,
+          imgUrl: vm.imgUrl,
+          desc: vm.desc,
+          success() {
+            vm.share();
+          },
+          cancel() {
+            vm.$vux.toast.show({
+              text: '分享取消',
+              type: 'text',
+              width: 'auto',
+              position: 'middle',
+            });
+          },
+          fail(res) {
           // eslint-disable-next-line
           alert(JSON.stringify(res));
-        },
-      });
-      vm.$wechat.onMenuShareTimeline({
-        title: vm.title,
-        link: vm.link,
-        imgUrl: vm.imgUrl,
-        desc: vm.desc,
-        success() {
-          vm.share();
-        },
-        cancel() {
-          vm.$vux.toast.show({
-            text: '分享取消',
-            type: 'text',
-            width: 'auto',
-          });
-        },
-        fail(res) {
+          },
+        });
+        vm.$wechat.onMenuShareTimeline({
+          title: vm.title,
+          link: vm.link,
+          imgUrl: vm.imgUrl,
+          desc: vm.desc,
+          success() {
+            vm.share();
+          },
+          cancel() {
+            vm.$vux.toast.show({
+              text: '分享取消',
+              type: 'text',
+              width: 'auto',
+            });
+          },
+          fail(res) {
           // eslint-disable-next-line
           alert(JSON.stringify(res));
-        },
+          },
+        });
       });
     });
   },

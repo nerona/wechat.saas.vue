@@ -63,52 +63,52 @@ export default {
 
     vm.$http.post('/bind/jssdk', { url }).then((res) => {
       vm.$wechat.config(res);
-    });
+    }).then(() => {
+      vm.$wechat.ready(() => {
+        // 第一次进入此页面
+        vm.getLocation();
 
-    vm.$wechat.ready(() => {
-      // 第一次进入此页面
-      vm.getLocation();
-
-      vm.$wechat.onMenuShareAppMessage({
-        title: vm.title,
-        link: vm.link,
-        imgUrl: vm.imgUrl,
-        desc: vm.desc,
-        success() {
-          vm.share();
-        },
-        cancel() {
-          vm.$vux.toast.show({
-            text: '分享取消',
-            type: 'text',
-            width: 'auto',
-            position: 'middle',
-          });
-        },
-        fail(res) {
+        vm.$wechat.onMenuShareAppMessage({
+          title: vm.title,
+          link: vm.link,
+          imgUrl: vm.imgUrl,
+          desc: vm.desc,
+          success() {
+            vm.share();
+          },
+          cancel() {
+            vm.$vux.toast.show({
+              text: '分享取消',
+              type: 'text',
+              width: 'auto',
+              position: 'middle',
+            });
+          },
+          fail(res) {
           // eslint-disable-next-line
           alert(JSON.stringify(res));
-        },
-      });
-      vm.$wechat.onMenuShareTimeline({
-        title: vm.title,
-        link: vm.link,
-        imgUrl: vm.imgUrl,
-        desc: vm.desc,
-        success() {
-          vm.share();
-        },
-        cancel() {
-          vm.$vux.toast.show({
-            text: '分享取消',
-            type: 'text',
-            width: 'auto',
-          });
-        },
-        fail(res) {
+          },
+        });
+        vm.$wechat.onMenuShareTimeline({
+          title: vm.title,
+          link: vm.link,
+          imgUrl: vm.imgUrl,
+          desc: vm.desc,
+          success() {
+            vm.share();
+          },
+          cancel() {
+            vm.$vux.toast.show({
+              text: '分享取消',
+              type: 'text',
+              width: 'auto',
+            });
+          },
+          fail(res) {
           // eslint-disable-next-line
           alert(JSON.stringify(res));
-        },
+          },
+        });
       });
     });
   },

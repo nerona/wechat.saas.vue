@@ -47,20 +47,20 @@ export default {
 
     this.$http.post('/bind/jssdk', { url }).then((res) => {
       this.$wechat.config(res);
-    });
-
-    // 判断是否第一次用微信进入;
-    if (localStorage.getItem('_getLocation') === null
+    }).then(() => {
+      // 判断是否第一次用微信进入;
+      if (localStorage.getItem('_getLocation') === null
           && /MicroMessenger/i.test(navigator.userAgent)) {
-      this.getLocation();
-    } else if (localStorage.getItem('_getLocation') !== null) {
-      this.location = localStorage.getItem('_getLocation');
-      this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
-      this.getCurriculum();
-    } else {
-      this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
-      this.getCurriculum();
-    }
+        this.getLocation();
+      } else if (localStorage.getItem('_getLocation') !== null) {
+        this.location = localStorage.getItem('_getLocation');
+        this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
+        this.getCurriculum();
+      } else {
+        this.addressValue = name2value(this.location.split(' '), ChinaAddressV4Data).split(' ');
+        this.getCurriculum();
+      }
+    });
   },
   methods: {
     goActivity() {
