@@ -5,6 +5,9 @@
  * @author  lindongfnag
  */
 
+import {
+  formUtils,
+} from '@/mixins';
 import { XButton, ViewBox, Popup, Confirm, Alert } from 'vux';
 import SwiperList from './SwiperList';
 import DetailPopup from './DetailPopup';
@@ -20,6 +23,9 @@ export default {
     Confirm,
     Alert,
   },
+  mixins: [
+    formUtils,
+  ],
   data() {
     return {
       showPopup: false,

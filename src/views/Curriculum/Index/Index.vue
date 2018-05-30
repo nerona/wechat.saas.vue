@@ -12,6 +12,9 @@ import {
   Value2nameFilter as value2name,
   Name2valueFilter as name2value,
   } from 'vux';
+import {
+  formUtils,
+} from '@/mixins';
 import ThumbList from './ThumbList';
 
 export default {
@@ -21,6 +24,9 @@ export default {
     XAddress,
     Group,
   },
+  mixins: [
+    formUtils,
+  ],
   data() {
     return {
       banner: {
