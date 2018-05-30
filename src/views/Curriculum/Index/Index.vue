@@ -85,7 +85,8 @@ export default {
       this.$http.get(`/course_packet/${this.addressValue[2]}`).then((res) => {
         this.$vux.loading.hide();
         this.thumbs = res.course_packets;
-      });
+      }).catch(this.$_formMixin_alertError)
+      .finally(() => { this.$vux.loading.hide(); });
     },
     // 微信获取位置
     getLocation() {
