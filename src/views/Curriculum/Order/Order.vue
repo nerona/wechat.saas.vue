@@ -158,6 +158,17 @@ export default {
           type: 'success',
           position: 'middle',
         });
+
+        // 微信config
+        const url = /(Android)/i.test(navigator.userAgent) ?
+                    location.href : localStorage.getItem('linkUrl');
+
+        this.$http.post('/bind/jssdk', { url }).then((config) => {
+          this.$wechat.config(config);
+        }).then(() => {
+          // 调用支付;
+          // this.wechatPay(res);
+        });
       }).catch((err) => {
         this.$vux.toast.show({
           text: err.message,
@@ -165,25 +176,10 @@ export default {
           position: 'middle',
         });
       });
-
-      // const url = location.href;
-      // this.$http.post(`${url}create-order`, order).then((response) => {
-      //   this.$vux.loading.hide();
-      //   if (response.status === 200 && response.data.status === 1) {
-      //     this.wechatPay(response.data.data);
-      //   } else {
-      //     this.$vux.alert.show({
-      //       title: '创建订单失败',
-      //       content: response.data.message,
-      //     });
-      //   }
-      // }).catch((error) => {
-      //   this.$vux.loading.hide();
-      //   this.$vux.toast.show({
-      //     text: '网络错误',
-      //     type: 'cancel',
-      //   });
-      // });
+    },
+    showKey(e) {
+      // eslint-disable-next-line
+      alert(JSON.stringify(e.keyCode));
     },
   },
 };
@@ -191,6 +187,10 @@ export default {
 
 <template>
   <app-page class="curriculum-order">
+    <input
+      type="text"
+      style="height: 40px;font-size: 30px;"
+      @keyup="showKey($event)">
     <div class="curriculum-order-block"/>
     <group gutter="0">
       <cell
