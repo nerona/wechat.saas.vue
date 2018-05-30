@@ -7,6 +7,7 @@
 
 import {
   formUtils,
+  pageUtils,
 } from '@/mixins';
 
 import {
@@ -19,6 +20,8 @@ import {
   XInput,
   Swiper,
 } from 'vux';
+
+import signinPoster from '@/assets/signin-poster.png';
 
 export default {
   name: 'SignIn',
@@ -33,6 +36,7 @@ export default {
 
   mixins: [
     formUtils,
+    pageUtils,
   ],
 
   data: () => ({
@@ -50,6 +54,8 @@ export default {
     url: '/bind/bind_phone',
 
     submitLoading: false,
+
+    activities: [],
   }),
 
   computed: {
@@ -58,9 +64,34 @@ export default {
 
       return this.data.code && this.data.mobile.match(pattern);
     },
+
+    convertActivities() {
+      const activities = this.activities.map(
+        ({
+          name: title,
+          cover: img,
+          activity_url: url,
+        }) => ({ title, img, url }),
+      );
+
+      return activities.length ? activities : [{ img: signinPoster }];
+    },
+  },
+
+  created() {
+    this.getActivities();
   },
 
   methods: {
+    getActivities() {
+      const api = '/activity/in_progress';
+      const callback = ({ data }) => {
+        this.activities = data;
+      };
+
+      this.$_pageMixin_http(api, callback);
+    },
+
     directRoute() {
       const to = this.$route.params.from || '/curriculum';
 
@@ -81,13 +112,13 @@ export default {
 
 <template>
   <div class="signin">
-    <div class="signin__banner">
-      <XButton
-        text="快去报名>>"
-        type="warn"
-        mini
-      />
-    </div>
+    <Swiper
+      :list="convertActivities"
+      :aspect-ratio="0.5"
+      :show-dots="convertActivities.length > 1"
+      :show-desc-mask="!!convertActivities[0].url"
+      auto
+    />
     <Group
       label-width="4em"
       gutter="15px"
@@ -117,12 +148,6 @@ export default {
 </template>
 
 <style lang="less">
-.signin__banner {
-  padding: 1em;
-  height: px2vw(360);
-  background-color: grey;
-}
-
 .signin .signin__confirm {
   margin: px2vw(40) px2vw(20) 0 px2vw(20);
   width: px2vw(710);
