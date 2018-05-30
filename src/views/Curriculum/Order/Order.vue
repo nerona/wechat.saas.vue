@@ -177,20 +177,12 @@ export default {
         });
       });
     },
-    showKey(e) {
-      // eslint-disable-next-line
-      alert(JSON.stringify(e.keyCode));
-    },
   },
 };
 </script>
 
 <template>
   <app-page class="curriculum-order">
-    <input
-      type="text"
-      style="height: 40px;font-size: 30px;"
-      @keyup="showKey($event)">
     <div class="curriculum-order-block"/>
     <group gutter="0">
       <cell
