@@ -4,6 +4,7 @@ import * as views from '@/views';
 import activity from './activity';
 import curriculum from './curriculum';
 import learn from './learn';
+import order from './order';
 import user from './user';
 
 Vue.use(Router);
@@ -35,6 +36,8 @@ const router = new Router({
     ...learn,
 
     ...user,
+
+    ...order,
   ],
 });
 

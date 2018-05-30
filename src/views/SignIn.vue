@@ -17,6 +17,7 @@ import {
   Group,
   XButton,
   XInput,
+  Swiper,
 } from 'vux';
 
 export default {
@@ -26,6 +27,7 @@ export default {
     Group,
     XButton,
     XInput,
+    Swiper,
     VerificationCode,
   },
 
@@ -52,8 +54,9 @@ export default {
 
   computed: {
     isFormValid() {
-      return this.data.mobile.match(/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/)
-        && this.data.code;
+      const pattern = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
+
+      return this.data.code && this.data.mobile.match(pattern);
     },
   },
 

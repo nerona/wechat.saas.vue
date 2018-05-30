@@ -25,11 +25,11 @@ export default {
 
   methods: {
     toDetail() {
-      this.$router.push(`/user/order/${this.data.id}`);
+      this.$router.push(`/order/detail/${this.data.id}`);
     },
 
     toPay() {
-      this.$router.push(`/user/order/${this.data.id}?ispay=true`);
+      this.$router.push(`/order/detail/${this.data.id}?ispay=true`);
     },
   },
 };

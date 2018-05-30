@@ -91,7 +91,7 @@ export default {
     toRefund(route = this.$route) {
       const id = Number(route.params.id);
 
-      this.$router.push(`/user/refund/${id}`);
+      this.$router.push(`/order/refund/${id}`);
     },
 
     toPay() {

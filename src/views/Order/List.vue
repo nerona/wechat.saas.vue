@@ -39,6 +39,12 @@ export default {
     orderList: [],
   }),
 
+  computed: {
+    orderStatus() {
+      return this.$route.query.type || '0';
+    },
+  },
+
   created() {
     this.getOrderList();
   },
@@ -77,7 +83,7 @@ export default {
         :key="item.state"
         :class="{
           'order-list__tab-item': true,
-          'order-list__tab-item--active': item.state === $route.query.type,
+          'order-list__tab-item--active': item.state === orderStatus,
         }"
         @on-item-click="() => changeOrderState(item.state)"
       >

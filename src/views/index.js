@@ -30,6 +30,8 @@ export { default as LearnCurriculum } from './Learn/curriculum';
 export { default as UserIndex } from './User/Index/Index';
 export { default as UserEdit } from './User/Index/Edit';
 export { default as UserActivity } from './User/Index/ActivityRecord';
-export { default as UserOrderList } from './User/Order/List';
-export { default as UserOrderDetail } from './User/Order/Detail';
-export { default as UserOrderRefund } from './User/Order/Refund';
+
+/* 订单管理 */
+export { default as OrderList } from './Order/List';
+export { default as OrderDetail } from './Order/Detail';
+export { default as OrderRefund } from './Order/Refund';
