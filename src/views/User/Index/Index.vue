@@ -5,7 +5,7 @@
  * @author
  */
 
-import { Card, Cell, XButton, Group } from 'vux';
+import { Card, Cell, XButton, Group, Confirm } from 'vux';
 
 export default {
   name: 'UserIndex',
@@ -14,6 +14,7 @@ export default {
     Cell,
     Group,
     XButton,
+    Confirm,
   },
   data() {
     return {
@@ -26,6 +27,7 @@ export default {
       activityRecord: null,
 
       order: {},
+      logoutConfirm: false,
     };
   },
   created() {
@@ -58,6 +60,12 @@ export default {
     },
     // 退出登录
     logout() {
+      this.logoutConfirm = true;
+    },
+    onCancel() {
+      this.logoutConfirm = false;
+    },
+    onConfirm() {
       this.$http.post('/bind/logout').then(() => {
         this.$router.push('/sign-in');
       }).catch(({ message }) => {
@@ -134,6 +142,13 @@ export default {
         type="primary"
         @click.native="logout">退出</x-button>
     </div>
+    <!-- 退出确认框 -->
+    <confirm
+      v-model="logoutConfirm"
+      @on-cancel="onCancel"
+      @on-confirm="onConfirm">
+      <div style="font-size: 18px;">确认退出？</div>
+    </confirm>
 
   </AppPageWithTabbar>
 </template>
