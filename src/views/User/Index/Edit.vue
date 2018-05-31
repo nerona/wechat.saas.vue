@@ -73,7 +73,7 @@ export default {
       }
     },
     submit() {
-      const pattern = /^([\u4e00-\u9fa5]+|[\u4e00-\u9fa5]+([\u4e00-\u9fa5]+)*)$/;
+      const pattern = /^[\u4e00-\u9fa5a-zA-Z]+$/;
 
       let name;
       let roleType;
@@ -86,6 +86,7 @@ export default {
             type: 'text',
             width: 'auto',
           });
+          return;
         }
       }
       if (this.roleValue !== 0) {
@@ -141,7 +142,7 @@ export default {
     <group gutter="5 5">
       <x-input
         v-model="name"
-        :max="20"
+        :max="10"
         :show-clear="false"
         type="text"
         placeholder="请输入您的姓名"
