@@ -174,11 +174,10 @@ export default {
 
 <style lang="less">
 .curriculum-detail-order {
-  height: 100%;
+  height: 90%;
   overflow-y: scroll;
   background-color: #fff;
   font-size: px2vw(@font-size-big);
-  margin-bottom: px2vw(100);
 }
 .curriculum-detail-order__card {
   padding: px2vw(24) px2vw(32);
