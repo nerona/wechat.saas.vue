@@ -100,10 +100,19 @@ export default {
         this.$vux.toast.text('请选择校区！', 'middle');
         return;
       }
-      if (this.isDateActive === null) {
-        this.$vux.toast.text('请选择上课时间！', 'middle');
+      if (this.btnDisabled) {
+        this.$vux.toast.text('课程已售空！', 'middle');
         return;
       }
+      if (this.isDateActive === null) {
+        this.$vux.toast.show({
+          text: '请选择有效的上课时间！',
+          type: 'text',
+          width: 'auto',
+        });
+        return;
+      }
+
       query.department_id = this.isSchoolActive;
       query.curriculum_id = this.isDateActive;
       query.course_packet_id = this.$route.params.id;
@@ -177,7 +186,6 @@ export default {
       slot="bottom"
       class="curriculum-detail-sure">
       <x-button
-        :disabled="btnDisabled"
         type="primary"
         @click.native="submit">确定</x-button>
     </div>
@@ -188,6 +196,10 @@ export default {
 .curriculum-detail-order {
   background-color: #fff;
   font-size: px2vw(@font-size-big);
+}
+.curriculum-detail-order .weui-btn_primary:not(.weui-btn_disabled):active {
+    color: rgba(0, 0, 0, 0.9);
+    background-color: #ffd900;
 }
 .curriculum-detail-order__card {
   padding: px2vw(24) px2vw(32);

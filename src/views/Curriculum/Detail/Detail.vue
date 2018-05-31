@@ -169,6 +169,10 @@ export default {
 .curriculum-detail {
   color: @font-size-default-color;
 }
+.curriculum-detail .weui-btn_primary:not(.weui-btn_disabled):active {
+    color: rgba(0, 0, 0, 0.9);
+    background-color: #ffd900;
+}
 .curriculum-detail__info {
   background-color: #fff;
   padding: px2vw(30) px2vw(28);
