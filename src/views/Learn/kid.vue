@@ -75,10 +75,10 @@ export default {
     },
 
     isSubmit() {
-      const pattern = /^[A-Za-z0-9\u4e00-\u9fa5]{0,10}$/;
+      const pattern = /^[A-Za-z\u4e00-\u9fa5]{0,10}$/;
       const isName = pattern.test(this.formData.name);
       if (!isName) {
-        this.$vux.toast.text('姓名最多只能输入10个字符', 'middle');
+        this.$vux.toast.text('姓名最多只能输入10个汉字或者英文字母', 'middle');
       }
 
       return this.formData.head_url &&
@@ -314,12 +314,13 @@ export default {
 
 <template>
   <AppPage class="learn-kid">
-    <div class="learn-kid__header">
+    <div
+      class="learn-kid__header"
+      @click="uploadImg">
       <group>
         <cell
           is-link
-          title="上传头像"
-          @click.native="uploadImg">
+          title="上传头像">
           <div>
             <img
               v-if="formData.head_url"
