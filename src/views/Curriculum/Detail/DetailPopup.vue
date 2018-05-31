@@ -178,7 +178,7 @@ export default {
   overflow-y: scroll;
   background-color: #fff;
   font-size: px2vw(@font-size-big);
-  padding-bottom: px2vw(100);
+  margin-bottom: px2vw(100);
 }
 .curriculum-detail-order__card {
   padding: px2vw(24) px2vw(32);
