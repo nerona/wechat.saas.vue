@@ -136,7 +136,6 @@ export default {
         v-model="showPopup"
         :should-scroll-top-on-show="true"
         height="75%"
-        style="background-color: #fff;"
       >
         <detail-popup
           v-if="showPopup"

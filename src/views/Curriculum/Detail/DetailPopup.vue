@@ -5,12 +5,13 @@
  * @author  lindongfnag
  */
 
-import { XButton } from 'vux';
+import { XButton, ViewBox } from 'vux';
 
 export default {
   name: 'DetailOrder',
   components: {
     XButton,
+    ViewBox,
   },
   filters: {
     toDay(str) {
@@ -106,7 +107,7 @@ export default {
 </script>
 
 <template>
-  <div class="curriculum-detail-order">
+  <view-box class="curriculum-detail-order">
     <!--  -->
     <div class="curriculum-detail-order__card">
       <div class="curriculum-detail-order-card__header">
@@ -164,18 +165,18 @@ export default {
       </div>
     </div>
     <!--  -->
-    <div class="curriculum-detail-sure">
+    <div
+      slot="bottom"
+      class="curriculum-detail-sure">
       <x-button
         type="primary"
         @click.native="submit">确定</x-button>
     </div>
-  </div>
+  </view-box>
 </template>
 
 <style lang="less">
 .curriculum-detail-order {
-  height: 90%;
-  overflow-y: scroll;
   background-color: #fff;
   font-size: px2vw(@font-size-big);
 }
