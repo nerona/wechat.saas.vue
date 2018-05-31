@@ -164,7 +164,9 @@ export default {
         </div>
       </div>
     </div>
-    <div class="learn-curriculum__info">
+    <div
+      v-if="curriculumInfo != undefined"
+      class="learn-curriculum__info">
       <div>
         <span style="float:right;">{{ curriculumInfo.block_status_name }}</span>
         <span>课程名称：{{ curriculumInfo.curriculum_name }}</span>
@@ -177,14 +179,17 @@ export default {
       </div>
     </div>
     <div
-      v-if="curriculumInfo.performance.legth > 0"
-      class="learn-curriculum__performance">
-      <div style="color:gray">课堂表现</div>
+      v-if="curriculumInfo != undefined">
       <div
-        v-for="item in curriculumInfo.performance"
-        :key="item.name + item.score_name">
-        <span>{{ item.name }}</span>
-        <span style="float:right;">{{ item.score_name }}</span>
+        v-if="curriculumInfo.performance.legth > 0"
+        class="learn-curriculum__performance">
+        <div style="color:gray">课堂表现</div>
+        <div
+          v-for="item in curriculumInfo.performance"
+          :key="item.name + item.score_name">
+          <span>{{ item.name }}</span>
+          <span style="float:right;">{{ item.score_name }}</span>
+        </div>
       </div>
     </div>
   </div>

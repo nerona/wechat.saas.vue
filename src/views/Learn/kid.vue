@@ -328,7 +328,21 @@ export default {
     <div
       class="learn-kid__header"
       @click="uploadImg">
-      <div>
+      <group>
+        <cell
+          is-link
+          title="上传头像">
+          <div>
+            <img
+              v-if="formData.head_url"
+              :src="formData.head_url">
+            <div
+              v-else
+              class="learn-kid-header__div"/>
+          </div>
+        </cell>
+      </group>
+      <!-- <div>
         <span>上传头像</span>
         <img
           v-if="formData.head_url"
@@ -336,7 +350,7 @@ export default {
         <div
           v-else
           class="learn-kid-header__div"/>
-      </div>
+      </div> -->
       <input
         ref="inputImg"
         type="file"
@@ -395,30 +409,30 @@ export default {
 </template>
 
 <style lang="less">
-.learn-kid__header{
-  margin-top: px2vw(20);
-  background: white;
-  line-height: px2vw(120);
-  font-size: px2vw(32);
-  position: relative;
-}
-.learn-kid__header span{
-  margin-left: 15px;
-}
-.learn-kid__header>div::after{
-    content: " ";
-    display: inline-block;
-    height: px2vw(13);
-    width: px2vw(13);
-    border-width: px2vw(4) px2vw(4) 0 0;
-    border-color: #C8C8CD;
-    border-style: solid;
-    transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
-    position: absolute;
-    top: 50%;
-    margin-top: px2vw(-8);
-    right: px2vw(20);
-}
+// .learn-kid__header{
+//   margin-top: px2vw(20);
+//   background: white;
+//   line-height: px2vw(120);
+//   font-size: px2vw(32);
+//   position: relative;
+// }
+// .learn-kid__header span{
+//   margin-left: 15px;
+// }
+// .learn-kid__header>div::after{
+//     content: " ";
+//     display: inline-block;
+//     height: px2vw(13);
+//     width: px2vw(13);
+//     border-width: px2vw(4) px2vw(4) 0 0;
+//     border-color: #C8C8CD;
+//     border-style: solid;
+//     transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+//     position: absolute;
+//     top: 50%;
+//     margin-top: px2vw(-8);
+//     right: px2vw(20);
+// }
 .learn-kid__header .weui-cells{
   margin-top: px2vw(20);
 }
@@ -428,18 +442,18 @@ export default {
   height: px2vw(100);
   border-radius: 50%;
   background: darkgrey;
-  position: absolute;
-  right: px2vw(50);
-  top: px2vw(10);
+  // position: absolute;
+  // right: px2vw(50);
+  // top: px2vw(10);
 }
 .learn-kid__header img{
   display: inline-block;
   width: px2vw(100);
   height: px2vw(100);
   border-radius: 50%;
-  position: absolute;
-  right: px2vw(50);
-  top: px2vw(10);
+  // position: absolute;
+  // right: px2vw(50);
+  // top: px2vw(10);
 }
 .learn-kid__body{
   & .vux-x-input,.vux-datetime,.vux-cell-box {
