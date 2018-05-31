@@ -48,6 +48,8 @@ export default {
 
       isSchoolActive: null,
       isDateActive: null,
+
+      btnDisabled: false,
     };
   },
   created() {
@@ -66,6 +68,12 @@ export default {
         this.curriculum = currentItem.curriculum;
         this.stock_remain = currentItem.stock_remain;
         // this.isDateActive = null;
+
+        if (this.curriculum.length === 1 && this.curriculum[0].stock_remain === 0) {
+          this.btnDisabled = true;
+        } else {
+          this.btnDisabled = false;
+        }
       } else {
         this.isSchoolActive = null;
       }
@@ -169,6 +177,7 @@ export default {
       slot="bottom"
       class="curriculum-detail-sure">
       <x-button
+        :disabled="btnDisabled"
         type="primary"
         @click.native="submit">确定</x-button>
     </div>
