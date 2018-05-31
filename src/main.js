@@ -5,6 +5,7 @@ import {
   WechatPlugin,
   TransferDom,
 } from 'vux';
+import 'core-js/fn/promise/finally';
 import Vue from 'vue';
 import FastClick from 'fastclick';
 import VueLazyload from 'vue-lazyload';
