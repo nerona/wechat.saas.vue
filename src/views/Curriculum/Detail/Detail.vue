@@ -117,7 +117,9 @@ export default {
     </div>
 
     <!-- 购买-试听 -->
-    <div class="curriculum-detail__btns">
+    <div
+      slot="bottom"
+      class="curriculum-detail__btns">
       <x-button
         v-if="info.category_type == 1"
         type="primary"

@@ -253,7 +253,9 @@ export default {
     </group>
 
     <!-- 支付 -->
-    <div class="curriculum-order-pay">
+    <div
+      slot="bottom"
+      class="curriculum-order-pay">
       <div class="curriculum-order-pay__amount">实付金额: <span>￥ {{ product.price }}元</span></div>
       <div
         class="curriculum-order-pay__sure"
