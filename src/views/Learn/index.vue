@@ -226,6 +226,7 @@ export default {
 }
 .learn-learn-index__body .weui-cells{
   margin-top: px2vw(6);
+  margin-bottom: px2vw(8);
   font-size: px2vw(32);
 }
 .learn-learn-index__body .weui-cell_access .weui-cell__ft:after{

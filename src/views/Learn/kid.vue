@@ -74,19 +74,6 @@ export default {
       return productionURL;
     },
 
-    isSubmit() {
-      const pattern = /^[A-Za-z\u4e00-\u9fa5]{0,10}$/;
-      const isName = pattern.test(this.formData.name);
-      if (!isName) {
-        this.$vux.toast.text('姓名最多只能输入10个汉字或者英文字母', 'middle');
-      }
-
-      return this.formData.head_url &&
-      isName &&
-      this.formData.birth_at &&
-      this.formData.gender;
-    },
-
   },
 
   beforeRouteEnter(to, from, next) {
@@ -279,6 +266,29 @@ export default {
     },
 
     submit() {
+      const pattern = /^[A-Za-z\u4e00-\u9fa5]{0,10}$/;
+      const isName = pattern.test(this.formData.name);
+
+      if (!this.formData.head_url) {
+        this.$vux.toast.text('请上传头像', 'middle');
+        return;
+      }
+      if (!this.formData.name) {
+        this.$vux.toast.text('请输入小孩姓名', 'middle');
+        return;
+      }
+      if (!isName) {
+        this.$vux.toast.text('姓名最多只能输入10个汉字或者英文字母', 'middle');
+        return;
+      }
+      if (!this.formData.birth_at) {
+        this.$vux.toast.text('请选择出生年月', 'middle');
+        return;
+      }
+      if (!this.formData.gender) {
+        this.$vux.toast.text('请选择性别', 'middle');
+        return;
+      }
       if (this.address.length > 0 && this.school.length < 1) {
         this.$vux.toast.text('请选择学校', 'middle');
         return;
@@ -287,6 +297,7 @@ export default {
         this.$vux.toast.text('请选择一个有学校的地区在选择学校', 'middle');
         return;
       }
+
       if (this.kidId) {
         this.$http.patch(`/student/${this.kidId}`, this.formData)
         .then(() => {
@@ -317,20 +328,15 @@ export default {
     <div
       class="learn-kid__header"
       @click="uploadImg">
-      <group>
-        <cell
-          is-link
-          title="上传头像">
-          <div>
-            <img
-              v-if="formData.head_url"
-              :src="formData.head_url">
-            <div
-              v-else
-              class="learn-kid-header__div"/>
-          </div>
-        </cell>
-      </group>
+      <div>
+        <span>上传头像</span>
+        <img
+          v-if="formData.head_url"
+          :src="formData.head_url">
+        <div
+          v-else
+          class="learn-kid-header__div"/>
+      </div>
       <input
         ref="inputImg"
         type="file"
@@ -381,7 +387,6 @@ export default {
         @on-change="changeGrade"/>
       <div class="learn-kid-submit">
         <x-button
-          :disabled="!isSubmit"
           type="primary"
           @click.native="submit">提交</x-button>
       </div>
@@ -390,8 +395,32 @@ export default {
 </template>
 
 <style lang="less">
+.learn-kid__header{
+  margin-top: px2vw(20);
+  background: white;
+  line-height: px2vw(120);
+  font-size: px2vw(32);
+  position: relative;
+}
+.learn-kid__header span{
+  margin-left: 15px;
+}
+.learn-kid__header>div::after{
+    content: " ";
+    display: inline-block;
+    height: px2vw(13);
+    width: px2vw(13);
+    border-width: px2vw(4) px2vw(4) 0 0;
+    border-color: #C8C8CD;
+    border-style: solid;
+    transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+    position: absolute;
+    top: 50%;
+    margin-top: px2vw(-8);
+    right: px2vw(20);
+}
 .learn-kid__header .weui-cells{
-  margin-top: 10px;
+  margin-top: px2vw(20);
 }
 .learn-kid-header__div{
   display: inline-block;
@@ -399,20 +428,41 @@ export default {
   height: px2vw(100);
   border-radius: 50%;
   background: darkgrey;
+  position: absolute;
+  right: px2vw(50);
+  top: px2vw(10);
 }
 .learn-kid__header img{
   display: inline-block;
   width: px2vw(100);
   height: px2vw(100);
   border-radius: 50%;
+  position: absolute;
+  right: px2vw(50);
+  top: px2vw(10);
 }
 .learn-kid__body{
   & .vux-x-input,.vux-datetime,.vux-cell-box {
     background: white;
     margin-top: px2vw(20);
+    font-size: px2vw(32);
   }
   .weui-cell:before,.vux-cell-box:not(:first-child):before{
     border-top: none;
+  }
+  .weui-cell_access .weui-cell__ft:after{
+    content: " ";
+    display: inline-block;
+    height: px2vw(12);
+    width: px2vw(12);
+    border-width: px2vw(4) px2vw(4) 0 0;
+    border-color: #C8C8CD;
+    border-style: solid;
+    transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+    position: absolute;
+    top: 50%;
+    margin-top: px2vw(-8);
+    right: px2vw(-4);
   }
 }
 .learn-kid-submit {
