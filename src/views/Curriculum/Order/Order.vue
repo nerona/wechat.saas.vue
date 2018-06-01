@@ -5,6 +5,7 @@
  * @author  lindongfnag
  */
 
+import { pageUtils } from '@/mixins';
 import { Cell, Group, Popup } from 'vux';
 
 import Childs from './Childs';
@@ -19,6 +20,7 @@ export default {
     Childs,
     Voucher,
   },
+  mixins: [pageUtils],
 
   data() {
     return {
@@ -68,30 +70,18 @@ export default {
 
   methods: {
     getInherit() {
-      this.$http.get(`/course_packet/surface/${this.$route.query.course_packet_id}`).then((res) => {
+      this.$_pageMixin_http(`/course_packet/surface/${this.$route.query.course_packet_id}`, (res) => {
         this.product = res;
-      }).catch((err) => {
-        this.$vux.toast.show({
-          text: err.message,
-          type: 'text',
-          width: 'auto',
-        });
       });
     },
     getChilds() {
-      this.$http.get('/student').then((res) => {
+      this.$_pageMixin_http('/student', (res) => {
         this.childs = res.students;
          // 小孩
         if (this.childs.length > 0) {
           this.childValue = this.childs[0].name;
           this.childId = this.childs[0].id;
         }
-      }).catch((err) => {
-        this.$vux.toast.show({
-          text: err.message,
-          type: 'text',
-          width: 'auto',
-        });
       });
     },
     // 添加小孩
@@ -145,12 +135,7 @@ export default {
         return;
       }
 
-      this.$http.post('/order', {
-        department_id: Number.parseInt(this.$route.query.department_id, 10),
-        curriculum_id: Number.parseInt(this.$route.query.curriculum_id, 10),
-        course_packet_id: Number.parseInt(this.$route.query.course_packet_id, 10),
-        student_id: this.childId,
-      }).then((res) => {
+      const cb = (res) => {
         // eslint-disable-next-line
         console.log(res);
         this.$vux.toast.show({
@@ -169,12 +154,13 @@ export default {
           // 调用支付;
           // this.wechatPay(res);
         });
-      }).catch((err) => {
-        this.$vux.toast.show({
-          text: err.message,
-          type: 'text',
-          position: 'middle',
-        });
+      };
+
+      this.$_pageMixin_http('/order', cb, 'post', {
+        department_id: Number.parseInt(this.$route.query.department_id, 10),
+        curriculum_id: Number.parseInt(this.$route.query.curriculum_id, 10),
+        course_packet_id: Number.parseInt(this.$route.query.course_packet_id, 10),
+        student_id: this.childId,
       });
     },
   },
