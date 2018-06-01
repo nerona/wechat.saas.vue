@@ -33,6 +33,11 @@ export default {
       item.img = item.url;
     });
   },
+  methods: {
+    show() {
+      return false;
+    },
+  },
 };
 </script>
 <template>
@@ -46,8 +51,8 @@ export default {
       loop
       dots-class="swiper-list__dots"
       dots-position="center"
+      @click.native="show($event)"
     />
-    <div class="swiper-list-cover"/>
   </div>
 </template>
 
