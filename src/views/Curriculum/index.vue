@@ -13,19 +13,19 @@ import {
   Name2valueFilter as name2value,
   } from 'vux';
 import {
-  formUtils,
+  pageUtils,
 } from '@/mixins';
-import ThumbList from './ThumbList';
+import ThumbItem from './components/ThumbItem';
 
 export default {
   name: 'CurriculumIndex',
   components: {
-    ThumbList,
+    ThumbItem,
     XAddress,
     Group,
   },
   mixins: [
-    formUtils,
+    pageUtils,
   ],
   data() {
     return {
@@ -72,6 +72,7 @@ export default {
     goActivity() {
       this.$router.push('/activity/learn/index');
     },
+
     // 打开位置选择
     openAddress() {
       this.showAddress = true;
@@ -86,16 +87,14 @@ export default {
       this.$vux.loading.show();
       this.getCurriculum();
     },
+
     // 获取课程包信息
     getCurriculum() {
-      this.$http.get(`/course_packet/${this.addressValue[2]}`).then((res) => {
-        this.$vux.loading.hide();
+      this.$_pageMixin_http(`/course_packet/${this.addressValue[2]}`, (res) => {
         this.thumbs = res.course_packets;
-      }).catch((err) => {
-        this.$vux.loading.hide();
-        this.$_formMixin_alertError(err);
       });
     },
+
     // 微信获取位置
     getLocation() {
       const vm = this;
@@ -175,7 +174,20 @@ export default {
       </div>
 
       <!-- 课程列表 -->
-      <thumb-list :thumbs="thumbs" />
+      <template v-if="thumbs.length != 0">
+        <div class="curriculum-list">
+          <ThumbItem
+            v-for="item in thumbs"
+            :item="item"
+            :key="item.id"/>
+        </div>
+      </template>
+      <template v-else>
+        <div class="curriculum-list-empty">
+          <div>该地区暂无课程,</div>
+          <div>敬请期待!</div>
+        </div>
+      </template>
 
     </div>
   </AppPageWithTabbar>
@@ -199,7 +211,7 @@ export default {
   display: block;
   width: px2vw(18);
   height: px2vw(26);
-  background: url('./../../../assets/location.png') no-repeat;
+  background: url('./../../assets/location.png') no-repeat;
   background-size: 100% 100%;
   position: absolute;
   left: px2vw(22);
@@ -219,5 +231,14 @@ export default {
 }
 .curriculum-index-banner__image {
   width: 100%;
+}
+.curriculum-list {
+  margin-top: px2vw(10);
+}
+.curriculum-list-empty {
+  text-align: center;
+  margin-top: px2vw(160);
+  font-size: px2vw(40);
+  letter-spacing: px2vw(4);
 }
 </style>

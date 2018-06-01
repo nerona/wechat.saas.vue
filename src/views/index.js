@@ -14,7 +14,7 @@ export { default as ActivityLearnShare } from './Activity/Learn/Share';
 
 /* 课程中心 */
 
-export { default as CurriculumIndex } from './Curriculum/Index/Index';
+export { default as CurriculumIndex } from './Curriculum';
 export { default as CurriculumDetail } from './Curriculum/Detail/Detail';
 export { default as CurriculumOrder } from './Curriculum/Order/Order';
 

@@ -1,22 +1,16 @@
 <script>
 /**
- * @overview 课程首页列表
+ * @overview 课程首页列表项
  *
  * @author  lindongfnag
  */
   export default {
-    name: 'CurriculumItem',
+    name: 'CurriculumThumbItem',
     props: {
-      thumbs: {
-        type: Array,
-        default: () => [],
+      item: {
+        type: Object,
+        default: (() => {}),
       },
-    },
-    data() {
-      return {};
-    },
-    created() {
-
     },
     methods: {
       goDetail(id) {
@@ -26,49 +20,34 @@
   };
 </script>
 <template>
-  <div class="curriculum-list">
-    <template v-if="thumbs.length != 0">
-      <div
-        v-for="item in thumbs"
-        :key="item.id"
-        class="curriculum-item"
-        @click="goDetail(item.id)"
-      >
-        <div class="curriculum-item__thumb">
-          <img
-            v-lazy="item.cover_url">
-            <!-- <div
+  <div
+    class="curriculum-item"
+    @click="goDetail(item.id)"
+  >
+    <div class="curriculum-item__thumb">
+      <img
+        v-lazy="item.cover_url">
+        <!-- <div
             v-if="item.stock_remain === 0"
             class="curriculum-item__thumb--full">满员</div> -->
-        </div>
-        <div class="curriculum-item__desc">
-          <div class="curriculum-item-desc__title">{{ item.name }}</div>
-          <div class="curriculum-item-desc__content">{{ item.introduce }}</div>
-          <div class="curriculum-item-desc__time">{{ item.created }}</div>
-          <div
-            v-if="item.stock_remain != 0"
-            class="curriculum-item-desc__left">还剩{{ item.stock_remain }}个名额</div>
-          <div
-            v-else
-            class="curriculum-item-desc__left">满员</div>
-          <div class="curriculum-item-desc__price">￥{{ item.price }}</div>
+    </div>
+    <div class="curriculum-item__desc">
+      <div class="curriculum-item-desc__title">{{ item.name }}</div>
+      <div class="curriculum-item-desc__content">{{ item.introduce }}</div>
+      <div class="curriculum-item-desc__time">{{ item.created }}</div>
+      <div
+        v-if="item.stock_remain != 0"
+        class="curriculum-item-desc__left">还剩{{ item.stock_remain }}个名额</div>
+      <div
+        v-else
+        class="curriculum-item-desc__left">满员</div>
+      <div class="curriculum-item-desc__price">￥{{ item.price }}</div>
 
-        </div>
-      </div>
-    </template>
-    <template v-else>
-      <div class="curriculum-list-empty">
-        <div>该地区暂无课程,</div>
-        <div>敬请期待!</div>
-      </div>
-    </template>
+    </div>
   </div>
 </template>
 
 <style lang="less">
-.curriculum-list {
-  margin-top: px2vw(10);
-}
 .curriculum-item {
   background-color: #fff;
   display: flex;
