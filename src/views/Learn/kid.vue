@@ -327,12 +327,12 @@ export default {
 <template>
   <AppPage class="learn-kid">
     <div
-      class="learn-kid__header"
-      @click="uploadImg">
+      class="learn-kid__header">
       <group>
         <cell
           is-link
-          title="上传头像">
+          title="上传头像"
+          @click.native="uploadImg">
           <div>
             <img
               v-if="formData.head_url"
@@ -343,14 +343,32 @@ export default {
           </div>
         </cell>
       </group>
-      <input
-        id="inputImg"
-        ref="inputImg"
-        type="file"
-        accept="image/jpg,image/jpeg,image/png,image/bmp"
-        style="display:none;"
-        @change="changeImg">
     </div>
+
+    <div
+      class="learn-kid__test"
+      @click="uploadImg">
+      <div>
+        <span>
+          上传头像
+        </span>
+        <img
+          v-if="formData.head_url"
+          :src="formData.head_url">
+        <div
+          v-else
+          class="learn-kid-header__div"/>
+      </div>
+    </div>
+
+    <input
+      id="inputImg"
+      ref="inputImg"
+      type="file"
+      accept="image/jpg,image/jpeg,image/png,image/bmp"
+      style="display:none;"
+      @change="changeImg">
+
     <div class="learn-kid__body">
       <x-input
         v-model="formData.name"
@@ -402,9 +420,28 @@ export default {
 </template>
 
 <style lang="less">
-.learn-kid__header{
+.learn-kid__test{
   z-index: 10000;
+  background: white;
+  height: px2vw(140);
+  margin-top: px2vw(20);
+  position: relative;
+  & span {
+    margin-left: 10px;
+    font-size: px2vw(32);
+    line-height: px2vw(150);
+  }
+  & img,.learn-kid-header__div {
+  display: inline-block;
+  width: px2vw(100);
+  height: px2vw(100);
+  border-radius: 50%;
+  position: absolute;
+  top: px2vw(20);
+  right: 30px;
+  }
 }
+
 .learn-kid__header .vux-label{
   font-size: px2vw(32);
 }
