@@ -47,7 +47,7 @@ export default {
       gradeList: [],
       schoolList: [{
         name: '无',
-        value: -1,
+        value: '-1',
       }],
 
 
@@ -456,6 +456,9 @@ export default {
     top: 50%;
     margin-top: px2vw(-8);
     right: px2vw(-4);
+  }
+  .vux-cell-box{
+    position: inherit;
   }
 }
 .learn-kid-submit {

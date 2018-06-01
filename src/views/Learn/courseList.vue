@@ -94,7 +94,6 @@ export default {
   font-size: px2vw(32) !important;
 }
 .course-list__fill{
-  width: 100%;
   background: white;
   margin-top: px2vw(4);
   padding: px2vw(10) px2vw(30);
@@ -103,7 +102,7 @@ export default {
 }
 .course-list-fill__span{
   position: absolute;
-  right: px2vw(100);
+  right: px2vw(20);
 }
 .course-list-fill-span__red{
   color: red;
