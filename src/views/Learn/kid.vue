@@ -161,11 +161,6 @@ export default {
       this.routePage = url;
     },
 
-    uploadImg() {
-      const input = document.getElementById('inputImg');
-      input.click();
-    },
-
     changeImg() {
       this.formData.head_url = '';
       this.formData.head_name = '';
@@ -327,50 +322,8 @@ export default {
 
 <template>
   <AppPage class="learn-kid">
-    <div
-      class="learn-kid__header">
-      <group>
-        <cell
-          is-link
-          title="上传头像"
-          @click.native="uploadImg">
-          <div>
-            <img
-              v-if="formData.head_url"
-              :src="formData.head_url">
-            <div
-              v-else
-              class="learn-kid-header__div"/>
-          </div>
-        </cell>
-      </group>
-      <!-- <input
-        id="inputImg"
-        ref="inputImg"
-        type="file"
-        accept="image/jpg,image/jpeg,image/png,image/bmp"
-        style="display:none;"
-        @change="changeImg"> -->
-    </div>
-
-    <!-- <div
-      class="learn-kid__test"
-      @click="uploadImg">
-      <div>
-        <span>
-          上传头像
-        </span>
-        <img
-          v-if="formData.head_url"
-          :src="formData.head_url">
-        <div
-          v-else
-          class="learn-kid-header__div"/>
-      </div>
-    </div> -->
-
     <label
-      class="learn-kid__test2"
+      class="learn-kid-header"
       for="inputImg">
       <input
         id="inputImg"
@@ -386,7 +339,7 @@ export default {
         :src="formData.head_url">
       <div
         v-else
-        class="learn-kid-header__div"/>
+        class="learn-kid-header__block"/>
     </label>
 
 
@@ -441,30 +394,7 @@ export default {
 </template>
 
 <style lang="less">
-.learn-kid__test{
-  z-index: 10000;
-  background: white;
-  height: px2vw(140);
-  margin-top: px2vw(20);
-  position: relative;
-  & span {
-    margin-left: 10px;
-    font-size: px2vw(32);
-    line-height: px2vw(150);
-  }
-  & img,.learn-kid-header__div {
-  display: inline-block;
-  pointer-events: none;
-  width: px2vw(100);
-  height: px2vw(100);
-  border-radius: 50%;
-  position: absolute;
-  top: px2vw(20);
-  right: 30px;
-  }
-}
-
-.learn-kid__test2{
+.learn-kid-header{
   background: white;
   display: inline-block;
   height: px2vw(140);
@@ -472,11 +402,11 @@ export default {
   margin-top: px2vw(20);
   position: relative;
   & span {
-    margin-left: 10px;
+    margin-left: 15px;
     font-size: px2vw(32);
     line-height: px2vw(150);
   }
-  & img,.learn-kid-header__div {
+  & img,.learn-kid-header__block {
   display: inline-block;
   pointer-events: none;
   width: px2vw(100);
@@ -487,11 +417,7 @@ export default {
   right: 30px;
   }
 }
-
-.learn-kid__header .vux-label{
-  font-size: px2vw(32);
-}
-.learn-kid__header .weui-cell_access .weui-cell__ft:after{
+.learn-kid-header::after{
     content: " ";
     display: inline-block;
     height: px2vw(12);
@@ -503,23 +429,10 @@ export default {
     position: absolute;
     top: 50%;
     margin-top: px2vw(-8);
-    right: px2vw(-4);
-}
-.learn-kid__header .weui-cells{
-  margin-top: px2vw(20);
-}
-.learn-kid-header__div{
-  display: inline-block;
-  width: px2vw(100);
-  height: px2vw(100);
-  border-radius: 50%;
+    right: 10px;
+  }
+.learn-kid-header__block{
   background: darkgrey;
-}
-.learn-kid__header img{
-  display: inline-block;
-  width: px2vw(100);
-  height: px2vw(100);
-  border-radius: 50%;
 }
 .learn-kid__body{
   & .vux-x-input,.vux-datetime,.vux-cell-box {
