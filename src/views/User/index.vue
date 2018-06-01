@@ -5,6 +5,9 @@
  * @author
  */
 
+import {
+  pageUtils,
+} from '@/mixins';
 import { Card, Cell, XButton, Group } from 'vux';
 
 export default {
@@ -15,6 +18,7 @@ export default {
     Group,
     XButton,
   },
+  mixins: [pageUtils],
   data() {
     return {
       info: {},
@@ -30,18 +34,14 @@ export default {
     };
   },
   created() {
-    this.getBefore();
     this.getInfo();
   },
   methods: {
-    getBefore() {
-      this.$http.get('/order/count').then((res) => {
-        this.order = res;
-      });
-    },
     getInfo() {
-      this.$http.get('/wechat_user/show').then((res) => {
-        // eslint-disable-next-line
+      this.$_pageMixin_http('/wechat_user/show', (res) => {
+        this.$_pageMixin_http('/order/count', (count) => {
+          this.order = count;
+        });
         this.info = res;
         if (this.info.headimgurl === null || this.info.headimgurl === '') {
           this.info.headimgurl = 'http://placeholder.qiniudn.com/60x60/FFEF7D/fff';
@@ -66,15 +66,9 @@ export default {
         onCancel() {
         },
         onConfirm() {
-          vm.$http.post('/bind/logout').then(() => {
+          vm.$_pageMixin_http('/bind/logout', () => {
             vm.$router.push('/sign-in');
-          }).catch(({ message }) => {
-            vm.$vux.toast.show({
-              text: message,
-              type: 'text',
-              width: 'auto',
-            });
-          });
+          }, 'post');
         },
       });
     },

@@ -6,9 +6,9 @@
  */
 
 import {
-  formUtils,
+  pageUtils,
 } from '@/mixins';
-import { XButton, ViewBox, Popup, Confirm, Alert } from 'vux';
+import { XButton, ViewBox, Popup, Confirm } from 'vux';
 import SwiperList from './SwiperList';
 import DetailPopup from './DetailPopup';
 
@@ -21,17 +21,14 @@ export default {
     Popup,
     DetailPopup,
     Confirm,
-    Alert,
   },
   mixins: [
-    formUtils,
+    pageUtils,
   ],
   data() {
     return {
       showPopup: false,
       noPermissionActivity: false,
-      alertMsg: false,
-      errMsg: '',
 
       popupData: {},
 
@@ -41,13 +38,12 @@ export default {
     };
   },
   created() {
-    this.$vux.loading.show();
     this.getDetail();
   },
   methods: {
     // 打开购买详情
     openPopup() {
-      this.$http.get(`/course_packet/inherent/${this.$route.params.id}`).then((res) => {
+      this.$_pageMixin_http(`/course_packet/inherent/${this.$route.params.id}`, (res) => {
          // 未领取试听课程
         if (res.status === 2) {
           this.noPermissionActivity = true;
@@ -55,9 +51,6 @@ export default {
           this.popupData = res;
           this.showPopup = true;
         }
-      }).catch((err) => {
-        this.alertMsg = true;
-        this.errMsg = err.message;
       });
     },
 
@@ -71,12 +64,8 @@ export default {
     },
 
     getDetail() {
-      this.$http.get(`/course_packet/surface/${this.$route.params.id}`).then((res) => {
-        this.$vux.loading.hide();
+      this.$_pageMixin_http(`/course_packet/surface/${this.$route.params.id}`, (res) => {
         this.info = res;
-      }).catch((err) => {
-        this.$vux.loading.hide();
-        this.$_formMixin_alertError(err);
       });
     },
   },
@@ -152,11 +141,6 @@ export default {
         cancel-text="知道了"
         @on-cancel="getIt"
         @on-confirm="goActivity"/>
-    </div>
-
-    <!-- 错误弹窗 -->
-    <div v-transfer-dom>
-      <alert v-model="alertMsg"> {{ errMsg }}</alert>
     </div>
 
   </app-page>

@@ -27,9 +27,9 @@ export { default as LearnCurriculum } from './Learn/curriculum';
 
 /* 用户中心 */
 
-export { default as UserIndex } from './User/Index/Index';
-export { default as UserEdit } from './User/Index/Edit';
-export { default as UserActivity } from './User/Index/ActivityRecord';
+export { default as UserIndex } from './User';
+export { default as UserEdit } from './User/Edit';
+export { default as UserActivity } from './User/ActivityRecord';
 
 /* 订单管理 */
 export { default as OrderList } from './Order/List';

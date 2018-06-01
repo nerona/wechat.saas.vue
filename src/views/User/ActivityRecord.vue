@@ -4,9 +4,13 @@
  *
  * @author
  */
+import {
+  pageUtils,
+} from '@/mixins';
 
 export default {
   name: 'UserActivity',
+  mixins: [pageUtils],
   data() {
     return {
       list: [],
@@ -17,7 +21,7 @@ export default {
   },
   methods: {
     getBefore() {
-      this.$http.get('/activity/record').then((res) => {
+      this.$_pageMixin_http('/activity/record', (res) => {
         this.list = res.data;
       });
     },

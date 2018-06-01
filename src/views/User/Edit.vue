@@ -5,6 +5,9 @@
  * @author
  */
 
+import {
+  pageUtils,
+} from '@/mixins';
 import { XInput, Group, XButton, PopupPicker, Cell } from 'vux';
 import { setTimeout } from 'timers';
 
@@ -17,6 +20,7 @@ export default {
     PopupPicker,
     Cell,
   },
+  mixins: [pageUtils],
   data() {
     return {
       info: {},
@@ -33,7 +37,7 @@ export default {
   },
   methods: {
     getBefore() {
-      this.$http.get('/wechat_user/store_before').then((res) => {
+      this.$_pageMixin_http('/wechat_user/store_before', (res) => {
         this.list = res.typeArr;
         const arr = [];
         res.typeArr.forEach((item) => {
@@ -45,7 +49,7 @@ export default {
       });
     },
     getInfo() {
-      this.$http.get('/wechat_user/show').then((res) => {
+      this.$_pageMixin_http('/wechat_user/show', (res) => {
         // eslint-disable-next-line
         this.info = res;
         this.name = res.name;
@@ -94,7 +98,7 @@ export default {
       }
 
       if (this.name !== '' || this.roleValue !== 0) {
-        this.$http.patch('/wechat_user', { name, role_type: roleType }).then(() => {
+        this.$_pageMixin_http('/wechat_user', () => {
           this.$vux.toast.show({
             text: '提交成功',
             type: 'text',
@@ -103,7 +107,7 @@ export default {
           setTimeout(() => {
             this.$router.push('/user/index');
           }, 2000);
-        });
+        }, 'patch', { name, role_type: roleType });
       }
     },
   },

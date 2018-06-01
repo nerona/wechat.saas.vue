@@ -42,7 +42,6 @@ export default {
     };
   },
   created() {
-    this.$vux.loading.show();
     // 清除位置信息
     // localStorage.removeItem('_getLocation');
   },
