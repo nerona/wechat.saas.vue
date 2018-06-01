@@ -112,7 +112,7 @@ export default {
         <Countdown
           :value="counter"
           @on-finish="vm_countOver"
-        />s
+        />S后重新获取
       </span>
       <span v-else>
         获得验证码
