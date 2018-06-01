@@ -108,7 +108,7 @@ export default {
         this.$vux.toast.show({
           text: '请选择有效的上课时间！',
           type: 'text',
-          width: 'auto',
+          width: '14em',
         });
         return;
       }
