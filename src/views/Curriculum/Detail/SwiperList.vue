@@ -47,9 +47,20 @@ export default {
       dots-class="swiper-list__dots"
       dots-position="center"
     />
+    <div class="swiper-list-cover"/>
   </div>
 </template>
 
 <style lang="less">
-
+.swiper-list {
+  position: relative;
+}
+.swiper-list-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
 </style>
