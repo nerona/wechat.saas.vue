@@ -454,6 +454,7 @@ export default {
   }
   & img,.learn-kid-header__div {
   display: inline-block;
+  pointer-events: none;
   width: px2vw(100);
   height: px2vw(100);
   border-radius: 50%;
@@ -477,6 +478,7 @@ export default {
   }
   & img,.learn-kid-header__div {
   display: inline-block;
+  pointer-events: none;
   width: px2vw(100);
   height: px2vw(100);
   border-radius: 50%;
