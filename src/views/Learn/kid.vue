@@ -345,6 +345,7 @@ export default {
       </group>
       <input
         id="inputImg"
+        ref="inputImg"
         type="file"
         accept="image/jpg,image/jpeg,image/png,image/bmp"
         style="display:none;"
@@ -401,6 +402,9 @@ export default {
 </template>
 
 <style lang="less">
+.learn-kid__header{
+  z-index: 10000;
+}
 .learn-kid__header .vux-label{
   font-size: px2vw(32);
 }
