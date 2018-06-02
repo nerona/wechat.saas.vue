@@ -81,7 +81,7 @@ export default {
       const id = Number(route.params.id);
       const api = `/order/${id}/cancel`;
       const callback = () => {
-        this.$router.replace('/user/order?type=0');
+        this.$router.replace('/order/list?type=0');
       };
 
       this.$_pageMixin_http(api, callback, 'patch')
