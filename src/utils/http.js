@@ -26,7 +26,7 @@ class Http {
   removeToken() {
     localStorage.removeItem('token');
     this.token = '';
-    location.href = '/sign-in';
+    // location.href = '/sign-in';
   }
 
   /**

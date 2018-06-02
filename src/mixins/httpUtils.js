@@ -45,9 +45,7 @@ export default {
     // 验证是否登录有效，无效跳转登录页
     $_checkSession({ status }) {
       if (status === 401) {
-        const from = this.$route.fullpath;
-
-        this.$router.push(`/sign-in?from=${from}`);
+        this.$router.push('/sign-in');
       }
     },
   },

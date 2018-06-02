@@ -93,7 +93,9 @@ export default {
     },
 
     directRoute() {
-      const to = this.$route.params.from || '/curriculum';
+      const to = this.$_pageMixin_routeFrom.name
+        ? this.$_pageMixin_routeFrom.fullPath
+        : '/curriculum';
 
       this.$router.replace(to);
     },

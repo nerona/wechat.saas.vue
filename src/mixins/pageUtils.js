@@ -8,7 +8,18 @@ import httpUtils from './httpUtils';
 
 export default {
 
+  data: () => ({
+    $_pageMixin_routeFrom: {},
+  }),
+
   mixins: [httpUtils],
+
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      // eslint-disable-next-line
+      if (from) vm.$_pageMixin_routeFrom = from;
+    });
+  },
 
   methods: {
     /**
