@@ -29,4 +29,22 @@ export default [
       title: '活动已结束',
     },
   },
+
+  /* 在线评测 */
+  {
+    path: '/activity/evaluate/index',
+    name: 'ActivityEvaluateIndex',
+    component: views.ActivityEvaluateIndex,
+    meta: {
+      title: '在线评测',
+    },
+  },
+  {
+    path: '/activity/evaluate/finish/:score',
+    name: 'ActivityEvaluateFinish',
+    component: views.ActivityEvaluateFinish,
+    meta: {
+      title: '在线评测',
+    },
+  },
 ];

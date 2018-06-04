@@ -12,6 +12,9 @@ export { default as ActivityLearnIndex } from './Activity/Learn/Index';
 export { default as ActivityLearnOver } from './Activity/Learn/Gameover';
 export { default as ActivityLearnShare } from './Activity/Learn/Share';
 
+export { default as ActivityEvaluateIndex } from './Activity/evaluate/Index';
+export { default as ActivityEvaluateFinish } from './Activity/evaluate/Finish';
+
 /* 课程中心 */
 
 export { default as CurriculumIndex } from './Curriculum';
