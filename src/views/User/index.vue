@@ -109,7 +109,7 @@ export default {
           @click="goOrder(1)">
           <span>{{ order.unpaid }}</span>
           <br>
-          代付款
+          待付款
         </div>
         <div @click="goOrder(2)">
           <span>{{ order.paid }}</span>
