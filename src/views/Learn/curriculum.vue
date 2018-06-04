@@ -87,12 +87,14 @@ export default {
       if (this.showDot) {
         this.$vux.loading.show();
 
+        this.dateTime = times.dateChange(val, 'isDay');
         this.curriculumInfo = [];
         this.schedule.forEach((item) => {
           if (times.dateChange(item.date) === val) {
             this.curriculumInfo.push(item);
           }
         });
+        this.curriculumInfo.sort(this.timeSort('start_time'));
         this.$vux.loading.hide();
       }
     },
@@ -104,21 +106,31 @@ export default {
     changeDate(line, index, data) {
       let strHtml = '<div class="undotDiv"></div>';
       if (this.showDot) {
-        const dotDate = this.schedule.find(item =>
-        times.dateChange(item.date) === data.formatedDate);
-        if (dotDate) {
-          if (dotDate.block_status === 1) {
-            strHtml = '<div class="dotDiv"><span class="dotSpan" style="background-color:blue;"></span></div>';
-          } else if (dotDate.block_status === 2) {
-            strHtml = '<div class="dotDiv"><span class="dotSpan" style="background-color:red;"></span></div>';
-          } else if (dotDate.block_status === 3) {
-            strHtml = '<div class="dotDiv"><span class="dotSpan" style="background-color:#69FFFE;"></span></div>';
-          } else {
-            strHtml = '<div class="undotDiv"></div>';
-          }
+        const dotDate1 = this.schedule.find(item =>
+        (times.dateChange(item.date) === data.formatedDate) && (item.block_status === 1));
+        if (dotDate1) {
+          strHtml += '<span class="dotSpan" style="background-color:blue;"></span>';
+        }
+        const dotDate2 = this.schedule.find(item =>
+        (times.dateChange(item.date) === data.formatedDate) && (item.block_status === 2));
+        if (dotDate2) {
+          strHtml += '<span class="dotSpan" style="background-color:red;"></span>';
+        }
+        const dotDate3 = this.schedule.find(item =>
+        (times.dateChange(item.date) === data.formatedDate) && (item.block_status === 3));
+        if (dotDate3) {
+          strHtml += '<span class="dotSpan" style="background-color:#69FFFE;"></span>';
         }
       }
       return strHtml;
+    },
+
+    timeSort(str) {
+      return (a, b) => {
+        const time1 = new Date(`2018/06/14 ${a[str]}`).getTime();
+        const time2 = new Date(`2018/06/14 ${b[str]}`).getTime();
+        return time1 - time2;
+      };
     },
 
   },
@@ -156,9 +168,9 @@ export default {
         @on-change="onChange"/>
       <div class="learn-curriculum__inline">
         <div>
-          <span class="learn-curriculum-inline__span learn-curriculum-inline__red"/>&nbsp;上课中
-          <span class="learn-curriculum-inline__span learn-curriculum-inline__blue"/>&nbsp;待上课
-          <span class="learn-curriculum-inline__span learn-curriculum-inline__cyan"/>&nbsp;已上课
+          <span class="learn-curriculum-inline__span learn-curriculum-inline__red"/>上课中
+          <span class="learn-curriculum-inline__span learn-curriculum-inline__blue"/>&nbsp;未上课
+          <span class="learn-curriculum-inline__span learn-curriculum-inline__cyan"/>&nbsp;已下课
         </div>
       </div>
     </div>
@@ -285,18 +297,18 @@ export default {
 }
 
 //上课中  待上课  已上课 在日期中的显示样式
-.dotDiv{
+.undotDiv{
+  height: px2vw(38);
   font-size: px2vw(24);
   text-align: center;
+  display: inline-block;
 }
 .dotSpan{
   display: inline-block;
   width: px2vw(10);
   height: px2vw(10);
   border-radius: 50%;
-}
-.undotDiv{
-  height: px2vw(38);
+  margin-left: px2vw(5);
 }
 </style>
 
