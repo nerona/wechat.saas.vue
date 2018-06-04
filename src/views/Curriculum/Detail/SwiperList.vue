@@ -31,6 +31,8 @@ export default {
     this.attachment.forEach((item) => {
       // eslint-disable-next-line
       item.img = item.url;
+       // eslint-disable-next-line
+      item.url = 'javascript:void';
     });
   },
   methods: {
