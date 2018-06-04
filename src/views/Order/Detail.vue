@@ -171,7 +171,7 @@ export default {
   padding: @padding;
   background-color: white;
   line-height: 1.25;
-  font-size: 0.5em;
+  font-size: 13px;
   color: @font-size-third-color;
   list-style: none;
 }
