@@ -22,6 +22,9 @@ export default [
     path: '/user/edit',
     name: 'UserEdit',
     component: views.UserEdit,
+    meta: {
+      title: '个人信息',
+    },
   },
   {
     path: '/user/activity-record',
