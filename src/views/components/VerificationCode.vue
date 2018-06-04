@@ -115,7 +115,7 @@ export default {
         />S后重新获取
       </span>
       <span v-else>
-        获得验证码
+        获取验证码
       </span>
     </XButton>
   </XInput>
