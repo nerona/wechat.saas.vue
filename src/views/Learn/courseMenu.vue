@@ -32,6 +32,10 @@ export default {
     getDate(str) {
       const month = new Date(str).getMonth() + 1;
       const day = (new Date(str).getDate() < 10 ? `0${new Date(str).getDate()}` : new Date(str).getDate());
+      //eslint-disable-next-line
+      alert(str);
+      //eslint-disable-next-line
+      alert(month);
       return `${month}.${day}`;
     },
     getTime(str) {
