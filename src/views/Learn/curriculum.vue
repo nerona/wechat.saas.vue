@@ -95,6 +95,8 @@ export default {
         this.$vux.loading.show();
         const dotDate = this.schedule.find(item => times.dateChange(item.date) === val);
         this.curriculumInfo = dotDate;
+      //eslint-disable-next-line
+        alert(this.curriculumInfo);
         this.$vux.loading.hide();
       }
     },

@@ -9,7 +9,8 @@ export default {
 
   filters: {
     getWeek(str) {
-      const week = new Date(new Date(str)).getDay();
+      //eslint-disable-next-line
+      const week = new Date(str.replace(/\-/g, '/')).getDay();
       switch (week) {
         case 1:
           return '周一';
@@ -30,8 +31,10 @@ export default {
       }
     },
     getDate(str) {
-      const month = new Date(new Date(str)).getMonth() + 1;
-      const day = (new Date(new Date(str)).getDate() < 10 ? `0${new Date(new Date(str)).getDate()}` : new Date(new Date(str)).getDate());
+      //eslint-disable-next-line
+      const month = new Date(str.replace(/\-/g, '/')).getMonth() + 1;
+      //eslint-disable-next-line
+      const day = (new Date(str.replace(/\-/g, '/')).getDate() < 10 ? `0${new Date(str.replace(/\-/g, '/')).getDate()}` : new Date(str.replace(/\-/g, '/')).getDate());
       return `${month}.${day}`;
     },
     getTime(str) {
