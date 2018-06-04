@@ -30,5 +30,8 @@ export default [
     path: '/user/activity-record',
     name: 'UserActivity',
     component: views.UserActivity,
+    meta: {
+      title: '活动记录',
+    },
   },
 ];
