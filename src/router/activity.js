@@ -39,4 +39,12 @@ export default [
       title: '在线评测',
     },
   },
+  {
+    path: '/activity/evaluate/finish/:score',
+    name: 'ActivityEvaluateFinish',
+    component: views.ActivityEvaluateFinish,
+    meta: {
+      title: '在线评测',
+    },
+  },
 ];
