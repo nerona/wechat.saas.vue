@@ -32,14 +32,7 @@ export default {
       currVal: ['全部'],
       schedule: [],
       curriculum: [],
-      curriculumInfo: {
-        curriculum_name: '',
-        block_status_name: '',
-        name: '',
-        start_time: '',
-        end_time: '',
-        performance: [],
-      },
+      curriculumInfo: [],
 
       showDot: false,
       show: true,
@@ -93,10 +86,13 @@ export default {
     onChange(val) {
       if (this.showDot) {
         this.$vux.loading.show();
-        const dotDate = this.schedule.find(item => times.dateChange(item.date) === val);
-        this.curriculumInfo = dotDate;
-      //eslint-disable-next-line
-        alert(this.curriculumInfo);
+
+        this.curriculumInfo = [];
+        this.schedule.forEach((item) => {
+          if (times.dateChange(item.date) === val) {
+            this.curriculumInfo.push(item);
+          }
+        });
         this.$vux.loading.hide();
       }
     },
@@ -167,30 +163,31 @@ export default {
       </div>
     </div>
     <div
-      v-if="curriculumInfo != undefined"
+      v-for="(item,index) in curriculumInfo"
+      :key="index"
       class="learn-curriculum__info">
-      <div>
-        <span style="float:right;">{{ curriculumInfo.block_status_name }}</span>
-        <span>课程名称：{{ curriculumInfo.curriculum_name }}</span>
+      <div class="learn-curriculum-info__block">
+        <div>
+          <span style="float:right;">{{ item.block_status_name }}</span>
+          <span>课程名称：{{ item.curriculum_name }}</span>
+        </div>
+        <div>教学内容：{{ item.name }}</div>
+        <div>上课时间：
+          <span v-if="item.start_time && item.end_time">
+            {{ item.start_time | getTime }} - {{ item.end_time | getTime }}
+          </span>
+        </div>
       </div>
-      <div>教学内容：{{ curriculumInfo.name }}</div>
-      <div>上课时间：
-        <span v-if="curriculumInfo.start_time && curriculumInfo.end_time">
-          {{ curriculumInfo.start_time | getTime }} - {{ curriculumInfo.end_time | getTime }}
-        </span>
-      </div>
-    </div>
-    <div
-      v-if="curriculumInfo != undefined">
+
       <div
-        v-if="curriculumInfo.performance.legth > 0"
+        v-if="item.performance.legth > 0"
         class="learn-curriculum__performance">
         <div style="color:gray">课堂表现</div>
         <div
-          v-for="item in curriculumInfo.performance"
-          :key="item.name + item.score_name">
-          <span>{{ item.name }}</span>
-          <span style="float:right;">{{ item.score_name }}</span>
+          v-for="itemPer in item.performance"
+          :key="itemPer.name + itemPer.score_name">
+          <span>{{ itemPer.name }}</span>
+          <span style="float:right;">{{ itemPer.score_name }}</span>
         </div>
       </div>
     </div>
@@ -198,6 +195,10 @@ export default {
 </template>
 
 <style lang="less">
+.learn-curriculum{
+  height: auto;
+  background: #EDEDF2;
+}
 .learn-curriculum__div{
   padding: px2vw(20) 0;
 }
@@ -267,10 +268,12 @@ export default {
 }
 
 .learn-curriculum__info{
-  background: #FFFFFF;
   margin: px2vw(10) 0;
-  padding: px2vw(10);
   font-size: px2vw(32);
+}
+.learn-curriculum-info__block{
+  background: #FFFFFF;
+  margin-bottom: px2vw(10);
 }
 .learn-curriculum__info div,.learn-curriculum__performance div{
   padding: px2vw(10) px2vw(20);
