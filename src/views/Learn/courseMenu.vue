@@ -9,7 +9,7 @@ export default {
 
   filters: {
     getWeek(str) {
-      const week = new Date(str).getDay();
+      const week = new Date(new Date(str)).getDay();
       switch (week) {
         case 1:
           return '周一';
@@ -30,8 +30,8 @@ export default {
       }
     },
     getDate(str) {
-      const month = new Date(str).getMonth() + 1;
-      const day = (new Date(str).getDate() < 10 ? `0${new Date(str).getDate()}` : new Date(str).getDate());
+      const month = new Date(new Date(str)).getMonth() + 1;
+      const day = (new Date(new Date(str)).getDate() < 10 ? `0${new Date(new Date(str)).getDate()}` : new Date(new Date(str)).getDate());
       return `${month}.${day}`;
     },
     getTime(str) {
