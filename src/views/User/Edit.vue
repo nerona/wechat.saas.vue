@@ -108,6 +108,8 @@ export default {
             this.$router.push('/user/index');
           }, 2000);
         }, 'patch', { name, role_type: roleType });
+      } else {
+        this.$router.push('/user/index');
       }
     },
   },
@@ -166,7 +168,7 @@ export default {
     <div class="user-edit-submit">
       <x-button
         type="primary"
-        @click.native="submit">提交</x-button>
+        @click.native="submit">保存</x-button>
     </div>
 
   </AppPage>
