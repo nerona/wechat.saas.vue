@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       product: {
-        price: '',
+        price: '0.00',
       },
       // 小孩
       childs: [],
@@ -163,6 +163,18 @@ export default {
         student_id: this.childId,
       });
     },
+
+    // 生成试听订单
+    listenOrder() {
+      this.$_pageMixin_http('/order', () => {
+        this.$router.push('/order/list?type=0');
+      }, 'post', {
+        department_id: Number.parseInt(this.$route.query.department_id, 10),
+        curriculum_id: Number.parseInt(this.$route.query.curriculum_id, 10),
+        course_packet_id: Number.parseInt(this.$route.query.course_packet_id, 10),
+        student_id: this.childId,
+      });
+    },
   },
 };
 </script>
@@ -210,6 +222,7 @@ export default {
     </group>
     <group>
       <cell
+        v-if="product.category_type === 1"
         value="￥0.00"
         title="押金抵扣"/>
     </group>
@@ -227,7 +240,7 @@ export default {
         is-link
         @click.native="chooseVoucher"/>
     </group> -->
-    <group>
+    <group v-if="product.category_type === 1">
       <cell
         v-if="product.price === '0.00' || product.price === null"
         :value="`￥${product.original_price}`"
@@ -241,7 +254,9 @@ export default {
     </group>
 
     <!-- 支付方式 -->
-    <group title="支付方式">
+    <group
+      v-if="product.category_type === 1"
+      title="支付方式">
       <cell style="padding: 15px 15px;">
         <img
           slot="icon"
@@ -255,7 +270,9 @@ export default {
     <div
       slot="bottom"
       class="curriculum-order-pay">
-      <div class="curriculum-order-pay__amount">
+      <div
+        v-if="product.category_type === 1"
+        class="curriculum-order-pay__amount">
         实付金额:
         <span v-if="product.price === '0.00' || product.price === null">
           ￥ {{ product.original_price }}元
@@ -265,8 +282,13 @@ export default {
         </span>
       </div>
       <div
+        v-if="product.category_type === 1"
         class="curriculum-order-pay__sure"
         @click="createOrder">去支付</div>
+      <div
+        v-else
+        class="curriculum-order-pay__sure"
+        @click="listenOrder">完成</div>
     </div>
 
     <!-- 选择小孩 -->
