@@ -387,7 +387,7 @@ export default {
       <div class="learn-kid-submit">
         <x-button
           type="primary"
-          @click.native="submit">提交</x-button>
+          @click.native="submit">保存</x-button>
       </div>
     </div>
   </AppPage>
