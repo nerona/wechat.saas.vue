@@ -106,7 +106,7 @@ export default {
         this.$router.replace(`/user/order/${this.data.id}`);
       };
 
-      this.$_pageMixin_http(api, callback, 'post', this.fdata);
+      this.$_pageMixin_http(api, callback, 'patch', this.fdata);
     },
   },
 };
