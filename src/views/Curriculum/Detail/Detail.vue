@@ -87,8 +87,15 @@ export default {
       <div class="curriculum-detail-info__desc">
         {{ info.introduce }}
       </div>
-      <div class="curriculum-detail-info__price">
-        <span class="curriculum-detail-info__price--old">￥{{ info.original_price }}元</span>
+      <div
+        v-if="info.price === '0.00' || info.price === null"
+        class="curriculum-detail-info__price">
+        <span class="curriculum-detail-info__price--old1">￥{{ info.original_price }}元</span>
+      </div>
+      <div
+        v-else
+        class="curriculum-detail-info__price">
+        <span class="curriculum-detail-info__price--old2">￥{{ info.original_price }}元</span>
         <!-- <span
           v-if="info.category_type == 2"
           class="curriculum-detail-info__price--null">￥0元</span> -->
@@ -116,7 +123,7 @@ export default {
       <x-button
         v-if="info.category_type == 2"
         type="primary"
-        @click.native="openPopup">试听</x-button>
+        @click.native="openPopup">约课</x-button>
     </div>
 
     <!-- 购买详情 -->
@@ -177,7 +184,10 @@ export default {
   margin-top: px2vw(16);
   font-size: px2vw(@font-size-bigger);
 }
-.curriculum-detail-info__price--old {
+.curriculum-detail-info__price--old1 {
+  margin-right: px2vw(30);
+}
+.curriculum-detail-info__price--old2 {
   margin-right: px2vw(30);
   text-decoration:line-through
 }

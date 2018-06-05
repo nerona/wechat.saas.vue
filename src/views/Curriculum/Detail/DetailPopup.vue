@@ -53,7 +53,9 @@ export default {
     };
   },
   created() {
-    this.curriculum = this.popupData.department[0].curriculum;
+    if (this.popupData.department.length > 0) {
+      this.curriculum = this.popupData.department[0].curriculum;
+    }
     this.stock_remain = this.popupData.stock_remain;
   },
 
@@ -115,7 +117,7 @@ export default {
 
       query.department_id = this.isSchoolActive;
       query.curriculum_id = this.isDateActive;
-      query.course_packet_id = this.$route.params.id;
+      query.course_packet_id = Number(this.$route.params.id);
 
       this.$router.push({ path: '/curriculum/order', query });
     },
@@ -132,7 +134,10 @@ export default {
       </div>
       <div class="curriculum-detail-order-card__content">
         <div class="curriculum-detail-order-card-content__price">
-          ￥{{ popupData.price }}
+          <span v-if="popupData.price === '0.00' || popupData.price === null">
+            ￥{{ popupData.original_price }}
+          </span>
+          <span v-else>￥{{ popupData.price }}</span>
         </div>
         <div class="curriculum-detail-order-card-content__left">
           剩余{{ stock_remain }}个名额

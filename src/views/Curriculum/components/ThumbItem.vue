@@ -41,7 +41,12 @@
       <div
         v-else
         class="curriculum-item-desc__left">满员</div>
-      <div class="curriculum-item-desc__price">￥{{ item.price }}</div>
+      <div
+        v-if="item.price === '0.00' || item.price === null"
+        class="curriculum-item-desc__price">￥{{ item.original_price }}</div>
+      <div
+        v-else
+        class="curriculum-item-desc__price">￥{{ item.price }}</div>
 
     </div>
   </div>

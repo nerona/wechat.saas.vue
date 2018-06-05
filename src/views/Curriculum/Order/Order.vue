@@ -192,7 +192,14 @@ export default {
       </div>
       <div class="curriculum-order-info__desc">
         <div class="curriculum-order-info-desc__name">{{ product.name }}</div>
-        <div class="curriculum-order-info-desc__price">￥{{ product.price }}</div>
+        <div class="curriculum-order-info-desc__price">
+          <span v-if="product.price === '0.00' || product.price === null">
+            ￥{{ product.original_price }}
+          </span>
+          <span v-else>
+            ￥{{ product.price }}
+          </span>
+        </div>
       </div>
     </div>
 
@@ -222,6 +229,12 @@ export default {
     </group> -->
     <group>
       <cell
+        v-if="product.price === '0.00' || product.price === null"
+        :value="`￥${product.original_price}`"
+        class="curriculum-order-cur-price"
+        title="课程金额"/>
+      <cell
+        v-else
         :value="`￥${product.price}`"
         class="curriculum-order-cur-price"
         title="课程金额"/>
@@ -242,7 +255,15 @@ export default {
     <div
       slot="bottom"
       class="curriculum-order-pay">
-      <div class="curriculum-order-pay__amount">实付金额: <span>￥ {{ product.price }}元</span></div>
+      <div class="curriculum-order-pay__amount">
+        实付金额:
+        <span v-if="product.price === '0.00' || product.price === null">
+          ￥ {{ product.original_price }}元
+        </span>
+        <span v-else>
+          ￥ {{ product.price }}元
+        </span>
+      </div>
       <div
         class="curriculum-order-pay__sure"
         @click="createOrder">去支付</div>
