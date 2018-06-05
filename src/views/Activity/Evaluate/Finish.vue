@@ -39,6 +39,7 @@ export default {
         <span v-else>Pre-K</span>
         课程的学习啦</p>
     </div>
+    <div class="evaluate-finish__sawtooth"/>
     <div class="evaluate-finish__content">
       <div v-if="score <= 5">
         <span>Phonics2</span>
@@ -100,5 +101,26 @@ export default {
   width: px2vw(334);
   height: px2vw(100);
   margin: px2vw(100) auto;
+}
+.evaluate-finish__sawtooth{
+  height: px2vw(38);
+  background: white;
+  background-image:-webkit-gradient(
+    linear,50% 0,0 100%,
+    from(transparent),
+    color-stop(0.5,transparent),
+    color-stop(0.5,#e0e9f9),
+    to(#e0e9f9)
+  ),
+  -webkit-gradient(
+    linear,50% 0,100% 100%,
+    from(transparent),
+    color-stop(0.5,transparent),
+    color-stop(0.5,#e0e9f9),
+    to(#e0e9f9)
+  );
+  background-size:px2vw(80) px2vw(40);
+  background-repeat:repeat-x;
+
 }
 </style>
