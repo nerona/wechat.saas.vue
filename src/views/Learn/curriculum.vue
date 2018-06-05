@@ -101,22 +101,22 @@ export default {
     },
 
     changeDate(line, index, data) {
-      let strHtml = '<div class="dotDiv"></div>';
+      let strHtml = '<div class="dotBlock"></div>';
       if (this.showDot) {
         const dotDate1 = this.schedule.find(item =>
         (times.dateChange(item.date) === data.formatedDate) && (item.block_status === 1));
         if (dotDate1) {
-          strHtml += '<span class="dotSpan" style="background-color:blue;"></span>';
+          strHtml += '<span class="dotType" style="background-color:blue;"></span>';
         }
         const dotDate2 = this.schedule.find(item =>
         (times.dateChange(item.date) === data.formatedDate) && (item.block_status === 2));
         if (dotDate2) {
-          strHtml += '<span class="dotSpan" style="background-color:red;"></span>';
+          strHtml += '<span class="dotType" style="background-color:red;"></span>';
         }
         const dotDate3 = this.schedule.find(item =>
         (times.dateChange(item.date) === data.formatedDate) && (item.block_status === 3));
         if (dotDate3) {
-          strHtml += '<span class="dotSpan" style="background-color:#69FFFE;"></span>';
+          strHtml += '<span class="dotType" style="background-color:#69FFFE;"></span>';
         }
       }
       return strHtml;
@@ -136,7 +136,7 @@ export default {
 
 <template>
   <div class="learn-curriculum">
-    <div class="learn-curriculum__div">
+    <div class="learn-curriculum__block">
       <group>
         <popup-picker
           :data="currList"
@@ -146,7 +146,7 @@ export default {
       </group>
     </div>
     <div>
-      <group class="learn-curriculum__group">
+      <group class="learn-curriculum__team">
         <datetime
           v-model="dateTime"
           title=""
@@ -161,13 +161,13 @@ export default {
         :return-six-rows="false"
         :render-function="buildSlotFn"
         :hide-header="true"
-        class="learn-curriculum__calendar"
+        class="learn-curriculum__date"
         @on-change="onChange"/>
       <div class="learn-curriculum__inline">
         <div>
-          <span class="learn-curriculum-inline__span learn-curriculum-inline__red"/>上课中
-          <span class="learn-curriculum-inline__span learn-curriculum-inline__blue"/>&nbsp;未上课
-          <span class="learn-curriculum-inline__span learn-curriculum-inline__cyan"/>&nbsp;已下课
+          <span class="learn-curriculum-inline__firText"/>&nbsp;上课中
+          <span class="learn-curriculum-inline__secText"/>&nbsp;未上课
+          <span class="learn-curriculum-inline__thiText"/>&nbsp;已下课
         </div>
       </div>
     </div>
@@ -190,7 +190,7 @@ export default {
 
       <div
         v-if="item.performance.legth > 0"
-        class="learn-curriculum__performance">
+        class="learn-curriculum-info__performance">
         <div style="color:gray">课堂表现</div>
         <div
           v-for="itemPer in item.performance"
@@ -208,14 +208,14 @@ export default {
   height: auto;
   background: #EDEDF2;
 }
-.learn-curriculum__div{
+.learn-curriculum__block{
   padding: px2vw(20) 0;
 }
 .learn-curriculum .vux-no-group-title{
   margin-top: 0px;
   font-size: px2vw(32);
 }
-.learn-curriculum__group .weui-cells:after{
+.learn-curriculum__team .weui-cells:after{
   border-bottom: none;
 }
 .learn-curriculum__inline{
@@ -229,7 +229,7 @@ export default {
   position: absolute;
   right: px2vw(20);
 }
-.learn-curriculum-inline__span{
+.learn-curriculum__inline span{
   display: inline-block;
   width: px2vw(15);
   height: px2vw(15);
@@ -238,13 +238,13 @@ export default {
   top: px2vw(-4);
   margin-left: px2vw(20);
 }
-.learn-curriculum-inline__red{
+.learn-curriculum-inline__firText{
   background: red;
 }
-.learn-curriculum-inline__blue{
+.learn-curriculum-inline__secText{
   background: blue;
 }
-.learn-curriculum-inline__cyan{
+.learn-curriculum-inline__thiText{
   background: #69FFFE;
 }
 .learn-curriculum .inline-calendar td.current > span.vux-calendar-each-date{
@@ -284,23 +284,23 @@ export default {
   background: #FFFFFF;
   margin-bottom: px2vw(10);
 }
-.learn-curriculum__info div,.learn-curriculum__performance div{
+.learn-curriculum__info div,.learn-curriculum-info__performance div{
   padding: px2vw(10) px2vw(20);
 }
-.learn-curriculum__performance{
+.learn-curriculum-info__performance{
   background: #FFFFFF;
   padding: px2vw(10);
   font-size: px2vw(32);
 }
 
 //上课中  待上课  已上课 在日期中的显示样式
-.dotDiv{
+.dotBlock{
   height: px2vw(38);
   font-size: px2vw(24);
   text-align: center;
   display: inline-block;
 }
-.dotSpan{
+.dotType{
   display: inline-block;
   width: px2vw(10);
   height: px2vw(10);

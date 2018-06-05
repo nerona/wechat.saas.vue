@@ -56,7 +56,7 @@ export default {
       剩余{{ formData.course_total - formData.course_finish }}学时</p>
       <p>校区：{{ formData.department_name }}</p>
     </div>
-    <div class="learn-detail__tab">
+    <div class="learn-detail__block">
       <button-tab>
         <button-tab-item
           selected
@@ -98,22 +98,22 @@ export default {
   margin: 0 px2vw(40);
   word-break: break-all;
 }
-.learn-detail__tab{
+.learn-detail__block{
   margin: px2vw(20) 0;
   height: px2vw(100);
 }
-.learn-detail__tab .vux-button-tab-item{
+.learn-detail__block .vux-button-tab-item{
   color: black;
   height: px2vw(105);
   border-radius: 0px !important;
   line-height: px2vw(105);
   font-size: px2vw(32);
 }
-.learn-detail__tab .vux-button-group-current{
+.learn-detail__block .vux-button-group-current{
   color: black !important;
   background: @button-primary-bg-color !important;
 }
-.learn-detail__tab .vux-button-group > a:after{
+.learn-detail__block .vux-button-group > a:after{
     border: none !important;
   }
 .learn-detail-content__none{

@@ -83,23 +83,23 @@ export default {
 
 <template>
   <AppPageWithTabbar>
-    <div class="learn-learn-index">
-      <header class="learn-learn-index__header">
+    <div class="learn-center-index">
+      <header class="learn-center-index__header">
         <img
           :src="kidInfo.head_url"
-          class="learn-learn-index-header__img">
-        <div class="learn-learn-index-header__info">
+          class="learn-center-index-header__picture">
+        <div class="learn-center-index-header__info">
           <span>{{ kidInfo.name }}</span>&nbsp;&nbsp;
           <span @click="editAdd(kidInfo.id)">
             <img
               src="./../../assets/edit.png"
-              class="learn-learn-index-header__edit">
+              class="learn-center-index-header__edit">
           </span>
           <br>
           <span>{{ kidInfo.birth_at }}</span>
         </div>
         <div
-          class="learn-learn-index-header__manage"
+          class="learn-center-index-header__manage"
           @click="showSheeet = true">
           <span>
             管理小孩&nbsp;&nbsp;&nbsp;
@@ -109,13 +109,13 @@ export default {
           <popup
             v-model="showSheeet"
             is-transparent>
-            <div class="learn-learn-index-header__transfer">
+            <div class="learn-center-index-header__block">
               <div
                 v-for="item in kidMenus"
                 :key="item.id"
-                :class="currKidId === item.id ? 'learn-learn-index-header-manage__speDiv '
-                  + 'learn-learn-index-header-manage__padDiv'
-                : 'learn-learn-index-header-manage__speDiv'"
+                :class="currKidId === item.id ? 'learn-center-index-header-manage__speBlock '
+                  + 'learn-center-index-header-manage__padBlock'
+                : 'learn-center-index-header-manage__speBlock'"
                 @click="getKid(item.id)">
                 <icon
                   v-if="currKidId === item.id"
@@ -123,24 +123,23 @@ export default {
                 <img
                   slot="icon"
                   :src="item.head_url"
-                  class="learn-learn-index-header-manage__img"
+                  class="learn-center-index-header-manage__picture"
                 >
                 <span>{{ item.name }}</span>
               </div>
               <div
-                class="learn-learn-index-header-manage__div"
+                class="learn-center-index-header-manage__btnBlock"
                 @click="addKId"
               >添加小孩</div>
               <div
-                class="learn-learn-index-header-manage__div"
+                class="learn-center-index-header-manage__btnBlock"
                 @click="showSheeet = false">取消</div>
             </div>
           </popup>
         </div>
-
       </header>
       <hr>
-      <div class="learn-learn-index__body">
+      <div class="learn-center-index__body">
         <group>
           <cell
             v-if="Object.keys(kidInfo.current).length > 0"
@@ -166,43 +165,43 @@ export default {
 </template>
 
 <style lang="less">
-.learn-learn-index__header{
+.learn-center-index__header{
   padding: px2vw(40);
   display: flex;
   position: relative;
   background: white;
 }
-.learn-learn-index-header__transfer{
+.learn-center-index-header__block{
   width: 100%;
   background-color:#fff;
   font-size: px2vw(32);
 }
-.learn-learn-index-header__transfer .weui-icon-success-no-circle{
+.learn-center-index-header__block .weui-icon-success-no-circle{
   font-size: px2vw(46);
 }
-.learn-learn-index-header__img{
+.learn-center-index-header__picture{
   width: px2vw(100);
   height: px2vw(100);
   border-radius: 50%;
 }
-.learn-learn-index-header__edit{
+.learn-center-index-header__edit{
   display: inline-block;
   width: px2vw(30);
   height: px2vw(30);
   position: relative;
   top: px2vw(6);
 }
-.learn-learn-index-header__info{
+.learn-center-index-header__info{
   margin-left: px2vw(30);
   font-size: px2vw(30);
 }
-.learn-learn-index-header__manage{
+.learn-center-index-header__manage{
   position: absolute;
   right: px2vw(40);
   top: px2vw(60);
   font-size: px2vw(32);
 }
-.learn-learn-index-header__manage>span::after{
+.learn-center-index-header__manage>span::after{
   content: " ";
   display: inline-block;
   height: px2vw(12);
@@ -216,15 +215,15 @@ export default {
   margin-top: px2vw(-8);
   right: px2vw(4);;
 }
-.learn-learn-index__body{
+.learn-center-index__body{
   background: white;
 }
-.learn-learn-index__body .weui-cells{
+.learn-center-index__body .weui-cells{
   margin-top: px2vw(6);
   margin-bottom: px2vw(8);
   font-size: px2vw(32);
 }
-.learn-learn-index__body .weui-cell_access .weui-cell__ft:after{
+.learn-center-index__body .weui-cell_access .weui-cell__ft:after{
     content: " ";
     display: inline-block;
     height: px2vw(12);
@@ -238,21 +237,21 @@ export default {
     margin-top: px2vw(-8);
     right: px2vw(-8);
 }
-.learn-learn-index-header-manage__div{
+.learn-center-index-header-manage__btnBlock{
   text-align: center;
   line-height: px2vw(90);
   border-bottom: px2vw(2) solid gainsboro;
 }
-.learn-learn-index-header-manage__speDiv{
+.learn-center-index-header-manage__speBlock{
   padding-left: 40%;
   padding-top: px2vw(5);
   padding-bottom: px2vw(20);
   border-bottom: px2vw(2) solid gainsboro;
 }
-.learn-learn-index-header-manage__padDiv{
+.learn-center-index-header-manage__padBlock{
   padding-left: 30%;
 }
-.learn-learn-index-header-manage__img{
+.learn-center-index-header-manage__picture{
   width: px2vw(60);
   height: px2vw(60);
   border-radius: 50%;

@@ -71,8 +71,8 @@ export default {
         <div>{{ item.date | getWeek }}</div>
       </div>
       <div
-        :class="item.block_status === 3 ? 'course-menu-detail__div '
-        + 'course-menu-detail___color' : 'course-menu-detail__div'">
+        :class="item.block_status === 3 ? 'course-menu-detail__block '
+        + 'course-menu-detail___color' : 'course-menu-detail__block'">
         <div>上课时间：{{ item.start_time | getTime }}-{{ item.end_time | getTime }}</div>
         <div>学习内容：{{ item.name }}</div>
       </div>
@@ -107,7 +107,7 @@ export default {
 .course-menu-detail__round div{
   height: px2vw(40);
 }
-.course-menu-detail__div{
+.course-menu-detail__block{
   display: inline-block;
   width:66%;
   padding: px2vw(20);
