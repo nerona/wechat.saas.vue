@@ -6,6 +6,7 @@
  */
 
 import { XButton, Group, Cell, XInput, Datetime, Picker, PopupPicker } from 'vux';
+import { pageUtils } from '@/mixins';
 
 export default {
   name: 'LearnKid',
@@ -19,6 +20,8 @@ export default {
     Picker,
     PopupPicker,
   },
+
+  mixins: [pageUtils],
 
   data() {
     return {
@@ -95,11 +98,7 @@ export default {
   },
 
   created() {
-    if (this.kidId) {
-      this.$vux.loading.show();
-    }
-    this.$http.get('/student/store_before')
-    .then((res) => {
+    this.$_pageMixin_http('/student/store_before', (res) => {
       this.formBefore = res;
 
       const gender = [];
@@ -114,8 +113,7 @@ export default {
       this.gradeList.push(grade);
     }).then(() => {
       if (this.kidId) {
-        this.$http.get(`/student/${this.kidId}`)
-        .then((res) => {
+        this.$_pageMixin_http(`/student/${this.kidId}`, (res) => {
           this.formData = {
             name: res.name,
             gender: res.gender,
@@ -132,25 +130,15 @@ export default {
           }
 
           if (res.school && res.school !== '0') {
-            this.$http.get(`/student/city/${res.school}`)
-            .then((resData) => {
+            this.$_pageMixin_http(`/student/city/${res.school}`, (resData) => {
               if (resData.city_code) {
                 this.address = [String(resData.province_code), String(resData.city_code)];
               } else {
                 this.address = [String(resData.province_code), null];
               }
               this.changeAddress(this.address, res.school);
-            })
-            .catch(({ message }) => {
-              this.$vux.toast.text(message, 'middle');
             });
           }
-
-          this.$vux.loading.hide();
-        })
-        .catch(({ message }) => {
-          this.$vux.loading.hide();
-          this.$vux.toast.text(message, 'middle');
         });
       }
     });
@@ -233,8 +221,7 @@ export default {
       } else {
         url = `/student/school/${val[0]}/${val[1]}`;
       }
-      this.$http.get(url)
-      .then((res) => {
+      this.$_pageMixin_http(url, (res) => {
         this.initSchoolList = res;
         if (res.length > 0) {
           this.schoolList = [];
@@ -246,9 +233,6 @@ export default {
             this.school = [String(school)];
           }
         }
-      })
-      .catch(({ message }) => {
-        this.$vux.toast.text(message, 'middle');
       });
     },
 
@@ -296,23 +280,15 @@ export default {
       }
 
       if (this.kidId) {
-        this.$http.patch(`/student/${this.kidId}`, this.formData)
-        .then(() => {
+        this.$_pageMixin_http(`/student/${this.kidId}`, () => {
           this.$vux.toast.text('修改小孩成功', 'middle');
           this.$router.push(this.routePage);
-        })
-        .catch(({ message }) => {
-          this.$vux.toast.text(message, 'middle');
-        });
+        }, 'patch', this.formData);
       } else {
-        this.$http.post('/student', this.formData)
-        .then(() => {
+        this.$_pageMixin_http('/student', () => {
           this.$vux.toast.text('添加小孩成功', 'middle');
           this.$router.push(this.routePage);
-        })
-        .catch(({ message }) => {
-          this.$vux.toast.text(message, 'middle');
-        });
+        }, 'post', this.formData);
       }
     },
 

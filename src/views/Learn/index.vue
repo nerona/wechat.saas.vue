@@ -5,6 +5,7 @@
  * @author suyanping
  */
 import { Group, Cell, Popup, TransferDom, Icon } from 'vux';
+import { pageUtils } from '@/mixins';
 import courseList from './courseList';
 
 export default {
@@ -21,6 +22,8 @@ export default {
     Icon,
   },
 
+  mixins: [pageUtils],
+
   data() {
     return {
       kidInfo: { current: {} },
@@ -33,9 +36,7 @@ export default {
   },
 
   created() {
-    this.$vux.loading.show();
-    this.$http.get('/student')
-    .then((res) => {
+    this.$_pageMixin_http('/student', (res) => {
       this.kidMenus = res.students;
       if (res.students.length < 1) {
         this.$router.push('/learn/kid');
@@ -47,12 +48,6 @@ export default {
         this.kidInfo = res.students[0];
         this.currKidId = this.kidInfo.id;
       }
-
-      this.$vux.loading.hide();
-    })
-    .catch(({ message }) => {
-      this.$vux.loading.hide();
-      this.$vux.toast.text(message, 'middle');
     });
   },
 

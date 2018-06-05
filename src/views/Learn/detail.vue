@@ -6,6 +6,7 @@
  */
 
 import { ButtonTab, ButtonTabItem } from 'vux';
+import { pageUtils } from '@/mixins';
 import courseMenu from './courseMenu';
 
 export default {
@@ -16,6 +17,8 @@ export default {
     ButtonTabItem,
     courseMenu,
   },
+
+  mixins: [pageUtils],
 
   data() {
     return {
@@ -33,16 +36,9 @@ export default {
   },
 
   created() {
-    this.$vux.loading.show();
     const arrId = this.$route.params.id.split('_');
-    this.$http.get(`/student/curriculum/${arrId[0]}/${arrId[1]}`)
-    .then((res) => {
-      this.$vux.loading.hide();
+    this.$_pageMixin_http(`/student/curriculum/${arrId[0]}/${arrId[1]}`, (res) => {
       this.formData = res;
-    })
-    .catch(({ message }) => {
-      this.$vux.loading.hide();
-      this.$vux.toast.text(message, 'middle');
     });
   },
 

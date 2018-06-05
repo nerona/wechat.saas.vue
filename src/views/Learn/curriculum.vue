@@ -7,6 +7,7 @@
 
 import { Datetime, PopupPicker, Group, InlineCalendar } from 'vux';
 import { times } from '@/utils';
+import { pageUtils } from '@/mixins';
 
 export default {
   name: 'LearnCurriculum',
@@ -22,6 +23,8 @@ export default {
       return `${timeArr[0]}:${timeArr[1]}`;
     },
   },
+
+  mixins: [pageUtils],
 
   data() {
     return {
@@ -49,9 +52,7 @@ export default {
 
   methods: {
     getFormData(studenId, curriculumId) {
-      this.$vux.loading.show();
-      this.$http.get(`/student/schedule/${studenId}/${curriculumId}`)
-      .then((res) => {
+      this.$_pageMixin_http(`/student/schedule/${studenId}/${curriculumId}`, (res) => {
         this.schedule = res.schedule;
         this.curriculum = res.curriculum;
 
@@ -68,10 +69,6 @@ export default {
 
         this.showDot = true;
         this.onChange(this.value);
-      })
-      .catch(({ message }) => {
-        this.$vux.loading.hide();
-        this.$vux.toast.text(message, 'middle');
       });
     },
 
@@ -104,7 +101,7 @@ export default {
     },
 
     changeDate(line, index, data) {
-      let strHtml = '<div class="undotDiv"></div>';
+      let strHtml = '<div class="dotDiv"></div>';
       if (this.showDot) {
         const dotDate1 = this.schedule.find(item =>
         (times.dateChange(item.date) === data.formatedDate) && (item.block_status === 1));
@@ -297,7 +294,7 @@ export default {
 }
 
 //上课中  待上课  已上课 在日期中的显示样式
-.undotDiv{
+.dotDiv{
   height: px2vw(38);
   font-size: px2vw(24);
   text-align: center;
