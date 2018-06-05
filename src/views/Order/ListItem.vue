@@ -63,7 +63,7 @@ export default {
       </ul>
     </div>
     <div
-      v-if="data.is_can_pay"
+      v-if="data.can_pay"
       class="order-item__footer"
     >
       <XButton

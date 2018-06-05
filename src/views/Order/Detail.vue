@@ -139,7 +139,7 @@ export default {
     </ul>
 
     <div
-      v-if="data.is_can_pay"
+      v-if="data.can_pay"
       class="order-detail__footer"
     >
       <XButton

@@ -30,7 +30,7 @@ const dataInit = () => {
     curriculum_introduce: '',
     department: null,
     id: 23,
-    is_can_pay: 1,
+    can_pay: 1,
     is_can_refund: 0,
     order_number: '2018052116272049',
     order_status: 4,
