@@ -103,7 +103,7 @@ export default {
     v_submit() {
       const api = `/order/${this.data.id}/refund`;
       const callback = () => {
-        this.$router.replace(`/order/detail${this.data.id}`);
+        this.$router.replace(`/order/detail/${this.data.id}`);
       };
 
       this.$_pageMixin_http(api, callback, 'patch', this.fdata);
