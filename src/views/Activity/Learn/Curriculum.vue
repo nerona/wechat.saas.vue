@@ -134,7 +134,7 @@ export default {
 </script>
 <template>
   <div class="learn-index-curriculum">
-    <div
+    <!-- <div
       v-for="item in curriculums"
       :key="item.id"
       class="learn-index-curriculum__item"
@@ -148,10 +148,10 @@ export default {
       <div class="learn-index-curriculum-item__text2">
         {{ item.line2 }}
       </div>
-    </div>
+    </div> -->
 
     <div
-      v-if="!isLogged && !isReserved"
+      v-if="!isLogged && isReserved"
       class="learn-index-curriculum__receive">
       <div class="learn-index-curriculum-receive-input">
         <input
@@ -192,22 +192,22 @@ export default {
 </template>
 <style lang="less">
 .learn-index-curriculum {
-  margin-top: px2vw(120);
+  // margin-top: px2vw(120);
   font-size: px2vw(28);
   padding-top: px2vw(60);
   padding-bottom: px2vw(60);
   position: relative;
-  &::before {
-    content: '';
-    display: block;
-    width: px2vw(154);
-    height: px2vw(131);
-    background: url('./../../../assets/activity/learn/l6.png') no-repeat;
-    background-size: 100% 100%;
-    position: absolute;
-    top: px2vw(-112);
-    right: px2vw(40);
-  }
+  // &::before {
+  //   content: '';
+  //   display: block;
+  //   width: px2vw(154);
+  //   height: px2vw(131);
+  //   background: url('./../../../assets/activity/learn/l6.png') no-repeat;
+  //   background-size: 100% 100%;
+  //   position: absolute;
+  //   top: px2vw(-112);
+  //   right: px2vw(40);
+  // }
 }
 .learn-index-curriculum__item {
   width: px2vw(588);
@@ -245,7 +245,7 @@ export default {
     width:  100%;
     border: none;
     outline: none;
-    background-color: #dcdddd;
+    background-color: whitesmoke;
     font-size: px2vw(32);
     line-height: px2vw(80);
     text-indent: px2vw(30);
@@ -265,5 +265,9 @@ export default {
 }
 .learn-index-curriculum-receive-submit--active {
   background-color: #ffd900;
+  color:black;
+  border: px2vw(2) solid black;
+  text-align: center;
+  border-radius: px2vw(10);
 }
 </style>

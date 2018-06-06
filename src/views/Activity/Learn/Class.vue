@@ -32,6 +32,143 @@
           link: '#other',
           name: '其他地区',
         }],
+
+        areaCity: [
+          {
+            id: 'xm',
+            link: '#xm',
+            name: '厦门',
+            area: [
+              {
+                address: '集美区地点',
+                school: [
+                  {
+                    name: '心超越中航城校区',
+                    location: '集美区杏林湾路园博二里104',
+                  },
+                  {
+                    name: '心超越曾营校区',
+                    location: '杏林区月美路403号',
+                  },
+                  {
+                    name: '光合教育校区',
+                    location: '集美区银江路132号星空下艺术文化中心',
+                  },
+                ],
+              },
+              {
+                address: '翔安区地点',
+                school: [
+                  {
+                    name: '春苗教育校区',
+                    location: '厦门市翔安区东方新城祥福二里29号201室',
+                  },
+                ],
+              },
+              {
+                address: '思明区地点',
+                school: [
+                  {
+                    name: '天天艾学校区',
+                    location: '厦门市思明区莲前西路209号5楼',
+                  },
+                  {
+                    name: '疯狂龙博士校区',
+                    location: '厦门市思明区湖滨南路787号',
+                  },
+                  {
+                    name: '助成教育校区',
+                    location: '厦门市思明区万寿路68号商洲文体中心3楼301号',
+                  },
+                  {
+                    name: '奥斯达托管补习中心',
+                    location: '厦门市思明区公园南路13号玉滨城7层',
+                  },
+                  {
+                    name: '百年树人体育路校区',
+                    location: '厦门市思明区体育路38号华强企业大楼3层',
+                  },
+                  {
+                    name: '彩虹蜗牛校区',
+                    location: '厦门市思明区侨岳里路79号-101号、102号、103号',
+                  },
+                  {
+                    name: '心超越瑞景校区',
+                    location: '思明区洪文一里133号103',
+                  },
+                  {
+                    name: '心超越民立校区',
+                    location: '思明区仙岳路里78号111室',
+                  },
+                  {
+                    name: '心超越莲花校区',
+                    location: '思明区莲花南路冶金大夏3楼',
+                  },
+                  {
+                    name: '心超越松柏校区',
+                    location: '思明区连岳路188号松柏永乐中心2楼 ',
+                  },
+                  {
+                    name: '心超越海峡国际校区',
+                    location: '思明区莲花南路冶金大夏3楼 ',
+                  },
+                  {
+                    name: '心超越华嘉校区',
+                    location: '湖里区华嘉路22~26 ',
+                  },
+                ],
+              },
+              {
+                address: '湖里区地点',
+                school: [
+                  {
+                    name: '尚学趣校区',
+                    location: '厦门市湖里区凯诚花园565#302',
+                  },
+                  {
+                    name: '爱考拉校区',
+                    location: '厦门市湖里区五缘尊府B座2楼201-205号',
+                  },
+                  {
+                    name: '百年树人金湖路校区',
+                    location: '厦门市湖里区金湖路43-45号金湖大厦701室',
+                  },
+                  {
+                    name: '心超越蔡塘校区',
+                    location: '湖里区蔡塘路博艺公寓2楼',
+                  },
+                ],
+              },
+              {
+                address: '海沧区地点',
+                school: [
+                  {
+                    name: '晓课堂天心岛校区',
+                    location: '厦门市湖里区凯诚花园565#302',
+                  },
+                  {
+                    name: '晓课堂外附校区',
+                    location: '厦门市湖里区五缘尊府B座2楼201-205号',
+                  },
+                  {
+                    name: '晓课堂北附校区',
+                    location: '厦门市湖里区金湖路43-45号金湖大厦701室',
+                  },
+                  {
+                    name: '晓课堂延奎校区',
+                    location: '湖里区蔡塘路博艺公寓2楼',
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            id: 'other',
+            link: '#other',
+            name: '其他地区',
+            area: [],
+          },
+        ],
       };
     },
     methods: {
@@ -46,22 +183,22 @@
   <div
     id="class"
     class="learn-index-class">
-    <div class="learn-index-board__title">
+    <!-- <div class="learn-index-board__title">
       <span>上课时间</span>
-    </div>
-    <div class="learn-index-class__range">{{ range }}</div>
-    <div class="learn-index-board__title">
+    </div> -->
+    <!-- <div class="learn-index-class__range">{{ range }}</div> -->
+    <!-- <div class="learn-index-board__title">
       <span>上课地点</span>
-    </div>
-    <div class="learn-index-class__area">
+    </div> -->
+    <!-- <div class="learn-index-class__area">
       <a
         v-for="(item,index) in citys"
         :key="index"
         :href="item.link"
       >{{ item.name }}</a>
-    </div>
+    </div> -->
 
-    <div class="learn-index-class__citys">
+    <!-- <div class="learn-index-class__citys">
       <div
         v-for="item in citys"
         :key="item.id"
@@ -104,11 +241,46 @@
             </a>
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <!--  -->
-      <div class="learn-index-class-citys_other">
+    <!--  -->
+    <!-- <div class="learn-index-class-citys_other">
         莆田、泉州、漳州、龙岩、三明、南平、宁德等地区正在筹备中，敬请期待！
+      </div>
+    </div> -->
+    <div class="learn-index-class__title">
+      <span>上课地点</span>
+    </div>
+    <div
+      v-for="item in areaCity"
+      :key="item.id"
+      class="learn-index-class__areas">
+      <p>{{ item.name }}</p>
+      <div
+        v-if="item.area.length > 0">
+        <div
+          v-for="area in item.area"
+          :key="area.address"
+          class="learn-index-class__address">
+          <p class="learn-index-class__text1">
+            <span>{{ area.address }}</span>
+          </p>
+          <div
+            v-for="school in area.school"
+            :key="school.location"
+            class="learn-index-class__school">
+            <p class="learn-index-class__text2">{{ school.name }}</p>
+            <p class="learn-index-class__text3">
+              <img src="./../../../assets/activity/learn/icon_location.png">
+              <span>{{ school.location }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div v-else>
+        <div class="learn-index-class__other_areas">
+          福州、莆田、泉州、漳州、龙岩、三明、南平、宁德等地区正在筹备中，敬请期待！
+        </div>
       </div>
     </div>
   </div>
@@ -256,5 +428,58 @@
   font-size: px2vw(30);
   color: #f39800;
   font-weight: bold;
+}
+
+.learn-index-class__title{
+  font-size: px2vw(50);
+  text-align: center;
+  padding-top: px2vw(50);
+  color: black;
+  margin-bottom: px2vw(40);
+}
+.learn-index-class__areas{
+  margin-bottom: px2vw(30);
+  margin-right: px2vw(50);
+}
+.learn-index-class__areas>p{
+  color: black;
+  width: px2vw(250);
+  background: #ffd900;
+  text-align: center;
+  border-top-right-radius: px2vw(30);
+  border-bottom-right-radius: px2vw(30);
+  font-size: px2vw(40);
+}
+.learn-index-class__address{
+  margin-left: px2vw(50);
+  margin-top: px2vw(30);
+}
+.learn-index-class__text1 span{
+  color: black;
+  font-size: px2vw(40);
+  border-bottom: px2vw(1) solid black;
+  padding-bottom: px2vw(10);
+}
+.learn-index-class__text2{
+  font-size: px2vw(35);
+}
+.learn-index-class__text3{
+  font-size: px2vw(32);
+}
+.learn-index-class__text3 img{
+  display: inline-block;
+  width: px2vw(30);
+  position: relative;
+  top: px2vw(7);
+  margin-right: px2vw(10);
+}
+.learn-index-class__school{
+  margin-top: px2vw(20);
+}
+.learn-index-class__other_areas{
+  font-size: px2vw(34);
+  color: black;
+  margin-left: px2vw(50);
+  margin-top: px2vw(30);
 }
 </style>

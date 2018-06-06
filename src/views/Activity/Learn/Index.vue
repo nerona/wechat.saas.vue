@@ -262,12 +262,12 @@ export default {
 <template>
   <AppPage class="learn-index">
     <!-- logo -->
-    <div class="learn-index-logo">
+    <!-- <div class="learn-index-logo">
       <img src="./../../../assets/activity/learn/l2.png">
-    </div>
+    </div> -->
 
     <!-- title -->
-    <div class="learn-index-banner">
+    <!-- <div class="learn-index-banner">
       <div class="learn-index-banner__title">
         <div class="learn-index-banner-title__number">{{ titleNumber }}万! !</div>
         <div class="learn-index-banner-title__text">
@@ -283,19 +283,31 @@ export default {
       <div class="learn-index-banner__desc">
         家门口的美国小学英语
       </div>
-    </div>
+    </div> -->
 
     <!-- range -->
-    <div class="learn-index-range">
+    <!-- <div class="learn-index-range">
       <div class="learn-index-range__all">[全国仅限{{ activityLimit }}名]</div>
       <div class="learn-index-range__time">活动时间: {{ activityRange }}</div>
-    </div>
+    </div> -->
 
     <!-- advance -->
-    <div class="learn-index-advance">
+    <!-- <div class="learn-index-advance">
       <img src="./../../../assets/activity/learn/l11.png">
       <img src="./../../../assets/activity/learn/l12.png">
       <img src="./../../../assets/activity/learn/l13.png">
+    </div> -->
+
+    <div class="activity-learn-index__logo">
+      <img src="./../../../assets/activity/learn/img_1.png">
+      <div class="activity-learn-index__block1">
+        <p class="activity-learn-index__text1">领取价值3600元幼小衔接课程</p>
+        <p class="activity-learn-index__text2">针对幼儿园升小学语、数、英各10节课程</p>
+      </div>
+      <div class="activity-learn-index__block2">
+        <p class="activity-learn-index__text1">领取价值1200元精品英语启蒙课程</p>
+        <p class="activity-learn-index__text2">针对对英语口语学习兴趣的学生英语启蒙10节课程</p>
+      </div>
     </div>
 
     <!-- curriculum -->
@@ -306,7 +318,6 @@ export default {
       :is-reserved="isReserved"
       :source="source"
       :adcode="adcode"
-      class="learn-index-board"
       @openCode="openCode"/>
 
     <!-- rule -->
@@ -546,5 +557,39 @@ export default {
     background-color: #fabe00;
   }
   */
+
+}
+.activity-learn-index__logo{
+  height: px2vw(920);
+  width: 90%;
+  margin-left: 5%;
+  position: relative;
+}
+.activity-learn-index__logo img{
+  width: 100%;
+}
+.activity-learn-index__logo div{
+  width: px2vw(420);
+  // height: px2vw(80);
+  background: dodgerblue;
+  color:white;
+  border-radius: px2vw(20);
+  margin-bottom: px2vw(20);
+  padding: px2vw(30);
+  text-align: center;
+}
+.activity-learn-index__block1{
+  position: relative;
+  bottom: px2vw(250);
+}
+.activity-learn-index__block2{
+  position: relative;
+  bottom: px2vw(260);
+}
+.activity-learn-index__text1{
+  font-size: px2vw(25);
+}
+.activity-learn-index__text2{
+  font-size: px2vw(20);
 }
 </style>

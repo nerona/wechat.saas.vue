@@ -5,7 +5,7 @@
  * @author lindongfang
  */
 // 二维码
-import qrcode from './../../../assets/activity/learn/l16.png';
+import qrcode from './../../../assets/activity/learn/QR_code.png';
 import Qrcode from './Qrcode';
 
 export default {
@@ -110,13 +110,13 @@ export default {
 <template>
   <AppPage class="learn-share">
     <!-- logo -->
-    <div class="learn-share-logo">
+    <!-- <div class="learn-share-logo">
       <img src="./../../../assets/activity/learn/l2.png">
-    </div>
+    </div> -->
     <!--  -->
-    <div class="learn-share-msg">
-      <!-- 英 -->
-      <div class="learn-share-msg__item learn-share-msg-item__en">
+    <!-- <div class="learn-share-msg"> -->
+    <!-- 英 -->
+    <!-- <div class="learn-share-msg__item learn-share-msg-item__en">
         <div class="learn-share-msg-item__title">Letter of Admission</div>
         <div class="learn-share-msg-item__text">
           <div class="learn-share-msg-item-text__to">Dear Kid:</div>
@@ -128,9 +128,9 @@ export default {
             Looking forward to your arrival！
           </div>
         </div>
-      </div>
-      <!-- 汉 -->
-      <div class="learn-share-msg__item learn-share-msg-item__cn">
+      </div> -->
+    <!-- 汉 -->
+    <!-- <div class="learn-share-msg__item learn-share-msg-item__cn">
         <div class="learn-share-msg-item__title">录取通知书</div>
         <div class="learn-share-msg-item__text">
           <div class="learn-share-msg-item-text__to">你好，孩子：</div>
@@ -145,6 +145,15 @@ export default {
         <span>您获得以下特权</span>
       </div>
       <div class="learn-share-tips">将课程送给2位好友，让他们成为<br>你的同班同学</div>
+    </div> -->
+    <div class="learn-share-msg1">
+      <img src="./../../../assets/activity/learn/img_4.png">
+    </div>
+    <div class="learn-share-msg2">
+      <!-- <img src="./../../../assets/activity/learn/img_4.png"> -->
+    </div>
+    <div class="learn-share-msg3">
+      <img src="./../../../assets/activity/learn/img_2.png">
     </div>
     <!-- qrcode -->
     <qrcode
@@ -285,27 +294,43 @@ export default {
   letter-spacing: px2vw(2);
 }
 
+.learn-share-msg1{
+  background: white;
+  width: 90%;
+  height: px2vw(348);
+  margin-left: 5%;
+  margin-top: px2vw(50);
+}
+.learn-share-msg1 img{
+  width: 100%;
+  margin-left: 5%;
+  padding-top: 5%;
+}
+.learn-share-msg2{
+  background: white;
+  height: px2vw(375);
+  width: 90%;
+  margin-left: 5%;
+  margin-top: px2vw(10);
+}
+.learn-share-msg3{
+  background: white;
+  height: px2vw(880);
+  width: 90%;
+  margin-left: 5%;
+  margin-top: px2vw(10);
+}
+.learn-share-msg3 img{
+  width: 90%;
+  margin-left: 5%;
+  padding-top: 5%;
+}
+
 
 .learn-share-qrcode {
-  background-color: #fff;
+  // background-color: #fff;
   margin-top: px2vw(20) !important;
   margin-bottom: px2vw(40) !important;
   position: relative;
-  &::before,
-  &::after {
-    content: '';
-    display: block;
-    width: px2vw(26);
-    height: px2vw(82);
-    background: url('./../../../assets/activity/learn/l15.png') no-repeat;
-    background-size: 100% 100%;
-    position: absolute;
-    top: px2vw(-50);
-    left: 23%;
-  }
-  &::after {
-    left: auto;
-    right: 23%
-  }
 }
 </style>
