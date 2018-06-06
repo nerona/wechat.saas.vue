@@ -308,7 +308,7 @@
             <p
               v-if="school.phone"
               class="learn-index-class__text3">
-              <a :href="school.phone">
+              <a :href="'tel:' + school.phone">
                 <img src="./../../../assets/activity/learn/icon_tel.png">
                 <span>{{ school.phone }}</span>
               </a>
