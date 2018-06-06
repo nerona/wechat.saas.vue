@@ -300,14 +300,14 @@ export default {
 
     <div class="activity-learn-index__logo">
       <img src="./../../../assets/activity/learn/img_1.png">
-      <div class="activity-learn-index__block1">
+      <!-- <div class="activity-learn-index__block1">
         <p class="activity-learn-index__text1">领取价值3600元幼小衔接课程</p>
         <p class="activity-learn-index__text2">针对幼儿园升小学语、数、英各10节课程</p>
       </div>
       <div class="activity-learn-index__block2">
         <p class="activity-learn-index__text1">领取价值1200元精品英语启蒙课程</p>
         <p class="activity-learn-index__text2">针对对英语口语学习兴趣的学生英语启蒙10节课程</p>
-      </div>
+      </div> -->
     </div>
 
     <!-- curriculum -->
