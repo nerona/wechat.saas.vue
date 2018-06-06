@@ -560,9 +560,8 @@ export default {
 
 }
 .activity-learn-index__logo{
-  height: px2vw(920);
-  width: 90%;
-  margin-left: 5%;
+  height: px2vw(1050);
+  width: 100%;
   position: relative;
 }
 .activity-learn-index__logo img{
@@ -581,10 +580,12 @@ export default {
 .activity-learn-index__block1{
   position: relative;
   bottom: px2vw(250);
+  left: px2vw(40);
 }
 .activity-learn-index__block2{
   position: relative;
   bottom: px2vw(260);
+  left: px2vw(40);
 }
 .activity-learn-index__text1{
   font-size: px2vw(25);

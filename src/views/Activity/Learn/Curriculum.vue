@@ -151,7 +151,7 @@ export default {
     </div> -->
 
     <div
-      v-if="!isLogged && isReserved"
+      v-if="!isLogged && !isReserved"
       class="learn-index-curriculum__receive">
       <div class="learn-index-curriculum-receive-input">
         <input
