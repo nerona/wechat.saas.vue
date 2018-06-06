@@ -45,14 +45,17 @@
                   {
                     name: '心超越中航城校区',
                     location: '集美区杏林湾路园博二里104',
+                    phone: '13275002188',
                   },
                   {
                     name: '心超越曾营校区',
                     location: '杏林区月美路403号',
+                    phone: '15159578765',
                   },
                   {
-                    name: '光合教育校区',
+                    name: '光合教育',
                     location: '集美区银江路132号星空下艺术文化中心',
+                    phone: '19906058872',
                   },
                 ],
               },
@@ -60,8 +63,9 @@
                 address: '翔安区地点',
                 school: [
                   {
-                    name: '春苗教育校区',
+                    name: '春苗教育',
                     location: '厦门市翔安区东方新城祥福二里29号201室',
+                    phone: '18064414303',
                   },
                 ],
               },
@@ -69,52 +73,64 @@
                 address: '思明区地点',
                 school: [
                   {
-                    name: '天天艾学校区',
+                    name: '天天艾学',
                     location: '厦门市思明区莲前西路209号5楼',
+                    phone: '13306050790',
                   },
                   {
-                    name: '疯狂龙博士校区',
+                    name: '疯狂龙博士',
                     location: '厦门市思明区湖滨南路787号',
+                    phone: '15960215498',
                   },
                   {
-                    name: '助成教育校区',
+                    name: '助成教育',
                     location: '厦门市思明区万寿路68号商洲文体中心3楼301号',
+                    phone: '15960215498',
                   },
                   {
                     name: '奥斯达托管补习中心',
                     location: '厦门市思明区公园南路13号玉滨城7层',
+                    phone: '15359023283',
                   },
                   {
-                    name: '百年树人体育路校区',
+                    name: '百年树人',
                     location: '厦门市思明区体育路38号华强企业大楼3层',
+                    phone: '0592-5031010',
                   },
                   {
-                    name: '彩虹蜗牛校区',
+                    name: '彩虹蜗牛',
                     location: '厦门市思明区侨岳里路79号-101号、102号、103号',
+                    phone: '15880205966',
                   },
                   {
                     name: '心超越瑞景校区',
                     location: '思明区洪文一里133号103',
+                    phone: '13313853339',
                   },
                   {
                     name: '心超越民立校区',
                     location: '思明区仙岳路里78号111室',
+                    phone: '15860724160',
                   },
                   {
                     name: '心超越莲花校区',
                     location: '思明区莲花南路冶金大夏3楼',
+                    phone: '15606090010',
                   },
                   {
                     name: '心超越松柏校区',
                     location: '思明区连岳路188号松柏永乐中心2楼 ',
+                    phone: '18606090010',
                   },
                   {
                     name: '心超越海峡国际校区',
                     location: '思明区会展北里48号101 ',
+                    phone: '18020739915',
                   },
                   {
                     name: '心超越华嘉校区',
                     location: '湖里区华嘉路22~26 ',
+                    phone: '',
                   },
                 ],
               },
@@ -122,20 +138,29 @@
                 address: '湖里区地点',
                 school: [
                   {
-                    name: '尚学趣校区',
+                    name: '尚学趣',
                     location: '厦门市湖里区凯诚花园565#302',
+                    phone: '15260178530',
                   },
                   {
-                    name: '爱考拉校区',
+                    name: '爱考拉',
                     location: '厦门市湖里区五缘尊府B座2楼201-205号',
+                    phone: '16605923911',
                   },
                   {
-                    name: '百年树人金湖路校区',
+                    name: '百年树人',
                     location: '厦门市湖里区金湖路43-45号金湖大厦701室',
+                    phone: '0592-2575156',
+                  },
+                  {
+                    name: '心超越湖里校区',
+                    location: '厦门市湖里区梧桐里御之苑68号',
+                    phone: '15259224544',
                   },
                   {
                     name: '心超越蔡塘校区',
                     location: '湖里区蔡塘路博艺公寓2楼',
+                    phone: '15159299563',
                   },
                 ],
               },
@@ -143,20 +168,24 @@
                 address: '海沧区地点',
                 school: [
                   {
-                    name: '晓课堂天心岛校区',
+                    name: '小课堂',
                     location: '天心岛校区（天心岛校区5号楼1107）',
+                    phone: '18030038639',
                   },
                   {
-                    name: '晓课堂外附校区',
+                    name: '小课堂',
                     location: '外附校区（兴港花园一期17栋186梯101）',
+                    phone: '18030038639',
                   },
                   {
-                    name: '晓课堂北附校区',
+                    name: '小课堂',
                     location: '北附校区（蓝月湾二期8号楼801）',
+                    phone: '18030038639',
                   },
                   {
-                    name: '晓课堂延奎校区',
+                    name: '小课堂',
                     location: '延奎校区（沧二小区8号楼78号101）',
+                    phone: '18030038639',
                   },
                 ],
               },
@@ -270,9 +299,19 @@
             :key="school.location"
             class="learn-index-class__school">
             <p class="learn-index-class__text2">{{ school.name }}</p>
-            <p class="learn-index-class__text3">
+            <p
+              class="learn-index-class__text3"
+              @click="openMap(school.location)">
               <img src="./../../../assets/activity/learn/icon_location.png">
               <span>{{ school.location }}</span>
+            </p>
+            <p
+              v-if="school.phone"
+              class="learn-index-class__text3">
+              <a :href="school.phone">
+                <img src="./../../../assets/activity/learn/icon_tel.png">
+                <span>{{ school.phone }}</span>
+              </a>
             </p>
           </div>
         </div>
@@ -465,6 +504,9 @@
 }
 .learn-index-class__text3{
   font-size: px2vw(32);
+}
+.learn-index-class__text3 a{
+  color: #8B8B8B;
 }
 .learn-index-class__text3 img{
   display: inline-block;
