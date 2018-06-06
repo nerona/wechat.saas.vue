@@ -7,12 +7,14 @@
 import {
   Countdown,
 } from 'vux';
+import { pageUtils } from '@/mixins';
 
 export default {
   name: 'ValidateCode',
   components: {
     Countdown,
   },
+  mixins: [pageUtils],
 
   props: {
     phone: {
@@ -24,7 +26,9 @@ export default {
     return {
       show: true,
       time: 60,
-      active: false,
+      active: true,
+
+      code: '',
 
       code1: '',
       code2: '',
@@ -35,52 +39,53 @@ export default {
     };
   },
   watch: {
-    code1(val) {
-      if (val !== '' && val !== null) {
-        this.$refs.code2.focus();
-        this.$refs.code2.click();
-        if (this.$refs.code2.value !== '' && this.$refs.code2.value !== null
-         && this.$refs.code3.value !== '' && this.$refs.code3.value !== null
-         && this.$refs.code4.value !== '' && this.$refs.code4.value !== null) {
-          this.active = true;
-        }
-      } else {
-        this.active = false;
-      }
-    },
-    code2(val) {
-      if (val !== '' && val !== null) {
-        this.$refs.code3.focus();
-        this.$refs.code3.click();
-        if (this.$refs.code3.value !== '' && this.$refs.code3.value !== null
-         && this.$refs.code4.value !== '' && this.$refs.code4.value !== null) {
-          this.active = true;
-        }
-      } else {
-        this.active = false;
-      }
-    },
-    code3(val) {
-      if (val !== '' && val !== null) {
-        this.$refs.code4.focus();
-        this.$refs.code4.click();
-        if (this.$refs.code4.value !== '' && this.$refs.code4.value !== null) {
-          this.active = true;
-        }
-      } else {
-        this.active = false;
-      }
-    },
-    code4(val) {
-      if (val !== '' && val !== null) {
-        this.active = true;
-      } else {
-        this.active = false;
-      }
-    },
+    // code1(val) {
+    //   if (val !== '' && val !== null) {
+    //     this.$refs.code2.focus();
+    //     this.$refs.code2.click();
+    //     if (this.$refs.code2.value !== '' && this.$refs.code2.value !== null
+    //      && this.$refs.code3.value !== '' && this.$refs.code3.value !== null
+    //      && this.$refs.code4.value !== '' && this.$refs.code4.value !== null) {
+    //       this.active = true;
+    //     }
+    //   } else {
+    //     this.active = false;
+    //   }
+    // },
+    // code2(val) {
+    //   if (val !== '' && val !== null) {
+    //     this.$refs.code3.focus();
+    //     this.$refs.code3.click();
+    //     if (this.$refs.code3.value !== '' && this.$refs.code3.value !== null
+    //      && this.$refs.code4.value !== '' && this.$refs.code4.value !== null) {
+    //       this.active = true;
+    //     }
+    //   } else {
+    //     this.active = false;
+    //   }
+    // },
+    // code3(val) {
+    //   if (val !== '' && val !== null) {
+    //     this.$refs.code4.focus();
+    //     this.$refs.code4.click();
+    //     if (this.$refs.code4.value !== '' && this.$refs.code4.value !== null) {
+    //       this.active = true;
+    //     }
+    //   } else {
+    //     this.active = false;
+    //   }
+    // },
+    // code4(val) {
+    //   if (val !== '' && val !== null) {
+    //     this.active = true;
+    //   } else {
+    //     this.active = false;
+    //   }
+    // },
   },
   mounted() {
-    this.$refs.code1.click();
+    // this.$refs.code1.click();
+    this.$refs.code.click();
 
     this.sendCode();
   },
@@ -104,21 +109,31 @@ export default {
     // 提交
     submit() {
       if (this.active) {
-        const code = this.$refs.code1.value +
-                     this.$refs.code2.value +
-                     this.$refs.code3.value +
-                     this.$refs.code4.value;
+        // const code = this.$refs.code1.value +
+        //              this.$refs.code2.value +
+        //              this.$refs.code3.value +
+        //              this.$refs.code4.value;
 
-        this.$http.post('/bind/bind_phone', { mobile: this.phone, code }).then(() => {
-          this.$emit('closeCode');
-        }).catch((err) => {
-          this.$vux.toast.show({
-            text: err.message,
-            type: 'text',
-            width: 'auto',
-            position: 'bottom',
-          });
-        });
+        // this.$http.post('/bind/bind_phone', { mobile: this.phone, code: this.code }).then(() => {
+        //   this.$emit('closeCode');
+        // }).catch((err) => {
+        //   this.$vux.toast.show({
+        //     text: err.message,
+        //     type: 'text',
+        //     width: 'auto',
+        //     position: 'bottom',
+        //   });
+        // });
+
+        const pattern = /^[0-9]+$/;
+        if (pattern.test(this.code)) {
+          const code = this.code * 1;
+          this.$_pageMixin_http('/bind/bind_phone', () => {
+            this.$emit('closeCode');
+          }, 'post', { mobile: this.phone, code });
+        } else {
+          this.$vux.toast.text('请输入正确的验证码', 'middle');
+        }
       }
     },
   },
@@ -127,7 +142,7 @@ export default {
 <template>
   <div class="popup-code">
     <div class="popup-code__title">验证码已发送到 {{ phone }}</div>
-    <div class="popup-code__input">
+    <!-- <div class="popup-code__input">
       <input
         ref="code1"
         v-model="code1"
@@ -148,6 +163,13 @@ export default {
         v-model="code4"
         type="tel"
         maxlength="1">
+    </div> -->
+
+    <div class="popup-code__numCode">
+      <input
+        ref="code"
+        v-model="code"
+      >
     </div>
 
     <div
@@ -214,4 +236,9 @@ export default {
   background-color: #fe9a00;
 }
 
+
+.popup-code__numCode input{
+  height: px2vw(60);
+  margin-top: px2vw(20);
+}
 </style>
