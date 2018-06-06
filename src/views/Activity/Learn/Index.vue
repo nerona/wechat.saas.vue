@@ -38,8 +38,8 @@ export default {
       activityId: 1,
 
       adcode: '350203',
-      isLogged: null,
-      isReserved: null,
+      isLogged: false,
+      isReserved: false,
 
       title: '3000万英语课程免费学',
       link: (process.env.NODE_ENV === 'production')
@@ -312,7 +312,6 @@ export default {
 
     <!-- curriculum -->
     <curriculum
-      v-show="isLogged !== null && isReserved !== null"
       :prize-id="prizeId"
       :activity-id="activityId"
       :is-logged="isLogged"
