@@ -44,7 +44,12 @@ export default {
           data.order_status_name === '待支付'
             ? { color: 'red' } : ''
         "
-      >{{ data.order_status_name }}</span>
+      >{{
+        data.order_status_name === '已支付' && data.order_refund
+          ? `${data.order_status_name} - ${data.order_refund.order_refund_status_name}`
+          : data.order_status_name
+      }}
+      </span>
     </div>
     <div
       class="order-item__body"
