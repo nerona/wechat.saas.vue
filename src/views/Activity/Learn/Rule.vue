@@ -92,6 +92,7 @@
   width: 90%;
   margin-left: 5%;
   padding-top: 5%;
+  margin-bottom: px2vw(50);
 }
 .learn-index-board__block1 img{
   width: 100%;

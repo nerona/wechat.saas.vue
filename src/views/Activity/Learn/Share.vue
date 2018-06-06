@@ -147,10 +147,10 @@ export default {
       <div class="learn-share-tips">将课程送给2位好友，让他们成为<br>你的同班同学</div>
     </div> -->
     <div class="learn-share-msg1">
-      <img src="./../../../assets/activity/learn/img_4.png">
+      <img src="./../../../assets/activity/learn/img_5.png">
     </div>
     <div class="learn-share-msg2">
-      <!-- <img src="./../../../assets/activity/learn/img_4.png"> -->
+      <img src="./../../../assets/activity/learn/img_4.png">
     </div>
     <div class="learn-share-msg3">
       <img src="./../../../assets/activity/learn/img_2.png">
@@ -297,21 +297,26 @@ export default {
 .learn-share-msg1{
   background: white;
   width: 90%;
-  height: px2vw(348);
+  height: px2vw(365);
   margin-left: 5%;
   margin-top: px2vw(50);
 }
 .learn-share-msg1 img{
   width: 100%;
-  margin-left: 5%;
+  margin-left: 10%;
   padding-top: 5%;
 }
 .learn-share-msg2{
   background: white;
-  height: px2vw(375);
+  height: px2vw(335);
   width: 90%;
   margin-left: 5%;
   margin-top: px2vw(10);
+}
+.learn-share-msg2 img{
+  width: 100%;
+  margin-left: 10%;
+  padding-top: 5%;
 }
 .learn-share-msg3{
   background: white;
