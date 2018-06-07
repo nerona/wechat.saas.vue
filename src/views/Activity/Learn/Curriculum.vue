@@ -12,8 +12,8 @@ export default {
   mixins: [formUtils],
   props: {
     prizeId: {
-      type: Number,
-      default: 1,
+      type: Array,
+      default: () => [],
     },
     activityId: {
       type: Number,

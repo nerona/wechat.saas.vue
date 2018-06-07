@@ -33,7 +33,7 @@ export default {
       titleNumber: '3000',
       activityLimit: '-',
       activityRange: '--月--日',
-      prizeId: 1,
+      prizeId: [],
       source: 3,
       activityId: 1,
 
@@ -119,7 +119,11 @@ export default {
         if (res.progress === '已结束') {
           this.$router.push('/activity/learn/over');
         }
-        this.prizeId = res.activity_prize[0].id;
+
+        res.activity_prize.forEach((item) => {
+          this.prizeId.push(item.id);
+        });
+
         this.activityLimit = res.user_limit;
         this.activityRange = `${res.start_at.split(' ')[0].split('-')[1]}月${
            res.start_at.split(' ')[0].split('-')[2]}日${
