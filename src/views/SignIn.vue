@@ -154,4 +154,7 @@ export default {
   margin: px2vw(40) px2vw(20) 0 px2vw(20);
   width: px2vw(710);
 }
+.signin .vux-img{
+  background-size: 100% 100% !important;
+}
 </style>
