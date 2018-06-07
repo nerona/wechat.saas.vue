@@ -33,7 +33,7 @@ export default {
     statusText() {
       if (!this.data) return null;
 
-      return this.data.pay_count_down
+      return this.data.can_pay
         ? `${this.data.order_status_name} 剩余时间${this.data.pay_count_down}`
         : this.data.order_status_name;
     },
