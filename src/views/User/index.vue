@@ -25,7 +25,8 @@ export default {
       roles: [],
       banner: {
         id: 1,
-        src: 'http://placeholder.qiniudn.com/750x300/FFEF7D/fff',
+        //eslint-disable-next-line
+        src: require('./../../assets/curr_user.png'),
       },
       activityRecord: null,
 

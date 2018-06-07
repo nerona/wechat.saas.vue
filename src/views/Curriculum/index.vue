@@ -31,7 +31,8 @@ export default {
     return {
       banner: {
         id: 1,
-        src: 'http://placeholder.qiniudn.com/750x350/4CD964',
+        //eslint-disable-next-line
+        src: require('./../../assets/curr_user.png'),
       },
       location: '福建省 厦门市 思明区',
       addressData: ChinaAddressV4Data,
