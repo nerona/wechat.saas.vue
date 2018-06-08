@@ -21,7 +21,11 @@ export default {
 
   methods: {
     getMoreInfo() {
-      this.$vux.toast.text('商城正在进行中，敬请期待！', 'middle');
+      if (this.score <= 5) {
+        this.$router.push('/curriculum/detail/28');
+      } else {
+        this.$router.push('/curriculum/detail/29');
+      }
     },
   },
 
@@ -38,6 +42,12 @@ export default {
         <span v-if="score <= 5">Phonics2</span>
         <span v-else>Pre-K</span>
         课程的学习啦</p>
+
+      <div class="evaluate-finish-result__submit">
+        <x-button
+          type="primary"
+          @click.native="getMoreInfo">立即约课</x-button>
+      </div>
     </div>
     <div class="evaluate-finish__sawtooth"/>
     <div class="evaluate-finish__content">
@@ -48,11 +58,6 @@ export default {
       <div v-else>
         <span>Pre-k</span>
         从身边息息相关的主题入手，积累大量原汁原味的语音，激发学习英文的兴趣。采用主题式教学和螺旋式复习的编排方式，通过游戏，歌曲，互动，TPR等充分调动学习兴趣。
-      </div>
-      <div class="evaluate-finish-content__submit">
-        <x-button
-          type="primary"
-          @click.native="getMoreInfo">了解更多</x-button>
       </div>
     </div>
   </div>
@@ -95,12 +100,12 @@ export default {
 .evaluate-finish__content span{
   color:red;
 }
-.evaluate-finish-content__submit button.weui-btn,.evaluate-finish-content__submit input.weui-btn{
+.evaluate-finish-result__submit button.weui-btn,.evaluate-finish-result__submit input.weui-btn{
   font-size: px2vw(40);
   border-radius: px2vw(20);
   width: px2vw(334);
   height: px2vw(100);
-  margin: px2vw(100) auto;
+  margin: px2vw(60) auto;
 }
 .evaluate-finish__sawtooth{
   height: px2vw(38);

@@ -32,6 +32,14 @@ export default [
 
   /* 在线评测 */
   {
+    path: '/activity/evaluate/first',
+    name: 'ActivityEvaluateFirst',
+    component: views.ActivityEvaluateFirst,
+    meta: {
+      title: '在线评测',
+    },
+  },
+  {
     path: '/activity/evaluate/index',
     name: 'ActivityEvaluateIndex',
     component: views.ActivityEvaluateIndex,
