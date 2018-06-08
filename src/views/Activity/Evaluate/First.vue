@@ -60,31 +60,31 @@ export default {
   background-size: 100% 100%;
 }
 .evaluate-first__header{
-  padding: px2vw(120) px2vw(50) px2vw(50) px2vw(50);
+  padding: px2vw(50);
   & p{
-    font-size: px2vw(38);
+    font-size: px2vw(34);
     margin-bottom: px2vw(10);
   }
 }
 .evaluate-first__content{
-  height: px2vw(200);
+  height: px2vw(160);
   width: 90%;
   color: #86300E;
   margin-left: px2vw(40);
   position: relative;
   & p{
     position: absolute;
-    font-size: px2vw(40);
-    top: px2vw(70);
-    left: px2vw(50);
+    font-size: px2vw(36);
+    top: px2vw(50);
+    left: px2vw(30);
   }
   & img{
     width: 100%;
-    height: px2vw(200);
+    height: px2vw(160);
   }
 }
 .evaluate-first__footer{
-  height: px2vw(200);
+  height: px2vw(160);
   width: 90%;
   color: #86300E;
   margin-left: px2vw(40);
@@ -92,13 +92,13 @@ export default {
   position: relative;
   & p{
     position: absolute;
-    font-size: px2vw(40);
-    top: px2vw(70);
-    left: px2vw(50);
+    font-size: px2vw(36);
+    top: px2vw(50);
+    left: px2vw(30);
   }
   & img{
     width: 100%;
-    height: px2vw(200);
+    height: px2vw(160);
   }
 }
 </style>
