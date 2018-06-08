@@ -297,12 +297,12 @@ export default {
       const X = endX - startX;
 
       if (this.isMove) {
-        if (X > 0) {
+        if (X > 50) {
           if (this.currPage > 1) {
             this.currPage -= 1;
             this.isPlay = false;
           }
-        } else if (X < 0) {
+        } else if (X < -50) {
           if (this.currPage !== 10 && this.currPage !== this.finshPage) {
             this.currPage += 1;
             this.isPlay = false;
@@ -334,7 +334,7 @@ export default {
         } else {
           this.$router.push(`/activity/evaluate/finish/${this.score}`);
         }
-      }, 3000);
+      }, 1000);
     },
     palyAudio() {
       const audio = document.getElementById('audio');
@@ -392,7 +392,7 @@ export default {
           v-for="(imgs,index) in item.select"
           :key="imgs.url">
           <div
-            v-if="(item.choose === item.answer) && (item.chooseIndex === index)"
+            v-show="(item.choose === item.answer) && (item.chooseIndex === index)"
             class="evaluate-index-body__success">
             <img
               :src="imgs.url">
@@ -401,7 +401,7 @@ export default {
               class="evaluate-index-body__successImg">
           </div>
           <div
-            v-else-if="(item.choose !== item.answer) && (item.chooseIndex === index)"
+            v-show="(item.choose !== item.answer) && (item.chooseIndex === index)"
             class="evaluate-index-body__error">
             <img
               :src="imgs.url">
@@ -410,7 +410,8 @@ export default {
               class="evaluate-index-body__errorImg">
           </div>
           <div
-            v-else
+            v-show="((item.choose !== item.answer) && (item.chooseIndex !== index))
+            || (item.choose === item.answer) && (item.chooseIndex !== index)"
             @click="choosePic(item.number,item.answer,imgs.name,index,item.choose)">
             <img
               :src="imgs.url">
