@@ -36,19 +36,19 @@ export default {
   <div class="evaluate-first">
     <div class="evaluate-first__header">
       <p>亲爱的家长：</p>
-      <p>你的小孩下半年是否就读小学一年级？</p>
+      <p>您的孩子下半年是否就读小学一年级？</p>
     </div>
     <div
       class="evaluate-first__content"
       @click="skipCurriculum">
       <p>是的，我需要幼小衔接课程</p>
-      <img src="./../../../assets/activity/evaluate/yes.png">
+      <img src="./../../../assets/activity/evaluate/frame.png">
     </div>
-    <div class="evaluate-first__footer">
-      <p>不是，通过英语能力评测选择课程</p>
-      <img
-        src="./../../../assets/activity/evaluate/icon.png"
-        @click="skipIndex">
+    <div
+      class="evaluate-first__footer"
+      @click="skipIndex">
+      <p>不是，我需要英语评测推荐课程</p>
+      <img src="./../../../assets/activity/evaluate/frame.png">
     </div>
   </div>
 </template>
@@ -56,7 +56,8 @@ export default {
 <style lang="less">
 .evaluate-first{
   height: 100%;
-  background: #FCFCCB;
+  background: url('./../../../assets/activity/evaluate/background.png') no-repeat;
+  background-size: 100% 100%;
 }
 .evaluate-first__header{
   padding: px2vw(120) px2vw(50) px2vw(50) px2vw(50);
@@ -68,8 +69,8 @@ export default {
 .evaluate-first__content{
   height: px2vw(200);
   width: 90%;
-  color: #863D0E;
-  margin-left: 5%;
+  color: #86300E;
+  margin-left: px2vw(40);
   position: relative;
   & p{
     position: absolute;
@@ -83,20 +84,21 @@ export default {
   }
 }
 .evaluate-first__footer{
-  height: px2vw(350);
-  margin-top: px2vw(50);
-  color: #863D0E;
-  font-size: px2vw(36);
+  height: px2vw(200);
   width: 90%;
-  margin-left: 5%;
-  background: url('./../../../assets/activity/evaluate/frame-no.png') no-repeat;
-  background-size: 100% 100%;
+  color: #86300E;
+  margin-left: px2vw(40);
+  margin-top: px2vw(50);
+  position: relative;
   & p{
-    padding: px2vw(50) px2vw(60);
+    position: absolute;
+    font-size: px2vw(40);
+    top: px2vw(70);
+    left: px2vw(50);
   }
   & img{
-    width: px2vw(350);
-    margin-left: px2vw(160);
+    width: 100%;
+    height: px2vw(200);
   }
 }
 </style>
