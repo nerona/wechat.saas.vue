@@ -67,7 +67,7 @@
 }
 .curriculum-item__thumb > img {
   width: px2vw(240);
-  height: 100%;
+  height: px2vw(240);
 }
 .curriculum-item__thumb--full {
   position: absolute;
@@ -93,12 +93,13 @@
   word-break: break-all;
 }
 .curriculum-item-desc__content {
-  // text-align: justify;
-  // overflow : hidden;
-  // text-overflow: ellipsis;
-  // display: -webkit-box;
-  // -webkit-line-clamp: 1;
-  // -webkit-box-orient: vertical;
+  width: px2vw(380);
+  text-align: left;
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
   margin-top: px2vw(4);
 }
 .curriculum-item-desc__time {
