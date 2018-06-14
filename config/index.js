@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/v1': {
-        target: 'https://wechat.caihonggou.com',
+        target: 'https://dev-wechat.caihonggou.com',
         changeOrigin: true,
       },
     },
