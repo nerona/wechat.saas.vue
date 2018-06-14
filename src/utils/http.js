@@ -1,6 +1,7 @@
 /**
  * 基于fetch的Ajax请求封装
  */
+import 'whatwg-fetch';
 
 class Http {
   constructor(apiRoot = '', version) {
